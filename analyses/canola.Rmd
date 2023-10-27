@@ -1,0 +1,329 @@
+---
+title: "Canola Analysis"
+author: "Dr. Riley M. Anderson & Salena Helmreich"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+graphics: yes
+output:
+  github_document:
+    toc: yes
+    toc_depth: 5
+    pandoc_args: --webtex
+  html_document:
+    keep_md: yes
+    theme: readable
+    mathjax: default
+  html_notebook:
+    code_folding: hide
+    theme: readable
+    mathjax: default
+  pdf_document:
+    toc: yes
+header-includes:
+  \usepackage{float}
+  \floatplacement{figure}{H}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = F}
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @@@@@ Knitr Options
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Set root directory to the project directory
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+
+# Set default knitr options: 
+# Suppress warnings and messages, cache chunks, 
+#  set default figure size to 6x8 at 300 dpi, and save a png and pdf
+knitr::opts_chunk$set(warning = F, message = F, collapse = T, cache = T,
+    fig.height = 6, fig.width = 8, dpi = 300, # 6x8" @ 300dpi:1800x2400=4.3MP
+    dev = c('png', 'pdf'), dev.args = list(pdf = list(onefile = F)))
+
+```
+
+
+
+## Overview
+
+This analysis explores Salena's canola experiment.
+
+### Summary of Results
+
+* Some bees have reduced head width in semi natural areas while others have increased head width in semi natural areas.
+
+* Most bees have head widths that vary independently of land type.
+
+```{r Main_Code, include = F, cache = F}
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @@@@@ Setup - This code is run, but output is hidden
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Load Packages
+library(tidyverse) # Needed for data wrangling: dplyr, tidyr, ggplot2
+library(cowplot) # Needed for publication-quality ggplots
+library(glmmTMB)
+library(lme4)
+library(sjPlot)
+library(car)
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @@@@@ Data Preparation
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Import datasets
+bees1 <- read.csv("data/CleanPalouseBees.csv")
+# Salena: I manually replaced the Halictus Family with Halictidae in the data
+# before importing it. It is saved this way with the correction.
+# Also corrected one record of Lasioglossum that was incorrectly assigned to 
+# the Apidae family.
+
+
+```
+
+
+```{r Data_Wrangling, echo = F, comment = ""}
+
+# look at the structure of your data:
+# str(bees1)
+
+# convert your character variables into factors:
+bees1 <- bees1 %>% 
+  # this code just uses less verbiage than individually mutating them
+  mutate(across(c(Period.x:land_type), factor),
+         across(c(Transect.x: Genus.x), factor)) 
+
+
+# add any other data wrangling code to this chunk
+
+
+##################################################
+
+# Which genera are excluded from semi natural sites?
+
+nat <- bees1 %>% 
+  filter(land_type == "natural") %>% 
+  select(Genus.x) %>% 
+  distinct()
+
+seminat <- bees1 %>% 
+  filter(land_type == "semi") %>% 
+  select(Genus.x) %>% 
+  distinct()
+
+onlynat <- inner_join(seminat, nat, by = "Genus.x")
+
+bees.reduced <- inner_join(bees1, onlynat, by = "Genus.x")
+
+x <- bees.reduced %>% 
+  group_by(land_type, Genus.x) %>% 
+  tally() %>% 
+  filter(n > 2) %>% 
+  ungroup() %>% 
+  select(Genus.x) %>% 
+  distinct()
+
+bees.reduced <- inner_join(bees.reduced, x, by = "Genus.x")
+
+
+
+```
+
+## Exploratory data analysis
+
+```{r exp_bee_health_by_land_type_family_genus, echo = F}
+# graph name ^ (use underscores for consistency)
+
+# Put each graph in a separate code block with a different name.
+# The title of each graph block will be automatically saved as the image name.
+# The set up chunk earlier defines this and automatically generates a 
+# .png & .pdf of every graph (so long as each chunk as only one graph)
+
+ggplot(bees.reduced, aes(x = land_type, y = Head.width, fill = Genus.x)) +
+  geom_boxplot() +
+  facet_wrap(~Family.x, scales = "free") +
+  theme_classic()
+
+```
+
+```{r intertegularspace_landtype_Family, echo = F}
+ggplot(bees.reduced,
+       aes(x = land_type, y = Intertegular.space, fill = Genus.x)) +
+  geom_boxplot() +
+  facet_wrap(~Family.x, scales = "free") +
+  theme_classic()
+
+# int.mod1 <- lm(Intertegular.space ~ land_type * Genus.x,
+#                contrasts = list(Genus.x = "contr.sum"),
+#                data = bees.reduced)
+# 
+# 
+# summary(int.mod1)
+```
+
+```{r corrplot_headwidth_intertegularspace, echo = F}
+
+
+ggplot(bees1, aes(x = Head.width, y = Intertegular.space)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  geom_text(x = 2.5, y = 4.2,
+            label = round(
+              cor(bees1$Head.width,
+                  bees1$Intertegular.space,
+                  method = "pearson"),
+              3)
+            ) +
+  geom_text(x = 2.2, y = 4.2,
+            label = "r = ") +
+  theme_classic()
+
+
+```
+
+```{r headwidth_landtype_morphogroup, echo = F}
+
+ggplot(bees.reduced,
+       aes(x = land_type, y = Head.width, fill = Morphogroup.x)) +
+  geom_boxplot() +
+  theme_classic()
+
+```
+
+```{r histogram_headwidth, echo = F}
+
+ggplot(bees.reduced,
+       aes(x = Head.width)) +
+  geom_histogram() +
+  facet_wrap(~Genus.x, scales = "free") +
+  theme_classic()
+
+```
+
+## Models
+
+```{r head_width_models, echo = F}
+
+mod1 <- lmer(Head.width ~ land_type + (1 + land_type | Genus.x),
+                data = bees1)
+
+# plot_model(mod1,
+#            type = "re")
+
+# summary(mod1)
+
+mod2 <- lmer(Head.width ~ land_type * Morphogroup.x +
+               (1 | Genus.x),
+             data = bees1)
+
+# best model:
+mod2.2 <- lmer(Head.width ~ land_type * Morphogroup.x +
+               (land_type | Genus.x),
+             data = bees1)
+# 
+# AIC(mod1,
+#     mod2,
+#     mod2.2)
+
+
+summary(mod2.2)
+
+Anova(mod2.2)
+
+plot_model(mod2.2,
+           type = "re")
+
+# AIC(mod1, mod2)
+
+#summary(mod1)
+
+#plot_model(mod2,
+#           type = "re")
+
+#summary(mod3)
+
+mod4 <- lmer(Head.width ~ land_type + (1 | Site.x) + (1 + land_type | Genus.x),
+           data = bees.reduced)
+
+#summary(mod4)
+
+```
+
+The best model considers a normally distributed random intercept of *Genus.x*. This essentially models the effect of *land_type* for each genus as lines with separate intercepts in the equation, which makes sense as variation in head width should vary to a greater degree across genera than within genera. Additionally, we allow the slope (effect of land type) to vary for each genus. However, the variance attributable to the random slopes is relatively small (~`r round(as.data.frame(VarCorr(mod2.2))[2,4], 3)`) compared to that attributed to the intercept (~`r round(as.data.frame(VarCorr(mod2.2))[1,4], 3)`) meaning the land type variable more or less effects each genus equally. AIC supports the inclusion of the random slope but I don't think it is actually giving us any useful information.
+
+There are very small differences in head_width attributable to land type but only for a few genera. For example, *Panurginus* and *Lasioglossum* have smaller head width in semi natural areas but *Halictus* and *Andrena* have larger head width in semi natural areas. *Panurginus* is extremely rare in the data so I definitely wouldn't rely on that one. Overall, I wouldn't place much weight on these findings as the variance component is so small that the estimates are probably unreliable.
+
+```{r head_width_predicted_values_fig, echo = F}
+
+plot_model(mod2.2,
+           type = "pred",
+           terms = c("land_type", "Morphogroup.x")) +
+  theme_classic() +
+  labs(x = "Land type",
+       y = "Head width (mm)",
+       color = "Morphogroup")
+
+```
+
+The fixed-effects reveal a land_type by morphogroup interaction where bumblebees have smaller head width in semi natural areas ($\beta$ = `r as.data.frame(coef(summary(mod2.2))[, "Estimate"][2])[1,1]`, t = `r as.data.frame(coef(summary(mod2.2))[, "t value"][2])[1,1]`) while honeybees and solitary bees have similar head width in both land types. This interaction is really just telling us that *Bombus* has a different response to land type than all of the other genera since it's the only genus in morphogroup = bumblebee.
+
+
+
+## Are some species more common in natural areas?
+
+* WARNING
+This is not a proper occupancy model as we aren't accounting for detection probabilities (uncertainty in detection efforts).
+
+This is a quick glimpse at the odds of finding particular genera in semi natural areas relative to natural areas.
+
+Proper occupancy modeling can be done (with a significant amount of work) if this is a question of interest.
+```{r occupancy, echo = F}
+
+# how many bees of each genera are there?
+genera <- bees.reduced %>% 
+  select(land_type, Genus.x) %>% 
+  group_by(land_type, Genus.x) %>% 
+  tally() %>% 
+  rename(occupied = n) %>% 
+  mutate(unoccupied = 
+           if_else(
+             grepl("natural", land_type),
+             514 - occupied,
+             498 - occupied
+           ))
+
+occ.mod <- glmer(cbind(occupied, unoccupied) ~
+                   land_type + (land_type | Genus.x),
+                 family = binomial(),
+                 data = genera)
+
+summary(occ.mod)
+
+
+
+```
+
+```{r occupancy_fig, echo = F}
+
+plot_model(occ.mod,
+           type = "re") 
+
+
+```
+
+Again, the variance component for the random slope is small but there may be some trends for a few genera. For example, *Halictus* and *Ceratina* are more likely to be found in semi natural areas, while *Andrena* and *Osmia* are more likely to found in natural areas. Keep in mind the simplified model structure here and its limitations. Also the model is run on a reduced data set including only genera that were found in both land types. With the full data set, there are more random effect levels than observations making the random effect parameters unidentifiable.
+
+
+## Session Information
+
+```{r Session_Info, echo = F, comment = ""}
+
+# Add session information to help with reproduceability
+sessionInfo()
+
+
+```
+
+
