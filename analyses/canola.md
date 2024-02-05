@@ -1,7 +1,7 @@
 Canola Analysis
 ================
 Dr. Riley M. Anderson & Salena Helmreich
-October 27, 2023
+February 05, 2024
 
   
 
@@ -112,6 +112,10 @@ bumblebees have smaller head width in semi natural areas
 head width in both land types. This interaction is really just telling
 us that *Bombus* has a different response to land type than all of the
 other genera since it’s the only genus in morphogroup = bumblebee.
+
+![](canola_files/figure-gfm/mod7-1.png)<!-- -->
+
+![](canola_files/figure-gfm/buffer2km_plot-1.png)<!-- -->
 
 ## Are some species more common in natural areas?
 

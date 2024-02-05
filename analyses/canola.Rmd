@@ -80,6 +80,10 @@ bees1 <- read.csv("data/CleanPalouseBees.csv")
 # Also corrected one record of Lasioglossum that was incorrectly assigned to 
 # the Apidae family.
 
+# import the buffer data
+km1 <- read.csv("data/canola_1kmbuff.csv")
+
+km2 <- read.csv("data/canola_2kmbuff.csv")
 
 ```
 
@@ -127,7 +131,22 @@ x <- bees.reduced %>%
 
 bees.reduced <- inner_join(bees.reduced, x, by = "Genus.x")
 
+bees.reduced <- bees.reduced %>% 
+  rename(Site = Site.x)
 
+#####
+# buffer data
+km2 <- km2 %>% 
+  select(Name, buffer2km)
+
+
+buffer <- left_join(km1, km2, by = "Name")
+
+buffer <- buffer %>% 
+  rename(Site = Name) %>% 
+  mutate(Site = factor(Site))
+
+bees.reduced <- left_join(bees.reduced, buffer, by = "Site")
 
 ```
 
@@ -268,6 +287,80 @@ plot_model(mod2.2,
 ```
 
 The fixed-effects reveal a land_type by morphogroup interaction where bumblebees have smaller head width in semi natural areas ($\beta$ = `r as.data.frame(coef(summary(mod2.2))[, "Estimate"][2])[1,1]`, t = `r as.data.frame(coef(summary(mod2.2))[, "t value"][2])[1,1]`) while honeybees and solitary bees have similar head width in both land types. This interaction is really just telling us that *Bombus* has a different response to land type than all of the other genera since it's the only genus in morphogroup = bumblebee.
+
+
+
+```{r buffer_mods, echo = F, include = F}
+
+hist(buffer$buffer1km)
+hist(buffer$buffer2km)
+
+bees.reduced %>% 
+  ggplot(aes(x = land_type, y = buffer2km)) +
+  geom_jitter() +
+  geom_boxplot()
+
+bees.reduced %>% 
+  ggplot(aes(x = buffer2km, y = Head.width, color = Genus.x)) +
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  facet_wrap(~ Family.x)
+
+
+
+
+
+mod5 <- lmer(Head.width ~ buffer1km * Morphogroup.x +
+               (1 | Genus.x), data = bees.reduced)
+
+
+summary(mod5)
+plot_model(mod5, type = "pred",
+           terms = c("buffer1km","Morphogroup.x"))
+
+plot_model(mod5, type = "re")
+
+
+mod6 <- lmer(Head.width ~ buffer1km * Family.x + (1 | Genus.x),
+             data = bees.reduced)
+summary(mod6)
+
+plot_model(mod6,
+           type = "pred", terms = c("buffer1km", "Family.x"))
+
+levels(bees.reduced$Site)
+
+```
+
+```{r mod7, echo = F}
+
+
+
+mod8 <- lmer(Head.width ~ scale(buffer2km) +
+               (scale(buffer2km) | Genus.x),
+             data = bees.reduced)
+plot_model(mod8, type = "re",
+           show.values = T,
+           show.p = T)
+
+
+
+
+
+
+```
+
+
+```{r buffer2km_plot, echo = F}
+bees.reduced %>% 
+  filter(Genus.x == c("Osmia", "Andrena", "Bombus", "Halictus")) %>% 
+  ggplot(aes(x = scale(buffer2km), y = Head.width)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  facet_wrap(~ Genus.x, scales = 'free') +
+  theme_classic()
+
+```
 
 
 
