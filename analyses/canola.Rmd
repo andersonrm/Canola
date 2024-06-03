@@ -85,6 +85,38 @@ km1 <- read.csv("data/canola_1kmbuff.csv")
 
 km2 <- read.csv("data/canola_2kmbuff.csv")
 
+
+
+###### Functions
+
+# Function to return a list with unscaled labels and scaled breaks
+# For plotting scaled & centered data
+unscale.plot.axis <- function(var, center = TRUE, labels = NULL){
+  
+    # Check if labels are specified. If not, create them
+    if (is.null(labels)) {
+      
+        # Create 6 labels from the minimum to the maximum of var
+        labels <- seq(min(var), max(var), 
+            by = floor((max(var) - min(var)) / 5))
+    }
+  
+    # Make a list to hold the output
+    out <- list()
+    
+    # Add the labels to the list
+    out$labels <- labels
+    
+    # Calculate the breaks on the scaled scale using the scale and center
+    out$breaks <- (out$labels - 
+        attributes(scale(var, center = center))$`scaled:center`) / 
+        attributes(scale(var, center = center))$`scaled:scale`
+    
+    # Return the list with labels and breaks
+    return(out)
+}
+
+
 ```
 
 
@@ -308,47 +340,65 @@ bees.reduced %>%
 
 
 
+bees.reduced <- bees.reduced %>% 
+  mutate(s_canola = scale(buffer2km))
 
-
-mod5 <- lmer(Head.width ~ buffer1km * Morphogroup.x +
-               (1 | Genus.x), data = bees.reduced)
+mod5 <- lmer(Head.width ~ s_canola * Morphogroup.x +
+               (s_canola | Genus.x), data = bees.reduced)
 
 
 summary(mod5)
 plot_model(mod5, type = "pred",
-           terms = c("buffer1km","Morphogroup.x"))
+           terms = c("s_canola","Morphogroup.x"))
 
 plot_model(mod5, type = "re")
 
+```
 
-mod6 <- lmer(Head.width ~ buffer1km * Family.x + (1 | Genus.x),
-             data = bees.reduced)
-summary(mod6)
+```{r Halictus_model, echo = F}
 
-plot_model(mod6,
-           type = "pred", terms = c("buffer1km", "Family.x"))
+halic.mod <- lm(Head.width ~ s_canola,
+                  data = filter(bees.reduced,
+                                Genus.x == "Halictus"))
 
-levels(bees.reduced$Site)
+summary(halic.mod)
 
 ```
 
-```{r mod7, echo = F}
+```{r halictus_plot, echo = F}
 
-
-
-mod8 <- lmer(Head.width ~ scale(buffer2km) +
-               (scale(buffer2km) | Genus.x),
-             data = bees.reduced)
-plot_model(mod8, type = "re",
-           show.values = T,
-           show.p = T)
-
-
-
-
-
+bees.reduced %>% 
+  filter(Genus.x == "Halictus") %>% 
+  mutate(area1km = pi * 2000^1) %>% 
+  ggplot(aes(x = buffer2km/area1km, y = Head.width)) +
+  geom_point()
 
 ```
+
+
+```{r Osmia_model, echo = F}
+
+osmia.mod <- lm(Head.width ~ s_canola,
+                  data = filter(bees.reduced,
+                                Genus.x == "Osmia"))
+
+summary(osmia.mod)
+
+```
+
+```{r Nomada_model, echo = F}
+
+nomada.mod <- lm(Head.width ~ s_canola,
+                  data = filter(bees.reduced,
+                                Genus.x == "Nomada"))
+
+summary(nomada.mod)
+
+```
+
+
+
+
 
 
 ```{r buffer2km_plot, echo = F}
