@@ -1,6 +1,4 @@
-ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,Family.x,Genus.x,Head.width,Intertegular.space,Notes.x,Notes.y
-32Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Halictidae,Agapostemon,3.01,2.15,Texanus,Texanus
-3Kam43,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Halictidae,Agapostemon,2.77,1.87,,
+ID,date,period,site,land_type,latitude,longitude,transect,morphogroup,family,genus,head_width,intertegular_space,Notes,Notes
 10Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Andrena,3.31,2.26,,
 10Aso42,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Andrena,2.63,1.86,,
 10Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Andrena,2.58,1.74,,
@@ -271,8 +269,27 @@ ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,
 9Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Andrenidae,Andrena,3.2,2.01,,
 9Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Andrenidae,Andrena,3.03,2.1,,
 9Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Andrenidae,Andrena,2.02,1.31,,
-1Plaz33,0022-08-02,3,Plaza,natural,47.397565,-117.57463,3,Solitary,Megachilidae,Anthidium,2.31,1.71,sp: manicatum,sp: manicatum
-2Kam42,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Megachilidae,Anthidium,2.16,1.8,,
+44Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Andrenidae,Panurginus,1.75,1.18,,
+45Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Andrenidae,Panurginus,1.67,1.13,,
+7Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Andrenidae,Panurginus,1.7,1.34,,
+1Plaz12,0022-07-06,2,Plaza,natural,47.397565,-117.57463,1,Solitary,Andrenidae,Perdita,1.29,0.62,,
+1Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Andrenidae,Perdita,1.42,0.95,,
+1Span22,0022-07-06,2,Spangle,natural,47.397378,-117.488876,2,Solitary,Andrenidae,Perdita,1.53,1.09,,
+2Span22,0022-07-06,2,Spangle,natural,47.397378,-117.488876,2,Solitary,Andrenidae,Perdita,1.31,0.81,,
+79Aso42,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Perdita,1.55,1.02,,
+10Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.59,1,S.L.,
+11Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.53,1.03,S.L.,
+12Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.5,0.92,S.L.,
+14Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.46,1.22,S.L.,
+18Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.6,0.95,S.L.,Male
+19Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.56,1.08,S.L.,Male
+21Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.66,1.04,S.L.,
+5Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.47,0.82,S.L.,
+6Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.43,0.88,S.L.,
+78Aso42,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Protandrena,1.94,1.26,,
+7Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.52,0.93,S.L.,
+8Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.61,0.81,S.L.,
+9Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.58,0.92,S.L.,
 13Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,HoneyBee,Apidae,Apis,3.56,2.84,mellifera,mellifera
 1Aso12,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,1,HoneyBee,Apidae,Apis,3.73,2.64,mellifera,mellifera
 1Chp12,0022-07-05,2,Chipman1,semi,46.721549,-117.153,1,HoneyBee,Apidae,Apis,3.73,2.95,mellifera,mellifera
@@ -465,202 +482,190 @@ ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,
 9Ckk32,0022-06-27,2,Clark2,natural,46.835963,-117.220154,3,Solitary,Apidae,Ceratina,1.35,1.08,,
 9SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Apidae,Ceratina,1.35,0.96,,
 9SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Ceratina,1.41,1,,
-100Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.36,0.89,Male,Male
-101Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,1,"Abdomen missing, recovered","Abdomen missing, recovered"
-103Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.41,0.95,"Head missing, recovered","Head missing, recovered"
-105Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.3,0.85,"Head missing, recovered","Head missing, recovered"
-106Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.27,0.93,"Head missing, recovered","Head missing, recovered"
-10Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.41,0.98,Male,Male
-10Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.27,0.86,Male,Male
-10Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.42,0.95,Male,Male
-10Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.26,0.88,Male,Male
-11Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.39,0.93,Male,Male
-11Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.33,0.93,Male,Male
-11Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.4,0.95,Male,Male
-12Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.33,0.86,Male,Male
-12Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.23,0.78,"Male, abdomen missing/recovered","Male, abdomen missing/recovered"
-12Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.31,0.88,Male,Male
-12Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,0.9,Male,Male
-13Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.35,0.89,Male,Male
-13Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.43,1.02,Male,Male
-13Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.41,0.95,Male,Male
-13Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.34,0.82,Male,Male
-14Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.2,0.77,Male,Male
-14Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.35,0.92,Head missing/recovered,Head missing/recovered
-14Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.36,0.94,Male,Male
-14Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.37,0.89,Male,Male
-15Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.26,0.83,Male,Male
-15Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.25,0.8,Male,Male
-15Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.22,0.71,Male,Male
-15Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.44,0.89,Male,Male
-16Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.28,0.8,Male,Male
-16Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.3,0.78,Male,Male
-16Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.52,1.04,Male,Male
-16Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.45,0.94,Male,Male
-17Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.45,0.86,Male,Male
-17Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.33,0.99,Male,Male
-17Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.71,1.18,Female,Female
-18Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.51,1.06,Male,Male
-18Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.22,0.89,Male,Male
-18Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.41,0.98,Female,Female
-19Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.27,0.84,Male,Male
-19Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.35,0.91,Male,Male
-19Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.61,1.1,Female,Female
-1Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.26,0.89,Male,Male
-1Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.32,0.92,Male,Male
-1Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,2.38,1.66,Male,Male
-1Chpp11,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,1,Solitary,Apidae,Ceratina ,1.25,0.83,Male,Male
-1Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.42,0.92,Male,Male
-20Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.14,0.73,Male,Male
-20Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.33,0.79,Male,Male
-20Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.46,0.92,Female,Female
-21Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.36,0.87,Male,Male
-21Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.32,1,Male,Male
-21Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,0.95,Female,Female
-22Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.29,1,Male,Male
-22Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.57,1.09,Female,Female
-23Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.33,0.77,Male,Male
-23Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.6,0.96,Female,Female
-24Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.27,0.84,Male,Male
-24Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.45,0.93,Female,Female
-25Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.54,1.1,Male,Male
-25Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.26,0.81,Male,Male
-26Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.4,0.87,Male,Male
-26Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.45,0.92,Male,Male
-27Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.36,0.86,Male,Male
-27Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.35,0.92,Male,Male
-28Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.23,0.95,Male,Male
-28Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.33,0.77,Male,Male
-29Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.46,0.89,Male,Male
-29Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.3,0.85,Male,Male
-2Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.27,0.73,Male,Male
-2Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.44,0.96,Female,Female
-2Chpp11,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,1,Solitary,Apidae,Ceratina ,1.43,1.03,Female,Female
-2Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.24,0.88,Male,Male
-2Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina ,1.52,1.1,Female,Female
-2Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.6,1,Female,Female
-30Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.44,0.94,Male,Male
-30Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.44,0.93,Male,Male
-30Chpp31,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Apidae,Ceratina ,1.44,1.03,Female,Female
-31Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.8,1.19,Female,Female
-31Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,0.85,Male,Male
-32Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.24,0.76,"Male, abdomen missing","Male, abdomen missing"
-32Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.32,0.88,Male,Male
-33Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.22,0.85,"Male, abdomen missing","Male, abdomen missing"
-33Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.38,0.92,Male,Male
-34Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.33,0.97,Male,Male
-34Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Apidae,Ceratina ,1.45,1.03,Female,Female
-35Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.38,0.88,Male,Male
-36Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.44,0.98,Male,Male
-37Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.48,0.98,Male,Male
-38Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.46,0.99,Male,Male
-39Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.53,1.03,Male,Male
-3Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.41,0.99,Male,Male
-3Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.36,0.91,Male,Male
-3Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.37,0.95,Male,Male
-3Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina ,1.62,1.05,Female,Female
-3Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.34,0.86,,
-40Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.26,0.77,Male,Male
-41Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.45,0.9,Male,Male
-43Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.56,0.99,Female,Female
-44Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.32,0.91,Female,Female
-45Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.43,1.04,Female,Female
-46Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.93,1.25,Female,Female
-47Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.73,1.06,Female,Female
-48Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.43,1.02,Female,Female
-49Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.57,1.08,Female,Female
-4Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.32,0.84,Male,Male
-4Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.66,1.06,Male,Male
-4Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.45,0.93,Male,Male
-4Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.28,0.76,Male,Male
-4Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina ,1.39,0.83,Male,Male
-4Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.41,0.98,Female,Female
-50Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.33,0.91,Female,Female
-51Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.44,0.91,Female,Female
-52Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.65,1.1,Female,Female
-53Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.48,0.97,Female,Female
-54Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.68,1.12,Female,Female
-55Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.44,0.89,Female,Female
-56Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.46,1.01,Female,Female
-59Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.82,1.23,Female,Female
-5Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.41,0.89,Male,Male
-5Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.3,0.99,Male,Male
-5Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Ceratina ,1.36,0.96,Male,Male
-5Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.27,0.85,Male,Male
-5Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina ,1.36,0.9,Female,Female
-5Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.43,0.94,Female,Female
-60Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.37,0.93,Female,Female
-61Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.62,1.08,Female,Female
-62Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.33,0.88,Female,Female
-63Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.41,0.97,Female,Female
-64Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.9,1.2,Female,Female
-65Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.41,1.02,Female,Female
-66Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.29,0.82,Female,Female
-67Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.56,1.1,Female,Female
-68Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.77,1.22,Female,Female
-69Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.78,1.17,Female,Female
-6Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.32,0.83,Male,Male
-6Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.34,0.88,Male,Male
-6Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.44,0.99,Female,Female
-70Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.35,0.92,Female,Female
-71Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.13,0.71,Female,Female
-72Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.58,1.1,Female,Female
-73Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.38,0.87,Male,Male
-74Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.4,0.96,Male,Male
-75Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.4,0.89,Male,Male
-76Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,0.81,Male,Male
-77Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.35,0.94,Male,Male
-78Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.46,0.93,Male,Male
-79Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,0.98,Male,Male
-7Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.35,0.87,Male,Male
-7Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.38,0.97,Male,Male
-7Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.26,0.88,Male,Male
-7Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.3,0.89,Female,Female
-80Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.43,0.89,Male,Male
-81Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.43,0.91,Male,Male
-82Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.4,0.93,Male,Male
-83Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.21,0.78,Male,Male
-84Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.6,0.93,Male,Male
-85Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.48,0.97,Male,Male
-86Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.29,0.85,Male,Male
-87Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.46,0.93,Male,Male
-88Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.29,0.87,Male,Male
-89Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.26,0.75,Male,Male
-8Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.43,0.97,Male,Male
-8Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.39,0.9,Male,Male
-8Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Ceratina ,1.47,1.06,Male,Male
-8Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.25,0.76,Male,Male
-8Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina ,1.46,0.98,Female,Female
-90Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.36,0.88,Male,Male
-91Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.32,0.92,Male,Male
-92Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.26,0.9,Male,Male
-93Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.34,0.89,Male,Male
-94Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.47,0.93,Male,Male
-95Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.33,0.84,Male,Male
-96Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.25,0.92,Male,Male
-97Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.27,0.78,Male,Male
-98Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.55,0.94,Male,Male
-99Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.44,0.92,Male,Male
-9Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina ,1.42,0.98,Male,Male
-9Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina ,1.41,0.92,Male,Male
-9Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina ,1.38,0.97,Male,Male
-9Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Ceratina ,1.35,0.96,Male,Male
-9Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina ,1.39,0.93,Male,Male
-10Aso12,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,1,Solitary,Colletidae,Colletes,2.71,1.82,,
-13Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Colletidae,Colletes,2.94,2.13,,
-4Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Colletidae,Colletes,2.89,2.18,,
-4Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Colletidae,Colletes,2.92,2.19,,
-6Chp12,0022-07-05,2,Chipman1,semi,46.721549,-117.153,1,Solitary,Colletidae,Colletes,2.9,2.28,,
+100Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.36,0.89,Male,Male
+101Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,1,"Abdomen missing, recovered","Abdomen missing, recovered"
+103Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.41,0.95,"Head missing, recovered","Head missing, recovered"
+105Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.3,0.85,"Head missing, recovered","Head missing, recovered"
+106Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.27,0.93,"Head missing, recovered","Head missing, recovered"
+10Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.41,0.98,Male,Male
+10Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.27,0.86,Male,Male
+10Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.42,0.95,Male,Male
+10Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.26,0.88,Male,Male
+11Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.39,0.93,Male,Male
+11Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.33,0.93,Male,Male
+11Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.4,0.95,Male,Male
+12Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.33,0.86,Male,Male
+12Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.23,0.78,"Male, abdomen missing/recovered","Male, abdomen missing/recovered"
+12Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.31,0.88,Male,Male
+12Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,0.9,Male,Male
+13Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.35,0.89,Male,Male
+13Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.43,1.02,Male,Male
+13Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.41,0.95,Male,Male
+13Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.34,0.82,Male,Male
+14Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.2,0.77,Male,Male
+14Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.35,0.92,Head missing/recovered,Head missing/recovered
+14Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.36,0.94,Male,Male
+14Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.37,0.89,Male,Male
+15Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.26,0.83,Male,Male
+15Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.25,0.8,Male,Male
+15Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.22,0.71,Male,Male
+15Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.44,0.89,Male,Male
+16Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.28,0.8,Male,Male
+16Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.3,0.78,Male,Male
+16Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.52,1.04,Male,Male
+16Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.45,0.94,Male,Male
+17Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.45,0.86,Male,Male
+17Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.33,0.99,Male,Male
+17Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.71,1.18,Female,Female
+18Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.51,1.06,Male,Male
+18Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.22,0.89,Male,Male
+18Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.41,0.98,Female,Female
+19Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.27,0.84,Male,Male
+19Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.35,0.91,Male,Male
+19Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.61,1.1,Female,Female
+1Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.26,0.89,Male,Male
+1Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.32,0.92,Male,Male
+1Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,2.38,1.66,Male,Male
+1Chpp11,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,1,Solitary,Apidae,Ceratina,1.25,0.83,Male,Male
+1Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.42,0.92,Male,Male
+20Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.14,0.73,Male,Male
+20Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.33,0.79,Male,Male
+20Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.46,0.92,Female,Female
+21Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.36,0.87,Male,Male
+21Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.32,1,Male,Male
+21Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,0.95,Female,Female
+22Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.29,1,Male,Male
+22Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.57,1.09,Female,Female
+23Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.33,0.77,Male,Male
+23Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.6,0.96,Female,Female
+24Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.27,0.84,Male,Male
+24Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.45,0.93,Female,Female
+25Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.54,1.1,Male,Male
+25Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.26,0.81,Male,Male
+26Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.4,0.87,Male,Male
+26Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.45,0.92,Male,Male
+27Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.36,0.86,Male,Male
+27Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.35,0.92,Male,Male
+28Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.23,0.95,Male,Male
+28Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.33,0.77,Male,Male
+29Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.46,0.89,Male,Male
+29Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.3,0.85,Male,Male
+2Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.27,0.73,Male,Male
+2Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.44,0.96,Female,Female
+2Chpp11,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,1,Solitary,Apidae,Ceratina,1.43,1.03,Female,Female
+2Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.24,0.88,Male,Male
+2Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina,1.52,1.1,Female,Female
+2Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.6,1,Female,Female
+30Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.44,0.94,Male,Male
+30Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.44,0.93,Male,Male
+30Chpp31,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Apidae,Ceratina,1.44,1.03,Female,Female
+31Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.8,1.19,Female,Female
+31Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,0.85,Male,Male
+32Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.24,0.76,"Male, abdomen missing","Male, abdomen missing"
+32Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.32,0.88,Male,Male
+33Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.22,0.85,"Male, abdomen missing","Male, abdomen missing"
+33Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.38,0.92,Male,Male
+34Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.33,0.97,Male,Male
+34Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Apidae,Ceratina,1.45,1.03,Female,Female
+35Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.38,0.88,Male,Male
+36Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.44,0.98,Male,Male
+37Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.48,0.98,Male,Male
+38Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.46,0.99,Male,Male
+39Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.53,1.03,Male,Male
+3Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.41,0.99,Male,Male
+3Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.36,0.91,Male,Male
+3Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.37,0.95,Male,Male
+3Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina,1.62,1.05,Female,Female
+3Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.34,0.86,,
+40Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.26,0.77,Male,Male
+41Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.45,0.9,Male,Male
+43Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.56,0.99,Female,Female
+44Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.32,0.91,Female,Female
+45Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.43,1.04,Female,Female
+46Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.93,1.25,Female,Female
+47Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.73,1.06,Female,Female
+48Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.43,1.02,Female,Female
+49Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.57,1.08,Female,Female
+4Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.32,0.84,Male,Male
+4Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.66,1.06,Male,Male
+4Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.45,0.93,Male,Male
+4Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.28,0.76,Male,Male
+4Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina,1.39,0.83,Male,Male
+4Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.41,0.98,Female,Female
+50Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.33,0.91,Female,Female
+51Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.44,0.91,Female,Female
+52Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.65,1.1,Female,Female
+53Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.48,0.97,Female,Female
+54Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.68,1.12,Female,Female
+55Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.44,0.89,Female,Female
+56Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.46,1.01,Female,Female
+59Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.82,1.23,Female,Female
+5Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.41,0.89,Male,Male
+5Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.3,0.99,Male,Male
+5Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Ceratina,1.36,0.96,Male,Male
+5Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.27,0.85,Male,Male
+5Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Ceratina,1.36,0.9,Female,Female
+5Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.43,0.94,Female,Female
+60Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.37,0.93,Female,Female
+61Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.62,1.08,Female,Female
+62Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.33,0.88,Female,Female
+63Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.41,0.97,Female,Female
+64Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.9,1.2,Female,Female
+65Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.41,1.02,Female,Female
+66Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.29,0.82,Female,Female
+67Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.56,1.1,Female,Female
+68Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.77,1.22,Female,Female
+69Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.78,1.17,Female,Female
+6Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.32,0.83,Male,Male
+6Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.34,0.88,Male,Male
+6Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.44,0.99,Female,Female
+70Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.35,0.92,Female,Female
+71Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.13,0.71,Female,Female
+72Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.58,1.1,Female,Female
+73Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.38,0.87,Male,Male
+74Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.4,0.96,Male,Male
+75Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.4,0.89,Male,Male
+76Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,0.81,Male,Male
+77Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.35,0.94,Male,Male
+78Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.46,0.93,Male,Male
+79Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,0.98,Male,Male
+7Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.35,0.87,Male,Male
+7Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.38,0.97,Male,Male
+7Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.26,0.88,Male,Male
+7Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.3,0.89,Female,Female
+80Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.43,0.89,Male,Male
+81Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.43,0.91,Male,Male
+82Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.4,0.93,Male,Male
+83Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.21,0.78,Male,Male
+84Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.6,0.93,Male,Male
+85Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.48,0.97,Male,Male
+86Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.29,0.85,Male,Male
+87Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.46,0.93,Male,Male
+88Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.29,0.87,Male,Male
+89Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.26,0.75,Male,Male
+8Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.43,0.97,Male,Male
+8Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.39,0.9,Male,Male
+8Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Ceratina,1.47,1.06,Male,Male
+8Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.25,0.76,Male,Male
+8Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Apidae,Ceratina,1.46,0.98,Female,Female
+90Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.36,0.88,Male,Male
+91Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.32,0.92,Male,Male
+92Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.26,0.9,Male,Male
+93Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.34,0.89,Male,Male
+94Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.47,0.93,Male,Male
+95Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.33,0.84,Male,Male
+96Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.25,0.92,Male,Male
+97Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.27,0.78,Male,Male
+98Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.55,0.94,Male,Male
+99Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.44,0.92,Male,Male
+9Chp11,0022-06-02,1,Chipman1,semi,46.721549,-117.153,1,Solitary,Apidae,Ceratina,1.42,0.98,Male,Male
+9Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Ceratina,1.41,0.92,Male,Male
+9Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Ceratina,1.38,0.97,Male,Male
+9Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Ceratina,1.35,0.96,Male,Male
+9Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Ceratina,1.39,0.93,Male,Male
 41Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Diadasia,2.84,2.46,,
 43Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Diadasia,2.66,2.22,,
 46Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Diadasia,2.94,2.31,,
-10Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Halictidae,Dufourea,1.64,1.24,,
-18Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Halictidae,Dufourea,1.75,1.4,,
-5Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Halictidae,Dufourea,2.06,1.58,,
-5Kam33,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Halictidae,Dufourea,2.19,1.74,,
-6Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Halictidae,Dufourea,2.3,1.62,,
-7Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Halictidae,Dufourea,1.74,1.36,,
-9Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Halictidae,Dufourea,1.69,1.12,,
 1SH13,0022-07-27,3,Smoot,natural,46.82218897,-117.237749,1,Solitary,Apidae,Epoleus,2.85,1.95,,
 4SH13,0022-07-27,3,Smoot,natural,46.82218897,-117.237749,1,Solitary,Apidae,Epoleus,2.8,1.67,,
 10Hut11,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,1,Solitary,Apidae,Eucera,4.11,3.32,,
@@ -671,6 +676,111 @@ ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,
 2Kam31,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Eucera,4.22,3.26,,
 3Kam31,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Eucera,4.13,3.16,,
 3Kam41,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Eucera,4.05,2.81,,
+2Kam21,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Melecta,3.6,2.65,,
+1Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Melissodes,4.1,3.26,,
+2Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Melissodes,4.04,3.07,,
+3Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Melissodes,3.9,3.14,,
+2SH22,0022-07-08,2,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Apidae,Melissodes,4.13,3,,
+10SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Nomada,2.55,1.58,,
+14Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.23,1.24,,
+15Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,1.76,1.22,*Silas check. Keys out to nomada but looks like wasp,*Silas check. Keys out to nomada but looks like wasp
+1Aso11,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,1,Solitary,Apidae,Nomada,3.65,2.36,,
+1Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Nomada,2.3,1.29,,
+1Chpp32,0022-07-05,2,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Apidae,Nomada,2.47,1.7,,
+1Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Nomada,2.64,1.77,,
+1Ck32,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,3,Solitary,Apidae,Nomada,2.58,1.62,,
+1Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,3.43,2.22,,
+1Ckk11,0022-06-07,1,Clark2,natural,46.835963,-117.220154,1,Solitary,Apidae,Nomada,1.85,1.16,,
+1Ckk12,0022-06-27,2,Clark2,natural,46.835963,-117.220154,1,Solitary,Apidae,Nomada,2.45,1.62,,
+1Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.17,1.26,,
+1Ckk22,0022-06-27,2,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.32,1.54,,
+1Ckk41,0022-06-07,1,Clark2,natural,46.835963,-117.220154,4,Solitary,Apidae,Nomada,3.53,2.23,,
+1Hut31,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,3.4,2.18,,
+1Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Apidae,Nomada,3.6,2.23,,
+1Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,3.59,2.48,,
+1Kam21,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,3.2,2.26,,
+1Kam41,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.21,1.31,,
+1Kam42,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.64,1.91,,
+1Kam43,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.69,1.71,,
+1SH21,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Apidae,Nomada,2.54,1.65,,
+1SH22,0022-07-08,2,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Apidae,Nomada,2.38,1.5,,
+1SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Nomada,2.07,1.22,,
+21Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Apidae,Nomada,2.34,1.32,,
+21Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.34,1.39,,
+22Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.59,1.73,,
+23Ck42,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,1.9,1.09,,
+24Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.19,1.25,,
+27Chpp31,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Apidae,Nomada,2,1.12,,
+2Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.39,1.35,,
+2Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Nomada,2.46,1.63,,
+2Ck13,0022-07-26,3,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Nomada,1.56,1.12,,incorrect measurements?
+2Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,3.22,2.07,,
+2Ck42,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.74,1.91,,
+2Ckk12,0022-06-27,2,Clark2,natural,46.835963,-117.220154,1,Solitary,Apidae,Nomada,2.5,1.61,,
+2Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.16,1.27,,
+2Ckk22,0022-06-27,2,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.6,1.69,,
+2Ckk41,0022-06-07,1,Clark2,natural,46.835963,-117.220154,4,Solitary,Apidae,Nomada,2.11,1.32,,
+2Hut11,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,1,Solitary,Apidae,Nomada,3.07,1.77,,
+2Hut31,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,3.29,2.24,,
+2Hut33,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,2.44,2.02,,
+2Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Apidae,Nomada,3.34,2.02,,
+2Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,3.31,2.18,,
+2Kam41,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.16,1.31,"Head missing, recovered. Abdomen missing","Head missing, recovered. Abdomen missing"
+2SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Apidae,Nomada,2.2,1.34,,
+2SH33,0022-07-27,3,Smoot,natural,46.82218897,-117.237749,3,Solitary,Apidae,Nomada,2.81,1.85,,
+2SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Nomada,2.57,1.58,,
+31SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Apidae,Nomada,2.69,1.74,abdomen missing,abdomen missing
+37Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Apidae,Nomada,2.72,1.9,,
+3Aso33,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,3,Solitary,Apidae,Nomada,2.62,1.57,,
+3Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,3.5,2.35,,
+3Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.41,1.37,,
+3Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Nomada,1.74,1.07,,
+3Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.19,1.28,,
+3Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.06,1.22,,
+3Hut31,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,2.31,1.51,,
+3Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Apidae,Nomada,3.42,2.13,,
+3Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,3.5,2.36,,
+3Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,2.75,1.74,,
+3Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,2.72,1.86,red,red
+42Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Nomada,2.13,1.21,,
+4Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.36,1.32,,
+4Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.31,1.29,,
+4Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,1.98,1.27,,
+4Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,2.08,1.1,red,red
+5Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.24,1.18,,
+5Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.09,1.29,,
+5Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,2.41,1.3,red,red
+5Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Nomada,2.19,1.43,,
+6Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.42,1.53,,
+6Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,1.82,0.97,,
+6Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.6,1.68,,
+7Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Nomada,1.55,0.91,,
+7Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.1,1.15,,
+7Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.35,1.52,,
+8Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,1.97,1.06,,
+8Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.57,1.75,,
+9Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.47,1.46,,
+10Aso12,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,1,Solitary,Colletidae,Colletes,2.71,1.82,,
+13Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Colletidae,Colletes,2.94,2.13,,
+4Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Colletidae,Colletes,2.89,2.18,,
+4Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Colletidae,Colletes,2.92,2.19,,
+6Chp12,0022-07-05,2,Chipman1,semi,46.721549,-117.153,1,Solitary,Colletidae,Colletes,2.9,2.28,,
+10Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Colletidae,Hylaeus,1.35,1.03,,
+12Hut42,0022-07-07,2,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Colletidae,Hylaeus,1.25,1.01,,
+1Span32,0022-07-06,2,Spangle,natural,47.397378,-117.488876,3,Solitary,Colletidae,Hylaeus,1.61,1.22,,
+1Span42,0022-07-06,2,Spangle,natural,47.397378,-117.488876,4,Solitary,Colletidae,Hylaeus,1.66,1.31,,
+2Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Colletidae,Hylaeus,1.17,0.84,,
+4Ckk32,0022-06-27,2,Clark2,natural,46.835963,-117.220154,3,Solitary,Colletidae,Hylaeus,1.33,1.01,,
+4Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Colletidae,Hylaeus,1.09,0.72,,
+32Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Halictidae,Agapostemon,3.01,2.15,Texanus,Texanus
+3Kam43,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Halictidae,Agapostemon,2.77,1.87,,
+10Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Halictidae,Dufourea,1.64,1.24,,
+18Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Halictidae,Dufourea,1.75,1.4,,
+5Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Halictidae,Dufourea,2.06,1.58,,
+5Kam33,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Halictidae,Dufourea,2.19,1.74,,
+6Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Halictidae,Dufourea,2.3,1.62,,
+7Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Halictidae,Dufourea,1.74,1.36,,
+9Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Halictidae,Dufourea,1.69,1.12,,
 10Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Halictidae,Halictus,1.89,1.31,,
 10SH21,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Halictidae,Halictus,1.75,1.22,,
 11Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Halictidae,Halictus,1.92,1.29,,
@@ -806,14 +916,6 @@ ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,
 9Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Halictidae,Halictus,1.73,1.13,,
 9Hut43,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Halictidae,Halictus,1.6,1.22,,
 9SH21,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Halictidae,Halictus,2.02,1.25,,
-77Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Megachilidae,Hoplitis,1.71,1.2,,
-10Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Colletidae,Hylaeus,1.35,1.03,,
-12Hut42,0022-07-07,2,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Colletidae,Hylaeus,1.25,1.01,,
-1Span32,0022-07-06,2,Spangle,natural,47.397378,-117.488876,3,Solitary,Colletidae,Hylaeus,1.61,1.22,,
-1Span42,0022-07-06,2,Spangle,natural,47.397378,-117.488876,4,Solitary,Colletidae,Hylaeus,1.66,1.31,,
-2Kam23,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Colletidae,Hylaeus,1.17,0.84,,
-4Ckk32,0022-06-27,2,Clark2,natural,46.835963,-117.220154,3,Solitary,Colletidae,Hylaeus,1.33,1.01,,
-4Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Colletidae,Hylaeus,1.09,0.72,,
 2Aso31,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,3,Solitary,Halictidae,Lasioglossum,5.15,3.83,,
 10Aso22,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,2,Solitary,Halictidae,Lasioglossum,1.45,0.97,,
 10Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Halictidae,Lasioglossum,1.57,1.09,,
@@ -1088,98 +1190,33 @@ ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,
 9Span33,0022-08-02,3,Spangle,natural,47.397378,-117.488876,3,Solitary,Halictidae,Lasioglossum,1.47,1.15,,
 11Aso31,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,3,Solitary,Halictidae,Lasioglossum,1.52,1.14,,
 7Aso31,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,3,Solitary,Halictidae,Lasioglossum,1.49,1.14,,
+17Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Halictidae,Nomada,2.1,1.2,,
+2Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Halictidae,Nomia,3.93,3.14,,
+3Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Halictidae,Nomia,3.8,2.77,,
+15SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Halictidae,Sphecodes,1.72,1.09,,
+18Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Halictidae,Sphecodes,2.14,1.42,,
+19Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Halictidae,Sphecodes,2.49,1.76,,
+1Hut32,0022-07-07,2,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Halictidae,Sphecodes,1.5,0.94,,
+1Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Halictidae,Sphecodes,2.55,1.84,,
+20Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Halictidae,Sphecodes,2.15,1.27,,
+25Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Halictidae,Sphecodes,2.11,1.55,,
+25SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Halictidae,Sphecodes,1.58,1.26,,
+26Hut42,0022-07-07,2,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Halictidae,Sphecodes,1.47,0.96,,
+2Ck32,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,3,Solitary,Halictidae,Sphecodes,2.54,1.62,,
+3Ckk22,0022-06-27,2,Clark2,natural,46.835963,-117.220154,2,Solitary,Halictidae,Sphecodes,1.44,0.88,,
+3Hut33,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Halictidae,Sphecodes,1.56,0.96,,
+43SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Halictidae,Sphecodes,1.62,1.37,,
+4Hut33,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Halictidae,Sphecodes,1.34,0.86,,
+5Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Halictidae,Sphecodes,2.02,1.47,,
+8SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Halictidae,Sphecodes,1.58,1.24,,
+1Plaz33,0022-08-02,3,Plaza,natural,47.397565,-117.57463,3,Solitary,Megachilidae,Anthidium,2.31,1.71,sp: manicatum,sp: manicatum
+2Kam42,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Megachilidae,Anthidium,2.16,1.8,,
+77Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Megachilidae,Hoplitis,1.71,1.2,,
 1Ck22,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,2,Solitary,Megachilidae,Megachile,4.24,3.69,,
 2Hut23,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,2,Solitary,Megachilidae,Megachile,2.41,2.29,,
 2Kam43,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Megachilidae,Megachile,4.09,3.16,,
 30Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Megachilidae,Megachile,4.09,2.96,,
 6Kam33,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Megachilidae,Megachile,3.07,2.08,,
-2Kam21,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Melecta,3.6,2.65,,
-1Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Melissodes,4.1,3.26,,
-2Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Melissodes,4.04,3.07,,
-3Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Melissodes,3.9,3.14,,
-2SH22,0022-07-08,2,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Apidae,Melissodes ,4.13,3,,
-10SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Nomada,2.55,1.58,,
-14Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.23,1.24,,
-15Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,1.76,1.22,*Silas check. Keys out to nomada but looks like wasp,*Silas check. Keys out to nomada but looks like wasp
-1Aso11,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,1,Solitary,Apidae,Nomada,3.65,2.36,,
-1Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Nomada,2.3,1.29,,
-1Chpp32,0022-07-05,2,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Apidae,Nomada,2.47,1.7,,
-1Ck12,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Nomada,2.64,1.77,,
-1Ck32,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,3,Solitary,Apidae,Nomada,2.58,1.62,,
-1Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,3.43,2.22,,
-1Ckk11,0022-06-07,1,Clark2,natural,46.835963,-117.220154,1,Solitary,Apidae,Nomada,1.85,1.16,,
-1Ckk12,0022-06-27,2,Clark2,natural,46.835963,-117.220154,1,Solitary,Apidae,Nomada,2.45,1.62,,
-1Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.17,1.26,,
-1Ckk22,0022-06-27,2,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.32,1.54,,
-1Ckk41,0022-06-07,1,Clark2,natural,46.835963,-117.220154,4,Solitary,Apidae,Nomada,3.53,2.23,,
-1Hut31,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,3.4,2.18,,
-1Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Apidae,Nomada,3.6,2.23,,
-1Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,3.59,2.48,,
-1Kam21,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,3.2,2.26,,
-1Kam41,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.21,1.31,,
-1Kam42,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.64,1.91,,
-1Kam43,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.69,1.71,,
-1SH21,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Apidae,Nomada,2.54,1.65,,
-1SH22,0022-07-08,2,Smoot ,natural,46.82218897,-117.237749,2,Solitary,Apidae,Nomada,2.38,1.5,,
-1SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Nomada,2.07,1.22,,
-21Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Apidae,Nomada,2.34,1.32,,
-21Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.34,1.39,,
-22Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.59,1.73,,
-23Ck42,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,1.9,1.09,,
-24Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.19,1.25,,
-27Chpp31,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Apidae,Nomada,2,1.12,,
-2Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.39,1.35,,
-2Chp21,0022-06-02,1,Chipman1,semi,46.721549,-117.153,2,Solitary,Apidae,Nomada,2.46,1.63,,
-2Ck13,0022-07-26,3,Clark1,semi,46.82942655,-117.1411106,1,Solitary,Apidae,Nomada,1.56,1.12,,incorrect measurements?
-2Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,3.22,2.07,,
-2Ck42,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.74,1.91,,
-2Ckk12,0022-06-27,2,Clark2,natural,46.835963,-117.220154,1,Solitary,Apidae,Nomada,2.5,1.61,,
-2Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.16,1.27,,
-2Ckk22,0022-06-27,2,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.6,1.69,,
-2Ckk41,0022-06-07,1,Clark2,natural,46.835963,-117.220154,4,Solitary,Apidae,Nomada,2.11,1.32,,
-2Hut11,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,1,Solitary,Apidae,Nomada,3.07,1.77,,
-2Hut31,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,3.29,2.24,,
-2Hut33,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,2.44,2.02,,
-2Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Apidae,Nomada,3.34,2.02,,
-2Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,3.31,2.18,,
-2Kam41,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Apidae,Nomada,2.16,1.31,"Head missing, recovered. Abdomen missing","Head missing, recovered. Abdomen missing"
-2SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Apidae,Nomada,2.2,1.34,,
-2SH33,0022-07-27,3,Smoot,natural,46.82218897,-117.237749,3,Solitary,Apidae,Nomada,2.81,1.85,,
-2SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Apidae,Nomada,2.57,1.58,,
-31SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Apidae,Nomada,2.69,1.74,abdomen missing,abdomen missing
-37Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Apidae,Nomada,2.72,1.9,,
-3Aso33,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,3,Solitary,Apidae,Nomada,2.62,1.57,,
-3Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,3.5,2.35,,
-3Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.41,1.37,,
-3Chp41,0022-06-02,1,Chipman1,semi,46.721549,-117.153,4,Solitary,Apidae,Nomada,1.74,1.07,,
-3Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.19,1.28,,
-3Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.06,1.22,,
-3Hut31,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Apidae,Nomada,2.31,1.51,,
-3Hut41,0022-06-22,1,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Apidae,Nomada,3.42,2.13,,
-3Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,3.5,2.36,,
-3Kam12,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Apidae,Nomada,2.75,1.74,,
-3Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,2.72,1.86,red,red
-42Chpp21,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Apidae,Nomada,2.13,1.21,,
-4Aso43,0022-07-21,3,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.36,1.32,,
-4Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.31,1.29,,
-4Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,1.98,1.27,,
-4Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,2.08,1.1,red,red
-5Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.24,1.18,,
-5Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.09,1.29,,
-5Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Apidae,Nomada,2.41,1.3,red,red
-5Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Apidae,Nomada,2.19,1.43,,
-6Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Apidae,Nomada,2.42,1.53,,
-6Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,1.82,0.97,,
-6Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.6,1.68,,
-7Chp31,0022-06-02,1,Chipman1,semi,46.721549,-117.153,3,Solitary,Apidae,Nomada,1.55,0.91,,
-7Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,2.1,1.15,,
-7Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.35,1.52,,
-8Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Apidae,Nomada,1.97,1.06,,
-8Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.57,1.75,,
-9Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Apidae,Nomada,2.47,1.46,,
-17Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Halictidae,Nomada,2.1,1.2,,
-2Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Halictidae,Nomia,3.93,3.14,,
-3Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Halictidae,Nomia,3.8,2.77,,
 14Ckk21,0022-06-07,1,Clark2,natural,46.835963,-117.220154,2,Solitary,Megachilidae,Osmia,2.65,1.99,,
 1Chpp23,0022-07-25,3,Chipman2,semi,46.7371882,-117.0662461,2,Solitary,Megachilidae,Osmia,1.84,1.27,,
 1Kam22,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,2,Solitary,Megachilidae,Osmia,3.99,3.38,,
@@ -1200,40 +1237,3 @@ ID,Date.x,Period.x,Site.x,land_type,latitude,longitude,Transect.x,Morphogroup.x,
 7Ckk41,0022-06-07,1,Clark2,natural,46.835963,-117.220154,4,Solitary,Megachilidae,Osmia,2.28,1.67,,
 7Kam43,0022-07-19,3,Kamiak,natural,46.8676508,-117.1510624,4,Solitary,Megachilidae,Osmia,3.84,2.73,,
 9Chpp31,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,3,Solitary,Megachilidae,Osmia,1.97,1.27,,
-44Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Andrenidae,Panurginus,1.75,1.18,,
-45Chp33,0022-07-25,3,Chipman1,semi,46.721549,-117.153,3,Solitary,Andrenidae,Panurginus,1.67,1.13,,
-7Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Andrenidae,Panurginus,1.7,1.34,,
-1Plaz12,0022-07-06,2,Plaza,natural,47.397565,-117.57463,1,Solitary,Andrenidae,Perdita,1.29,0.62,,
-1Plaz42,0022-07-06,2,Plaza,natural,47.397565,-117.57463,4,Solitary,Andrenidae,Perdita,1.42,0.95,,
-1Span22,0022-07-06,2,Spangle,natural,47.397378,-117.488876,2,Solitary,Andrenidae,Perdita,1.53,1.09,,
-2Span22,0022-07-06,2,Spangle,natural,47.397378,-117.488876,2,Solitary,Andrenidae,Perdita,1.31,0.81,,
-79Aso42,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Perdita,1.55,1.02,,
-10Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.59,1,S.L.,
-11Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.53,1.03,S.L.,
-12Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.5,0.92,S.L.,
-14Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.46,1.22,S.L.,
-18Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.6,0.95,S.L.,Male
-19Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.56,1.08,S.L.,Male
-21Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.66,1.04,S.L.,
-5Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.47,0.82,S.L.,
-6Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.43,0.88,S.L.,
-78Aso42,0022-06-29,2,Asotin,natural,46.26055038,-117.29982,4,Solitary,Andrenidae,Protandrena,1.94,1.26,,
-7Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.52,0.93,S.L.,
-8Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.61,0.81,S.L.,
-9Kam11,0022-06-15,1,Kamiak,natural,46.8676508,-117.1510624,1,Solitary,Andrenidae,Protandrena,1.58,0.92,S.L.,
-15SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Halictidae,Sphecodes,1.72,1.09,,
-18Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Halictidae,Sphecodes,2.14,1.42,,
-19Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Halictidae,Sphecodes,2.49,1.76,,
-1Hut32,0022-07-07,2,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Halictidae,Sphecodes,1.5,0.94,,
-1Kam32,0022-06-30,2,Kamiak,natural,46.8676508,-117.1510624,3,Solitary,Halictidae,Sphecodes,2.55,1.84,,
-20Ck41,0022-06-07,1,Clark1,semi,46.82942655,-117.1411106,4,Solitary,Halictidae,Sphecodes,2.15,1.27,,
-25Chpp41,0022-06-02,1,Chipman2,semi,46.7371882,-117.0662461,4,Solitary,Halictidae,Sphecodes,2.11,1.55,,
-25SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Halictidae,Sphecodes,1.58,1.26,,
-26Hut42,0022-07-07,2,Hutchins,semi,46.37795769,-117.877145,4,Solitary,Halictidae,Sphecodes,1.47,0.96,,
-2Ck32,0022-06-28,2,Clark1,semi,46.82942655,-117.1411106,3,Solitary,Halictidae,Sphecodes,2.54,1.62,,
-3Ckk22,0022-06-27,2,Clark2,natural,46.835963,-117.220154,2,Solitary,Halictidae,Sphecodes,1.44,0.88,,
-3Hut33,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Halictidae,Sphecodes,1.56,0.96,,
-43SH31,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,3,Solitary,Halictidae,Sphecodes,1.62,1.37,,
-4Hut33,0022-07-20,3,Hutchins,semi,46.37795769,-117.877145,3,Solitary,Halictidae,Sphecodes,1.34,0.86,,
-5Aso41,0022-06-08,1,Asotin,natural,46.26055038,-117.29982,4,Solitary,Halictidae,Sphecodes,2.02,1.47,,
-8SH41,0022-06-21,1,Smoot ,natural,46.82218897,-117.237749,4,Solitary,Halictidae,Sphecodes,1.58,1.24,,
