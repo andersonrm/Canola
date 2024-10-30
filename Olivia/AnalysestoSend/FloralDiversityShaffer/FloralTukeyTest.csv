@@ -1,0 +1,4 @@
+Season,Abundance,Abundance_mean,Abundance_SE,Richness,Richness_mean,Richness_SE,Shannon_Diversity,Shannon_Diversity_mean,Shannon_Diversity_SE,Abundance_Tukey,Richness_Tukey,Diversity_Tukey
+1PreBloom,2027,202.7,64.53974658,80,8,1.211060142,18.957,1.895797087,0.163220893,a,a,a
+2PeakBloom,945,94.5,18.40425675,61,6.1,1.048279013,15.7462,1.574628533,0.224030307,ab,ab,ab
+3DeclineBloom,374,37.4,13.56072761,39,3.9,0.657436097,11.7819,1.178196281,0.169125579,b,b,b

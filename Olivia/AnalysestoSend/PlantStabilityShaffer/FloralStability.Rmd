@@ -1,0 +1,154 @@
+---
+title: "FloralStability"
+author: "Olivia Shaffer"
+date: "2023-03-29"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+```
+
+
+load in data
+```{r}
+Plants <- read.csv("Plant_Stability.csv")
+Canola <- read.csv("CanolaPercentages.csv")
+Bees <- read.csv("BeesbySite.csv")
+BeeStability <- read.csv("Bee_Stability.csv")
+PlantDiv <- read.csv("BySiteFloral.csv")
+```
+
+
+Correlation between canola and stability
+```{r}
+#canola % within 2km
+cor.test(Canola$X2kmCan., Plants$Stability)
+#p-value = 0.224
+# cor 0.4223982  
+
+ggplot() + 
+  geom_point(mapping = aes(y =Plants$Stability, x= Canola$X2kmCan., color = Plants$Site)) + 
+  geom_smooth(mapping = aes(y = Plants$Stability, x = Canola$X2kmCan.), method = lm) +
+  labs(y = "Floral Variation in Abundance", x = "2km Canola %", colour = "Site") +
+  ggtitle("Floral Variation in Abundance and 2km Canola %")
+
+
+#canola distance
+cor.test(Canola$DistancetoCanola, Plants$Stability)
+#p-value = 0.373
+#cor -0.316445  
+
+ggplot() + 
+  geom_point(mapping = aes(y = Plants$Stability, x = Canola$DistancetoCanola, color = Plants$Site)) + 
+  geom_smooth(mapping = aes(y = Plants$Stability, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Variation in Abundance", x = "Distance to Canola (m)", colour = "Site") +
+  ggtitle("Floral Variation in Abundance and Distance to Canola")
+
+
+cor.test(Canola$X2kmCan., Plants$PDI)
+#p-value = 0.4706
+# cor 0.2586407   
+
+ggplot() + 
+  geom_point(mapping = aes(y =Plants$PDI, x= Canola$X2kmCan., color = Plants$Site)) + 
+  geom_smooth(mapping = aes(y = Plants$PDI, x = Canola$X2kmCan.), method = lm) +
+  labs(y = "Floral PDI", x = "2km Canola %", colour = "Site") +
+  ggtitle("Floral PDI and 2km Canola %")
+
+
+#canola distance
+cor.test(Canola$DistancetoCanola, Plants$PDI)
+#p-value = 0.9977
+#cor -0.001073475  
+
+ggplot() + 
+  geom_point(mapping = aes(y = Plants$PDI, x = Canola$DistancetoCanola, color = Plants$Site)) + 
+  geom_smooth(mapping = aes(y = Plants$PDI, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral PDI", x = "Distance to Canola (m)", colour = "Site") +
+  ggtitle("Floral PDI and Distance to Canola")
+
+#Combine graphs
+ggplot() + 
+  geom_point(mapping = aes(y = Plants$PDI, x = Canola$DistancetoCanola)) + 
+  geom_smooth(mapping = aes(y = Plants$PDI, x = Canola$DistancetoCanola, color = 'PDI'), method = lm) +
+  geom_point(mapping = aes(y = Plants$Stability, x = Canola$DistancetoCanola)) + 
+  geom_smooth(mapping = aes(y = Plants$Stability, x = Canola$DistancetoCanola, color = 'Variation in Abundance'), method = lm) +
+  labs(y = "Floral Stability", x = "Distance to Canola (m)", colour = "Site") +
+  ggtitle("Floral Stability and Distance to Canola")
+
+ggplot() + 
+  geom_point(mapping = aes(y = Plants$PDI, x = Canola$X2kmCan.)) + 
+  geom_smooth(mapping = aes(y = Plants$PDI, x = Canola$X2kmCan., color = 'PDI'), method = lm) +
+  geom_point(mapping = aes(y = Plants$Stability, x = Canola$X2kmCan.)) + 
+  geom_smooth(mapping = aes(y = Plants$Stability, x = Canola$X2kmCan., color = 'Variation in Abundance'), method = lm) +
+  labs(y = "Floral Stability", x = "2km Canola %", colour = "Site") +
+  ggtitle("Floral Stability and Canola %")
+```
+
+Bee Metrics v Floral Stability
+```{r}
+cor.test(Plants$PDI, Bees$Abundance)
+#p-value = 0.2187
+#-0.426785
+cor.test(Plants$PDI, Bees$Shannon_Diversity)
+#p-value = 0.4447
+#0.2733808
+cor.test(Plants$PDI, Bees$Richness)
+#p-value = 0.5996
+#-0.1897309
+cor.test(Plants$Stability, Bees$Abundance)
+#p-value = 0.8725
+#0.05847045
+cor.test(Plants$Stability, Bees$Shannon_Diversity)
+#p-value = 0.4284
+#0.2828915
+cor.test(Plants$Stability, Bees$Richness)
+#p-value = 0.7407
+#0.1202699
+```
+
+Floral metrics v Bee Stability
+```{r}
+cor.test(BeeStability$PDI, PlantDiv$Abundance)
+#p-value = 0.3457
+cor.test(BeeStability$PDI, PlantDiv$Shannon_Diversity)
+#p-value = 0.02792
+cor.test(BeeStability$PDI, PlantDiv$Richness)
+#p-value = 0.1805
+cor.test(BeeStability$Stability, PlantDiv$Abundance)
+#p-value = 0.486
+cor.test(BeeStability$Stability, PlantDiv$Shannon_Diversity)
+#p-value = 0.5881
+cor.test(BeeStability$Stability, PlantDiv$Richness)
+#p-value = 0.6033
+```
+
+
+Bee Stability v Plant Stability
+```{r}
+cor.test(Plants$PDI, BeeStability$PDI)
+#p-value = 0.008166
+#0.7771344 
+
+ggplot() + 
+  geom_point(mapping = aes(y = BeeStability$PDI, x = Plants$PDI, color = Plants$Site)) + 
+  geom_smooth(mapping = aes(y = BeeStability$PDI, x = Plants$PDI), method = lm) +
+  labs(y = "Bee PDI", x = "Plant PDI", colour = "Site") +
+  annotate(geom="text", x=1, y=0.6, label="P= 0.008166")+
+  ggtitle("Relationship between Plant PDI and Bee PDI")
+
+cor.test(Plants$PDI, BeeStability$Stability)
+#p-value = 0.7777
+#0.1027101 
+
+cor.test(Plants$Stability, BeeStability$PDI)
+#p-value = 0.7185
+#0.1308822 
+
+cor.test(Plants$Stability, BeeStability$Stability)
+#p-value = 0.3654
+#-0.3212587
+```
+
+

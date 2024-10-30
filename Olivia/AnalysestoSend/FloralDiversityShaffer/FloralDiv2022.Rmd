@@ -1,0 +1,611 @@
+---
+title: "2022FloralDiv"
+author: "Olivia Shaffer"
+date: "1/1/2023"
+output: html_document
+---
+
+Based on:
+https://rpubs.com/mbh038/719881
+
+```{r}
+install.packages("ggplot2")
+install.packages("vegan")
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("lme4")
+install.packages("lmerTest")
+install.packages("multcompView")
+```
+
+```{r}
+library("ggplot2")
+library("vegan")
+library("tidyverse")
+library("dplyr")
+library(lme4)
+library(lmerTest)
+library(multcompView)
+```
+
+load data
+```{r}
+flora <- read.csv("PlantDiv2022.csv")
+write.csv(flora, "flora.csv")
+```
+
+Create new columns
+```{r}
+flora$Species <- paste(flora$Genus, flora$Species, sep="_")
+flora$SiteSeason <- paste(flora$Site, flora$Period, sep="_")
+```
+
+Create interaction matrix
+```{r}
+#By site
+BySite <- table(flora$Site, flora$Species)
+as.matrix(BySite)
+
+SiteSp <- table(flora$Species, flora$Site)
+as.matrix(SiteSp)
+
+#By Season
+BySeason <- table(flora$Period, flora$Species)
+as.matrix(BySeason)
+
+SeasonSp <- table(flora$Species, flora$Period)
+as.matrix(SeasonSp)
+
+
+#SiteSeason
+BySiteSeason<- table(flora$SiteSeason, flora$Species)
+as.matrix(BySiteSeason)
+
+SiteSeasSp <- table(flora$Species, flora$SiteSeason)
+as.matrix(SiteSeasSp)
+
+```
+
+Create presence/absence tables for sp. richness
+```{r}
+#By Site
+Sitepa<- decostand(SiteSp, method = "pa")
+
+#By Season
+Seasonpa <- decostand(SeasonSp, method = "pa")
+
+#SiteSeason
+SiteSeasonpa <- decostand(SiteSeasSp, method="pa")
+
+#All
+Allpa <-decostand(SiteSeasSp, method="pa")
+```
+
+#Total Sp Diversity
+```{r}
+#Species
+SpeciesRichnessAll <- 
+
+#Genera
+
+#Family
+```
+
+
+#Diversity by Site
+
+Plant Abundance
+- total plants found in each sites
+```{r}
+#By Site
+SiteA <-select(flora, Amount, Site)
+#combine values 
+SiteAbun<- SiteA %>%
+  group_by(Site) %>%
+  summarise(across(c(Amount), sum))
+
+write.csv(SiteAbun, "AbundancebySitex.csv")
+
+SiteAbundancedf <- data.frame(SiteAbun)
+```
+
+Species Richness
+- num. of sp found in each sites
+```{r}
+SiteRichness <- colSums(Sitepa)
+
+write.csv(SiteRichness, "SpRichnessbySite.csv")
+
+SiteRichnessdf <- data.frame(SiteRichness)
+```
+
+
+Sp Diversity
+```{r}
+DivbySite <- diversity(BySite,"shannon")
+write.csv(DivbySite, "DivBySite.csv")
+
+SiteDivdf <- data.frame(DivbySite)
+```
+
+
+#Diversity by Season
+
+Sp Abundance
+```{r}
+
+SeasonA <-select(flora, Amount, Period)
+
+#combine values 
+SeasonAbun <- SeasonA %>%
+  group_by(Period) %>%
+  summarise(across(c(Amount), sum))
+
+write.csv(SeasonAbun, "AbundancebySeasonx.csv")
+
+SeasonAbundancedf <- data.frame(SeasonAbun)
+```
+
+Species Richness
+- num. of sp found in each season
+```{r}
+SeasRichness <- colSums(Seasonpa)
+
+write.csv(SeasRichness, "SpRichnessbySeason.csv")
+
+SeasRichnessdf <- data.frame(SeasRichness)
+```
+
+Sp Diversity
+```{r}
+DivbySeas <- diversity(BySeason,"shannon")
+write.csv(DivbySeas, "DivBySeason.csv")
+```
+
+#Diversity by SiteSeason
+
+Abundance
+```{r}
+#All
+SiteSeasonA <-select(flora, Amount, SiteSeason)
+#combine values 
+SiteSeasonAbun <- SiteSeasonA %>%
+  group_by(SiteSeason) %>%
+  summarise(across(c(Amount), sum))
+
+write.csv(SiteSeasonAbun, "AbundanceAll.csv")
+
+SiteSeasonAbundancedf <- data.frame(SiteSeasonAbun)
+```
+
+Species Richness
+- num. of sp found in each sites
+```{r}
+SiteSeasRichness <- colSums(SiteSeasonpa)
+
+write.csv(SiteSeasRichness, "AllSpRichness.csv")
+
+SiteSeasRichnessdf <- data.frame(SiteSeasRichness)
+```
+
+
+Diversity
+```{r}
+DivbyAll <- diversity(BySiteSeason,"shannon")
+write.csv(DivbyAll, "AllDiv.csv")
+```
+
+
+Graphs!
+
+Dissimilarity index 
+-Determines whether species Diversity varies
+
+Season
+```{r}
+Seas.dist<-vegdist(BySeason,binary=FALSE)
+
+#standardize data
+Seas.dist <- vegdist(decostand(BySeason, "norm"), "euclidean")
+
+#Calc and plot
+Seas.hc<-hclust(Seas.dist)
+plot(Seas.hc)
+```
+
+Site
+```{r}
+Site.dist<-vegdist(BySite,binary=FALSE)
+
+#standardize data
+Site.dist <- vegdist(decostand(BySite, "norm"), "euclidean")
+
+#Calc and plot
+Site.hc<-hclust(Site.dist)
+plot(Site.hc)
+```
+
+
+
+-graph showing Abundance & Richness
+-graph showing diversity
+
+-Created combined datasets in excel
+
+Load in combined datasets
+```{r}
+AllSite <- read.csv("BySiteFloral.csv")
+AllSite$Richness <- as.numeric(AllSite$Richness)
+
+AllSite <- AllSite %>%
+  select(Site, Richness, Shannon_Diversity) %>%
+  gather(key = "variable", value = "value", -Site)
+
+head(AllSite)
+
+AllSeason <- read.csv("BySeasonFloral.csv")
+AllSeason$Richness <- as.numeric(AllSeason$Richness)
+
+AllSeason <- AllSeason %>%
+  select(Season, Richness, Shannon_Diversity) %>%
+  gather(key = "variable", value = "value", -Season)
+head(AllSeason)
+
+#to get seasons in the right order
+AllSeason$Season <- as.character(AllSeason$Season)
+AllSeason$Season <- factor(AllSeason$Season, levels=unique(AllSeason$Season))
+
+AbundanceSeasonG <- read.csv("AbundancebySeasonx.csv")
+AbundanceSeasonG$Period <- as.character(AbundanceSeasonG$Period)
+AbundanceSeasonG$Period <- factor(AbundanceSeasonG$Period, levels=unique(AbundanceSeasonG$Period))
+
+SiteAbun <- read.csv("AbundancebySitex.csv")
+```
+
+
+By Site:
+```{r}
+#Richness & Diversity
+ggplot(AllSite, aes(fill= variable, x = Site, y=Amount, group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  scale_fill_manual(values = c( '#FFC300', '#FF5733')) +
+  ggtitle("Plant Diversity Values by Field Site") +
+  theme(text = element_text(size = 20), axis.text.x = element_text(size = 15, angle = 90))
+
+#Abundance
+ggplot(SiteAbun, aes(x = Site, y=Amount, fill = '#900C3F', group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  theme(legend.position = "none") +
+  ggtitle("Plant Abundance by Field Site")+
+  theme(text = element_text(size = 20), axis.text.x = element_text(size = 15, angle = 90))
+
+```
+
+
+By Season: 
+```{r}
+#Richness & Diversity
+ggplot(AllSeason, aes(fill= variable, x = Season, y=value, group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  scale_fill_manual(values = c( '#FFC300', '#FF5733')) +
+  ggtitle("Plant Diversity Values by Sampling Period")
+
+#Abundance
+ggplot(AbundanceSeasonG, aes(x = Period, y=Amount, fill = '#900C3F', group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  theme(legend.position = "none") +
+  ggtitle("Plant Abundance by Sampling Period")
+```
+
+Testing for Sig Diff
+```{r}
+#Load in floral data by site & season
+AllFloral <- read.csv("AllFloral.csv")
+
+
+##Sites
+#Abundance
+PlantSiteAbun<- lm(Abundance~Site, data = AllFloral)
+#P = 0.7736
+report(PlantSiteAbun)
+
+#Richness
+PlantSiteRich <-lm(Richness~Site, data = AllFloral)
+summary(lm(Richness~Site, data = AllFloral))
+#P=0.1834
+report(PlantSiteRich)
+
+#Diversity
+PlantSiteDiv <- lm(Shannon_Diversity~Site, data = AllFloral)
+summary(lm(Shannon_Diversity~Site, data = AllFloral))
+#P=0.0747
+report(PlantSiteDiv)
+
+##Seasons
+#Abundance
+PAbundanceSeas <- lm(Abundance~Season, data = AllFloral)
+#P=0.0204
+summary(aov(PAbundanceSeas))
+PMixedAbunSite <- lmer(Abundance~Season + (1|Site), data = AllFloral)
+summary(PMixedAbunSite)
+report(PAbundanceSeas)
+
+#Richness
+PRichSeas <- lm(Richness~Season, data = AllFloral)
+#P=0.0256
+summary(aov(PRichSeas))
+PMixedRichSite <- lmer(Richness~Season + (1|Site), data = AllFloral)
+summary(PMixedRichSite)
+report(PRichSeas)
+
+#Diversity
+PDivSeas <- lm(Shannon_Diversity~Season, data = AllFloral)
+#P=0.0387
+summary(aov(PDivSeas))
+PMixedDivSeas <- lmer(Shannon_Diversity~Season + (1|Site), data = AllFloral)
+summary(PMixedDivSeas)
+report(PDivSeas)
+
+
+#Fit of mixed v fixed effect models
+anova(PMixedAbunSite, PAbundanceSite)
+anova(PMixedRichSite, PRichSite)
+anova(PMixedDivSite, PDivSite)
+```
+
+Tukey HSD
+
+-By Season
+```{r}
+AllFloral <- read.csv("AllFloral.csv")
+
+#Tukey Test
+anova1 <- aov(Abundance~Season, data = AllFloral)
+tukey1 <- TukeyHSD(anova1, conf.level=.95)
+tukey1.cld <-multcompLetters4(anova1,tukey1)
+summary(anova1)
+print(tukey1)
+print(tukey1.cld)
+
+anova2 <- aov(Richness~Season, data = AllFloral)
+tukey2 <- TukeyHSD(anova2, conf.level=.95)
+tukey2.cld <-multcompLetters4(anova2,tukey2)
+summary(anova2)
+print(tukey2)
+print(tukey2.cld)
+
+anova3 <- aov(Shannon_Diversity~Season, data = AllFloral)
+tukey3 <- TukeyHSD(anova3, conf.level=.95)
+tukey3.cld <-multcompLetters4(anova3,tukey3)
+summary(anova3)
+print(tukey3)
+print(tukey3.cld)
+
+#Restructured dataset for error bars
+FloralTukey <- read.csv("FloralTukeyTest.csv")
+
+#Add tukey test results to dataset
+Abundance.cld <- as.data.frame.list(tukey1.cld$'Season')
+FloralTukey$Abundance_Tukey <- Abundance.cld$Letters 
+
+Richness.cld <- as.data.frame.list(tukey2.cld$'Season')
+FloralTukey$Richness_Tukey <- Richness.cld$Letters 
+
+Diversity.cld <- as.data.frame.list(tukey3.cld$'Season')
+FloralTukey$Diversity_Tukey <- Diversity.cld$Letters 
+
+#Save restructured dataset
+write.csv(FloralTukey, "FloralTukeyTest.csv")
+
+#Plot
+str(FloralTukey)
+FloralTukey$Season <- as.factor(FloralTukey$Season)
+
+#Abundance
+ggplot(FloralTukey, aes(Season, Abundance_mean, fill =Abundance_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Set2")+
+  labs(x = "Season", y = "Average Floral Abundance")+ 
+  theme_bw()+
+  scale_x_discrete(breaks=c("1PreBloom","2PeakBloom","3DeclineBloom"),
+        labels=c("PreBloom", "PeakBloom", "DeclineBloom"))+
+  geom_errorbar(aes(ymin=Abundance_mean-Abundance_SE, ymax=Abundance_mean+Abundance_SE), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Abundance_Tukey), nudge_y = 30, size = 5)+
+  ggtitle("Average Floral Abundance by Season")
+
+#Richness
+ggplot(FloralTukey, aes(Season, Richness_mean, fill =Richness_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Paired")+
+  labs(x = "Season", y = "Average Floral Richness")+ 
+  theme_bw()+
+  scale_x_discrete(breaks=c("1PreBloom","2PeakBloom","3DeclineBloom"),
+        labels=c("PreBloom", "PeakBloom", "DeclineBloom"))+
+  geom_errorbar(aes(ymin=Richness_mean-Richness_SE, ymax=Richness_mean+Richness_SE), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Richness_Tukey), nudge_y = 1.7, size = 5)+
+  ggtitle("Average Floral Species Richness by Season")
+  
+#Diversity
+ggplot(FloralTukey, aes(Season, Shannon_Diversity_mean, fill =Diversity_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Accent")+
+  labs(x = "Season", y = "Average Floral Shannon Diversity")+ 
+  theme_bw()+
+  scale_x_discrete(breaks=c("1PreBloom","2PeakBloom","3DeclineBloom"),
+        labels=c("PreBloom", "PeakBloom", "DeclineBloom"))+
+  geom_errorbar(aes(ymin=Shannon_Diversity_mean-Shannon_Diversity_SE, ymax=Shannon_Diversity_mean+Shannon_Diversity_SE), width = 0.2, color = "gray30")+
+  geom_text(aes(label =Diversity_Tukey), nudge_y = 0.4, size = 5)+
+  ggtitle("Average Floral Shannon Diversity by Season")
+```
+
+-By Site
+```{r}
+#Tukey Test
+anova4 <- aov(Abundance~Site, data = AllFloral)
+tukey4 <- TukeyHSD(anova4, conf.level=.95)
+tukey4.cld <-multcompLetters4(anova4,tukey4)
+print(tukey4)
+print(tukey4.cld)
+
+anova5 <- aov(Richness~Site, data = AllFloral)
+tukey5 <- TukeyHSD(anova5, conf.level=.95)
+tukey5.cld <-multcompLetters4(anova5,tukey5)
+print(tukey5)
+print(tukey5.cld)
+
+anova6 <- aov(Shannon_Diversity~Site, data = AllFloral)
+tukey6 <- TukeyHSD(anova6, conf.level=.95)
+tukey6.cld <-multcompLetters4(anova6,tukey6)
+print(tukey6)
+print(tukey6.cld)
+
+#Restructured dataset for error bars
+FloralSiteTukey <- read.csv("FloralSiteTukey.csv")
+
+#Add tukey test results to dataset
+Abundance.cld4 <- as.data.frame.list(tukey4.cld$'Site')
+FloralSiteTukey$Abundance_Tukey <- Abundance.cld4$Letters 
+
+Richness.cld5 <- as.data.frame.list(tukey5.cld$'Site')
+FloralSiteTukey$Richness_Tukey <- Richness.cld5$Letters 
+
+Diversity.cld6 <- as.data.frame.list(tukey6.cld$'Site')
+FloralSiteTukey$Diversity_Tukey <- Diversity.cld6$Letters 
+
+#Save restructured dataset
+write.csv(FloralSiteTukey, "FloralSiteTukey.csv")
+
+
+#Plot
+str(FloralSiteTukey)
+FloralSiteTukey$Site <- as.factor(FloralSiteTukey$Site)
+
+#Abundance
+ggplot(FloralSiteTukey, aes(Site, Abundance_mean, fill =Abundance_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Set2")+
+  labs(x = "Site", y = "Average Floral Abundance")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Abundance_mean-Abundance_SE, ymax=Abundance_mean+Abundance_SE), width = 0.5, color = "gray30")+ 
+  geom_text(aes(label =Abundance_Tukey), nudge_y = 140, size = 5)+
+  ggtitle("Average Floral Abundance by Site")
+
+#Richness
+ggplot(FloralSiteTukey, aes(Site, Richness_mean, fill =Richness_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Paired")+
+  labs(x = "Site", y = "Average Floral Richness")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Richness_mean-Richness_SE, ymax=Richness_mean+Richness_SE), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Richness_Tukey), nudge_y = 1.6, size = 5)+
+  ggtitle("Average Floral Species Richness by Site")
+  
+#Diversity
+ggplot(FloralSiteTukey, aes(Site, Shannon_mean, fill =Diversity_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Accent")+
+  labs(x = "Site", y = "Average Floral Shannon Diversity")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Shannon_mean-Shannon_Diversity_SE, ymax=Shannon_mean+Shannon_Diversity_SE), width = 0.2, color = "gray30")+
+  geom_text(aes(label =Diversity_Tukey), nudge_y = 0.6, size = 5)+
+  ggtitle("Average Floral Shannon Diversity by Site")
+```
+
+Relationship with Canola
+
+```{r}
+Canola <- read.csv("CanolaPercentages.csv")
+SiteFloral <- read.csv("BySiteFloral.csv")
+```
+
+
+Distance
+```{r}
+cor.test(Canola$DistancetoCanola, SiteFloral$Abundance)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Abundance, x= Canola$DistancetoCanola, color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Abundance, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Abundance", x = "Distance to Canola", colour = "Site") +
+  theme_bw()+
+  ggtitle("Floral Abundance and Distance to Canola")
+
+cor.test(Canola$DistancetoCanola, SiteFloral$Richness)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Richness, x= Canola$DistancetoCanola, color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Richness, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Richness", x = "Distance to Canola", colour = "Site") +
+  ggtitle("Floral Richness and Distance to Canola")
+
+cor.test(Canola$DistancetoCanola, SiteFloral$Shannon_Diversity)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Shannon_Diversity, x= Canola$DistancetoCanola, color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Shannon_Diversity, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Shannon Diversity", x = "Distance to Canola", colour = "Site") +
+  ggtitle("Floral Diversity and Distance to Canola")
+```
+
+Percentage
+```{r}
+cor.test(Canola$Canola2km, SiteFloral$Abundance)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Abundance, x= Canola$X2kmCan., color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Abundance, x = Canola$X2kmCan.), method = lm) +
+  labs(y = "Floral Abundance", x = "Canola Percentage in 2km", colour = "Site") +
+  ggtitle("Floral Abundance and Canola Percentage")
+
+cor.test(Canola$Canola2km, SiteFloral$Richness)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Richness, x= Canola$X2kmCan., color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Richness, x = Canola$X2kmCan.), method = lm) +
+  labs(y = "Floral Richness", x = "Canola Percentage in 2km", colour = "Site") +
+  ggtitle("Floral Richness and Canola Percentage")
+
+cor.test(Canola$Canola2km, SiteFloral$Shannon_Diversity)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Shannon_Diversity, x= Canola$X2kmCan., color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Shannon_Diversity, x = Canola$X2kmCan.), method = lm) +
+  labs(y = "Floral Shannon Diversity", x = "Canola Percentage in 2km", colour = "Site") +
+  ggtitle("Floral Diversity and Canola Percentage")
+```
+
+
+Species Histograms
+```{r}
+FlowerSp <- read.csv("flora.csv")
+
+FlowerSp$Family <- as.factor(FlowerSp$Family)
+str(FlowerSp)
+```
+
+Taxa composition
+```{r}
+ggplot(FlowerSp, aes(x= reorder(Family, -Amount), y = Amount, fill = Amount))+
+  geom_bar(aes(fill = 'Family'), stat = "identity", position = position_stack())+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggplot(FlowerSp, aes(x= reorder(Genus, -Amount), y = Amount, fill = Amount))+
+  geom_bar(aes(fill = 'Genus'), stat = "identity", position = position_stack())+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggplot(FlowerSp, aes(x= reorder(Family, -Amount), y = Amount, fill = Amount))+
+  geom_bar(aes(fill = 'Family'), stat = "identity", position = position_stack())+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggplot(FlowerSp, aes(x= reorder(Species, -Amount), y = Amount, fill = Amount))+
+  geom_bar(aes(fill = 'Species'), stat = "identity", position = position_stack())+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+```
+
+By Site
+```{r}
+ggplot(FlowerSp, aes(x= reorder(Site, -Amount), y = Amount, fill = Family))+
+  geom_bar(stat = "identity", position = "stack")+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))+
+  labs(x = "Site")+
+  ggtitle("Floral Family by Site")
+```
+

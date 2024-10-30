@@ -1,0 +1,781 @@
+Site,Sampling Period,Genus,Abundance
+Asotin,1,Agapostemon,0
+Asotin,2,Agapostemon,0
+Asotin,3,Agapostemon,0
+Chipman1,1,Agapostemon,0
+Chipman1,2,Agapostemon,0
+Chipman1,3,Agapostemon,1
+Chipman2,1,Agapostemon,0
+Chipman2,2,Agapostemon,0
+Chipman2,3,Agapostemon,0
+Clark1,1,Agapostemon,0
+Clark1,2,Agapostemon,0
+Clark1,3,Agapostemon,0
+Clark2,1,Agapostemon,0
+Clark2,2,Agapostemon,0
+Clark2,3,Agapostemon,0
+Hutchins,1,Agapostemon,0
+Hutchins,2,Agapostemon,0
+Hutchins,3,Agapostemon,0
+Kamiak,1,Agapostemon,0
+Kamiak,2,Agapostemon,0
+Kamiak,3,Agapostemon,1
+Plaza,1,Agapostemon,0
+Plaza,2,Agapostemon,0
+Plaza,3,Agapostemon,0
+Smoot ,1,Agapostemon,0
+Smoot ,2,Agapostemon,1
+Smoot ,3,Agapostemon,0
+Spangle,1,Agapostemon,0
+Spangle,2,Agapostemon,0
+Spangle,3,Agapostemon,0
+Asotin,1,Andrena,16
+Asotin,2,Andrena,83
+Asotin,3,Andrena,16
+Chipman1,1,Andrena,7
+Chipman1,2,Andrena,14
+Chipman1,3,Andrena,4
+Chipman2,1,Andrena,14
+Chipman2,2,Andrena,1
+Chipman2,3,Andrena,0
+Clark1,1,Andrena,44
+Clark1,2,Andrena,5
+Clark1,3,Andrena,2
+Clark2,1,Andrena,1
+Clark2,2,Andrena,6
+Clark2,3,Andrena,0
+Hutchins,1,Andrena,1
+Hutchins,2,Andrena,4
+Hutchins,3,Andrena,2
+Kamiak,1,Andrena,10
+Kamiak,2,Andrena,11
+Kamiak,3,Andrena,2
+Plaza,1,Andrena,3
+Plaza,2,Andrena,0
+Plaza,3,Andrena,0
+Smoot ,1,Andrena,21
+Smoot ,2,Andrena,4
+Smoot ,3,Andrena,0
+Spangle,1,Andrena,5
+Spangle,2,Andrena,0
+Spangle,3,Andrena,2
+Asotin,1,Anthidium,0
+Asotin,2,Anthidium,0
+Asotin,3,Anthidium,0
+Chipman1,1,Anthidium,0
+Chipman1,2,Anthidium,0
+Chipman1,3,Anthidium,0
+Chipman2,1,Anthidium,0
+Chipman2,2,Anthidium,0
+Chipman2,3,Anthidium,0
+Clark1,1,Anthidium,0
+Clark1,2,Anthidium,0
+Clark1,3,Anthidium,0
+Clark2,1,Anthidium,0
+Clark2,2,Anthidium,0
+Clark2,3,Anthidium,0
+Hutchins,1,Anthidium,0
+Hutchins,2,Anthidium,0
+Hutchins,3,Anthidium,0
+Kamiak,1,Anthidium,0
+Kamiak,2,Anthidium,1
+Kamiak,3,Anthidium,0
+Plaza,1,Anthidium,0
+Plaza,2,Anthidium,0
+Plaza,3,Anthidium,1
+Smoot ,1,Anthidium,0
+Smoot ,2,Anthidium,0
+Smoot ,3,Anthidium,0
+Spangle,1,Anthidium,0
+Spangle,2,Anthidium,0
+Spangle,3,Anthidium,0
+Asotin,1,Anthophora,1
+Asotin,2,Anthophora,0
+Asotin,3,Anthophora,0
+Chipman1,1,Anthophora,0
+Chipman1,2,Anthophora,0
+Chipman1,3,Anthophora,0
+Chipman2,1,Anthophora,0
+Chipman2,2,Anthophora,0
+Chipman2,3,Anthophora,0
+Clark1,1,Anthophora,0
+Clark1,2,Anthophora,0
+Clark1,3,Anthophora,0
+Clark2,1,Anthophora,0
+Clark2,2,Anthophora,0
+Clark2,3,Anthophora,0
+Hutchins,1,Anthophora,0
+Hutchins,2,Anthophora,0
+Hutchins,3,Anthophora,0
+Kamiak,1,Anthophora,1
+Kamiak,2,Anthophora,0
+Kamiak,3,Anthophora,0
+Plaza,1,Anthophora,0
+Plaza,2,Anthophora,0
+Plaza,3,Anthophora,0
+Smoot ,1,Anthophora,0
+Smoot ,2,Anthophora,0
+Smoot ,3,Anthophora,0
+Spangle,1,Anthophora,0
+Spangle,2,Anthophora,0
+Spangle,3,Anthophora,0
+Asotin,1,Apis,0
+Asotin,2,Apis,1
+Asotin,3,Apis,1
+Chipman1,1,Apis,0
+Chipman1,2,Apis,7
+Chipman1,3,Apis,0
+Chipman2,1,Apis,1
+Chipman2,2,Apis,0
+Chipman2,3,Apis,0
+Clark1,1,Apis,0
+Clark1,2,Apis,0
+Clark1,3,Apis,0
+Clark2,1,Apis,0
+Clark2,2,Apis,0
+Clark2,3,Apis,0
+Hutchins,1,Apis,0
+Hutchins,2,Apis,0
+Hutchins,3,Apis,0
+Kamiak,1,Apis,1
+Kamiak,2,Apis,0
+Kamiak,3,Apis,0
+Plaza,1,Apis,0
+Plaza,2,Apis,0
+Plaza,3,Apis,0
+Smoot ,1,Apis,0
+Smoot ,2,Apis,0
+Smoot ,3,Apis,0
+Spangle,1,Apis,0
+Spangle,2,Apis,0
+Spangle,3,Apis,0
+Asotin,1,Bombus,0
+Asotin,2,Bombus,1
+Asotin,3,Bombus,4
+Chipman1,1,Bombus,0
+Chipman1,2,Bombus,1
+Chipman1,3,Bombus,2
+Chipman2,1,Bombus,0
+Chipman2,2,Bombus,0
+Chipman2,3,Bombus,1
+Clark1,1,Bombus,0
+Clark1,2,Bombus,0
+Clark1,3,Bombus,1
+Clark2,1,Bombus,0
+Clark2,2,Bombus,0
+Clark2,3,Bombus,0
+Hutchins,1,Bombus,0
+Hutchins,2,Bombus,0
+Hutchins,3,Bombus,0
+Kamiak,1,Bombus,0
+Kamiak,2,Bombus,0
+Kamiak,3,Bombus,1
+Plaza,1,Bombus,0
+Plaza,2,Bombus,0
+Plaza,3,Bombus,0
+Smoot ,1,Bombus,0
+Smoot ,2,Bombus,0
+Smoot ,3,Bombus,3
+Spangle,1,Bombus,0
+Spangle,2,Bombus,0
+Spangle,3,Bombus,1
+Asotin,1,Ceratina,8
+Asotin,2,Ceratina,1
+Asotin,3,Ceratina,0
+Chipman1,1,Ceratina,66
+Chipman1,2,Ceratina,15
+Chipman1,3,Ceratina,41
+Chipman2,1,Ceratina,154
+Chipman2,2,Ceratina,9
+Chipman2,3,Ceratina,0
+Clark1,1,Ceratina,23
+Clark1,2,Ceratina,11
+Clark1,3,Ceratina,0
+Clark2,1,Ceratina,6
+Clark2,2,Ceratina,5
+Clark2,3,Ceratina,1
+Hutchins,1,Ceratina,1
+Hutchins,2,Ceratina,0
+Hutchins,3,Ceratina,0
+Kamiak,1,Ceratina,1
+Kamiak,2,Ceratina,2
+Kamiak,3,Ceratina,1
+Plaza,1,Ceratina,0
+Plaza,2,Ceratina,0
+Plaza,3,Ceratina,0
+Smoot ,1,Ceratina,16
+Smoot ,2,Ceratina,0
+Smoot ,3,Ceratina,1
+Spangle,1,Ceratina,0
+Spangle,2,Ceratina,0
+Spangle,3,Ceratina,0
+Asotin,1,Colletes,0
+Asotin,2,Colletes,1
+Asotin,3,Colletes,0
+Chipman1,1,Colletes,0
+Chipman1,2,Colletes,1
+Chipman1,3,Colletes,0
+Chipman2,1,Colletes,0
+Chipman2,2,Colletes,0
+Chipman2,3,Colletes,0
+Clark1,1,Colletes,0
+Clark1,2,Colletes,0
+Clark1,3,Colletes,0
+Clark2,1,Colletes,0
+Clark2,2,Colletes,0
+Clark2,3,Colletes,0
+Hutchins,1,Colletes,0
+Hutchins,2,Colletes,0
+Hutchins,3,Colletes,0
+Kamiak,1,Colletes,0
+Kamiak,2,Colletes,2
+Kamiak,3,Colletes,1
+Plaza,1,Colletes,0
+Plaza,2,Colletes,0
+Plaza,3,Colletes,0
+Smoot ,1,Colletes,0
+Smoot ,2,Colletes,0
+Smoot ,3,Colletes,0
+Spangle,1,Colletes,0
+Spangle,2,Colletes,0
+Spangle,3,Colletes,0
+Asotin,1,Diadasia,0
+Asotin,2,Diadasia,0
+Asotin,3,Diadasia,0
+Chipman1,1,Diadasia,0
+Chipman1,2,Diadasia,0
+Chipman1,3,Diadasia,3
+Chipman2,1,Diadasia,0
+Chipman2,2,Diadasia,0
+Chipman2,3,Diadasia,0
+Clark1,1,Diadasia,0
+Clark1,2,Diadasia,0
+Clark1,3,Diadasia,0
+Clark2,1,Diadasia,0
+Clark2,2,Diadasia,0
+Clark2,3,Diadasia,0
+Hutchins,1,Diadasia,0
+Hutchins,2,Diadasia,0
+Hutchins,3,Diadasia,0
+Kamiak,1,Diadasia,0
+Kamiak,2,Diadasia,0
+Kamiak,3,Diadasia,0
+Plaza,1,Diadasia,0
+Plaza,2,Diadasia,0
+Plaza,3,Diadasia,0
+Smoot ,1,Diadasia,0
+Smoot ,2,Diadasia,0
+Smoot ,3,Diadasia,0
+Spangle,1,Diadasia,0
+Spangle,2,Diadasia,0
+Spangle,3,Diadasia,0
+Asotin,1,Dufourea,0
+Asotin,2,Dufourea,0
+Asotin,3,Dufourea,0
+Chipman1,1,Dufourea,0
+Chipman1,2,Dufourea,0
+Chipman1,3,Dufourea,0
+Chipman2,1,Dufourea,0
+Chipman2,2,Dufourea,0
+Chipman2,3,Dufourea,0
+Clark1,1,Dufourea,0
+Clark1,2,Dufourea,0
+Clark1,3,Dufourea,0
+Clark2,1,Dufourea,0
+Clark2,2,Dufourea,0
+Clark2,3,Dufourea,0
+Hutchins,1,Dufourea,0
+Hutchins,2,Dufourea,0
+Hutchins,3,Dufourea,0
+Kamiak,1,Dufourea,0
+Kamiak,2,Dufourea,4
+Kamiak,3,Dufourea,3
+Plaza,1,Dufourea,0
+Plaza,2,Dufourea,0
+Plaza,3,Dufourea,0
+Smoot ,1,Dufourea,0
+Smoot ,2,Dufourea,0
+Smoot ,3,Dufourea,0
+Spangle,1,Dufourea,0
+Spangle,2,Dufourea,0
+Spangle,3,Dufourea,0
+Asotin,1,Epoleus,0
+Asotin,2,Epoleus,0
+Asotin,3,Epoleus,0
+Chipman1,1,Epoleus,0
+Chipman1,2,Epoleus,0
+Chipman1,3,Epoleus,0
+Chipman2,1,Epoleus,0
+Chipman2,2,Epoleus,0
+Chipman2,3,Epoleus,0
+Clark1,1,Epoleus,0
+Clark1,2,Epoleus,0
+Clark1,3,Epoleus,0
+Clark2,1,Epoleus,0
+Clark2,2,Epoleus,0
+Clark2,3,Epoleus,0
+Hutchins,1,Epoleus,0
+Hutchins,2,Epoleus,0
+Hutchins,3,Epoleus,0
+Kamiak,1,Epoleus,0
+Kamiak,2,Epoleus,0
+Kamiak,3,Epoleus,0
+Plaza,1,Epoleus,0
+Plaza,2,Epoleus,0
+Plaza,3,Epoleus,0
+Smoot ,1,Epoleus,0
+Smoot ,2,Epoleus,0
+Smoot ,3,Epoleus,2
+Spangle,1,Epoleus,0
+Spangle,2,Epoleus,0
+Spangle,3,Epoleus,0
+Asotin,1,Halictus,3
+Asotin,2,Halictus,0
+Asotin,3,Halictus,0
+Chipman1,1,Halictus,0
+Chipman1,2,Halictus,1
+Chipman1,3,Halictus,36
+Chipman2,1,Halictus,11
+Chipman2,2,Halictus,0
+Chipman2,3,Halictus,0
+Clark1,1,Halictus,2
+Clark1,2,Halictus,4
+Clark1,3,Halictus,0
+Clark2,1,Halictus,3
+Clark2,2,Halictus,0
+Clark2,3,Halictus,1
+Hutchins,1,Halictus,18
+Hutchins,2,Halictus,2
+Hutchins,3,Halictus,9
+Kamiak,1,Halictus,4
+Kamiak,2,Halictus,1
+Kamiak,3,Halictus,0
+Plaza,1,Halictus,0
+Plaza,2,Halictus,2
+Plaza,3,Halictus,2
+Smoot ,1,Halictus,19
+Smoot ,2,Halictus,5
+Smoot ,3,Halictus,4
+Spangle,1,Halictus,0
+Spangle,2,Halictus,1
+Spangle,3,Halictus,11
+Asotin,1,Heriades,0
+Asotin,2,Heriades,0
+Asotin,3,Heriades,0
+Chipman1,1,Heriades,0
+Chipman1,2,Heriades,0
+Chipman1,3,Heriades,0
+Chipman2,1,Heriades,0
+Chipman2,2,Heriades,0
+Chipman2,3,Heriades,0
+Clark1,1,Heriades,0
+Clark1,2,Heriades,0
+Clark1,3,Heriades,0
+Clark2,1,Heriades,0
+Clark2,2,Heriades,0
+Clark2,3,Heriades,2
+Hutchins,1,Heriades,0
+Hutchins,2,Heriades,0
+Hutchins,3,Heriades,0
+Kamiak,1,Heriades,0
+Kamiak,2,Heriades,0
+Kamiak,3,Heriades,0
+Plaza,1,Heriades,0
+Plaza,2,Heriades,0
+Plaza,3,Heriades,0
+Smoot ,1,Heriades,0
+Smoot ,2,Heriades,0
+Smoot ,3,Heriades,0
+Spangle,1,Heriades,0
+Spangle,2,Heriades,0
+Spangle,3,Heriades,0
+Asotin,1,Hoplitis,0
+Asotin,2,Hoplitis,0
+Asotin,3,Hoplitis,0
+Chipman1,1,Hoplitis,0
+Chipman1,2,Hoplitis,0
+Chipman1,3,Hoplitis,1
+Chipman2,1,Hoplitis,0
+Chipman2,2,Hoplitis,0
+Chipman2,3,Hoplitis,0
+Clark1,1,Hoplitis,0
+Clark1,2,Hoplitis,0
+Clark1,3,Hoplitis,0
+Clark2,1,Hoplitis,0
+Clark2,2,Hoplitis,0
+Clark2,3,Hoplitis,0
+Hutchins,1,Hoplitis,0
+Hutchins,2,Hoplitis,0
+Hutchins,3,Hoplitis,0
+Kamiak,1,Hoplitis,0
+Kamiak,2,Hoplitis,0
+Kamiak,3,Hoplitis,0
+Plaza,1,Hoplitis,0
+Plaza,2,Hoplitis,0
+Plaza,3,Hoplitis,0
+Smoot ,1,Hoplitis,0
+Smoot ,2,Hoplitis,0
+Smoot ,3,Hoplitis,0
+Spangle,1,Hoplitis,0
+Spangle,2,Hoplitis,0
+Spangle,3,Hoplitis,0
+Asotin,1,Hylaeus,0
+Asotin,2,Hylaeus,0
+Asotin,3,Hylaeus,0
+Chipman1,1,Hylaeus,0
+Chipman1,2,Hylaeus,0
+Chipman1,3,Hylaeus,0
+Chipman2,1,Hylaeus,0
+Chipman2,2,Hylaeus,0
+Chipman2,3,Hylaeus,0
+Clark1,1,Hylaeus,0
+Clark1,2,Hylaeus,1
+Clark1,3,Hylaeus,0
+Clark2,1,Hylaeus,0
+Clark2,2,Hylaeus,1
+Clark2,3,Hylaeus,3
+Hutchins,1,Hylaeus,0
+Hutchins,2,Hylaeus,1
+Hutchins,3,Hylaeus,0
+Kamiak,1,Hylaeus,0
+Kamiak,2,Hylaeus,0
+Kamiak,3,Hylaeus,1
+Plaza,1,Hylaeus,0
+Plaza,2,Hylaeus,1
+Plaza,3,Hylaeus,0
+Smoot ,1,Hylaeus,0
+Smoot ,2,Hylaeus,0
+Smoot ,3,Hylaeus,0
+Spangle,1,Hylaeus,0
+Spangle,2,Hylaeus,2
+Spangle,3,Hylaeus,0
+Asotin,1,Lasioglossum,5
+Asotin,2,Lasioglossum,34
+Asotin,3,Lasioglossum,24
+Chipman1,1,Lasioglossum,3
+Chipman1,2,Lasioglossum,3
+Chipman1,3,Lasioglossum,4
+Chipman2,1,Lasioglossum,7
+Chipman2,2,Lasioglossum,0
+Chipman2,3,Lasioglossum,0
+Clark1,1,Lasioglossum,11
+Clark1,2,Lasioglossum,6
+Clark1,3,Lasioglossum,6
+Clark2,1,Lasioglossum,3
+Clark2,2,Lasioglossum,1
+Clark2,3,Lasioglossum,2
+Hutchins,1,Lasioglossum,8
+Hutchins,2,Lasioglossum,56
+Hutchins,3,Lasioglossum,24
+Kamiak,1,Lasioglossum,4
+Kamiak,2,Lasioglossum,9
+Kamiak,3,Lasioglossum,6
+Plaza,1,Lasioglossum,2
+Plaza,2,Lasioglossum,0
+Plaza,3,Lasioglossum,17
+Smoot ,1,Lasioglossum,21
+Smoot ,2,Lasioglossum,5
+Smoot ,3,Lasioglossum,6
+Spangle,1,Lasioglossum,1
+Spangle,2,Lasioglossum,4
+Spangle,3,Lasioglossum,17
+Asotin,1,Megachile,0
+Asotin,2,Megachile,0
+Asotin,3,Megachile,0
+Chipman1,1,Megachile,0
+Chipman1,2,Megachile,0
+Chipman1,3,Megachile,1
+Chipman2,1,Megachile,0
+Chipman2,2,Megachile,0
+Chipman2,3,Megachile,0
+Clark1,1,Megachile,0
+Clark1,2,Megachile,1
+Clark1,3,Megachile,0
+Clark2,1,Megachile,0
+Clark2,2,Megachile,0
+Clark2,3,Megachile,0
+Hutchins,1,Megachile,0
+Hutchins,2,Megachile,0
+Hutchins,3,Megachile,1
+Kamiak,1,Megachile,0
+Kamiak,2,Megachile,0
+Kamiak,3,Megachile,2
+Plaza,1,Megachile,0
+Plaza,2,Megachile,0
+Plaza,3,Megachile,0
+Smoot ,1,Megachile,0
+Smoot ,2,Megachile,0
+Smoot ,3,Megachile,0
+Spangle,1,Megachile,0
+Spangle,2,Megachile,0
+Spangle,3,Megachile,0
+Asotin,1,Melissodes,0
+Asotin,2,Melissodes,0
+Asotin,3,Melissodes,0
+Chipman1,1,Melissodes,0
+Chipman1,2,Melissodes,0
+Chipman1,3,Melissodes,0
+Chipman2,1,Melissodes,0
+Chipman2,2,Melissodes,0
+Chipman2,3,Melissodes,0
+Clark1,1,Melissodes,0
+Clark1,2,Melissodes,0
+Clark1,3,Melissodes,0
+Clark2,1,Melissodes,0
+Clark2,2,Melissodes,0
+Clark2,3,Melissodes,0
+Hutchins,1,Melissodes,2
+Hutchins,2,Melissodes,0
+Hutchins,3,Melissodes,0
+Kamiak,1,Melissodes,4
+Kamiak,2,Melissodes,3
+Kamiak,3,Melissodes,0
+Plaza,1,Melissodes,0
+Plaza,2,Melissodes,0
+Plaza,3,Melissodes,0
+Smoot ,1,Melissodes,2
+Smoot ,2,Melissodes,1
+Smoot ,3,Melissodes,0
+Spangle,1,Melissodes,0
+Spangle,2,Melissodes,0
+Spangle,3,Melissodes,0
+Asotin,1,Nomada,4
+Asotin,2,Nomada,0
+Asotin,3,Nomada,4
+Chipman1,1,Nomada,4
+Chipman1,2,Nomada,0
+Chipman1,3,Nomada,0
+Chipman2,1,Nomada,6
+Chipman2,2,Nomada,1
+Chipman2,3,Nomada,0
+Clark1,1,Nomada,12
+Clark1,2,Nomada,3
+Clark1,3,Nomada,1
+Clark2,1,Nomada,13
+Clark2,2,Nomada,4
+Clark2,3,Nomada,1
+Hutchins,1,Nomada,7
+Hutchins,2,Nomada,0
+Hutchins,3,Nomada,1
+Kamiak,1,Nomada,6
+Kamiak,2,Nomada,6
+Kamiak,3,Nomada,1
+Plaza,1,Nomada,0
+Plaza,2,Nomada,0
+Plaza,3,Nomada,0
+Smoot ,1,Nomada,6
+Smoot ,2,Nomada,2
+Smoot ,3,Nomada,1
+Spangle,1,Nomada,0
+Spangle,2,Nomada,0
+Spangle,3,Nomada,0
+Asotin,1,Nomia,0
+Asotin,2,Nomia,0
+Asotin,3,Nomia,0
+Chipman1,1,Nomia,0
+Chipman1,2,Nomia,0
+Chipman1,3,Nomia,0
+Chipman2,1,Nomia,0
+Chipman2,2,Nomia,0
+Chipman2,3,Nomia,0
+Clark1,1,Nomia,0
+Clark1,2,Nomia,0
+Clark1,3,Nomia,0
+Clark2,1,Nomia,0
+Clark2,2,Nomia,0
+Clark2,3,Nomia,0
+Hutchins,1,Nomia,0
+Hutchins,2,Nomia,0
+Hutchins,3,Nomia,0
+Kamiak,1,Nomia,0
+Kamiak,2,Nomia,0
+Kamiak,3,Nomia,0
+Plaza,1,Nomia,0
+Plaza,2,Nomia,2
+Plaza,3,Nomia,0
+Smoot ,1,Nomia,0
+Smoot ,2,Nomia,0
+Smoot ,3,Nomia,0
+Spangle,1,Nomia,0
+Spangle,2,Nomia,0
+Spangle,3,Nomia,0
+Asotin,1,Osmia,1
+Asotin,2,Osmia,0
+Asotin,3,Osmia,0
+Chipman1,1,Osmia,0
+Chipman1,2,Osmia,0
+Chipman1,3,Osmia,0
+Chipman2,1,Osmia,2
+Chipman2,2,Osmia,0
+Chipman2,3,Osmia,1
+Clark1,1,Osmia,2
+Clark1,2,Osmia,0
+Clark1,3,Osmia,0
+Clark2,1,Osmia,4
+Clark2,2,Osmia,3
+Clark2,3,Osmia,1
+Hutchins,1,Osmia,0
+Hutchins,2,Osmia,0
+Hutchins,3,Osmia,0
+Kamiak,1,Osmia,1
+Kamiak,2,Osmia,3
+Kamiak,3,Osmia,1
+Plaza,1,Osmia,3
+Plaza,2,Osmia,0
+Plaza,3,Osmia,0
+Smoot ,1,Osmia,1
+Smoot ,2,Osmia,1
+Smoot ,3,Osmia,0
+Spangle,1,Osmia,0
+Spangle,2,Osmia,0
+Spangle,3,Osmia,0
+Asotin,1,Panurginus,0
+Asotin,2,Panurginus,0
+Asotin,3,Panurginus,0
+Chipman1,1,Panurginus,0
+Chipman1,2,Panurginus,0
+Chipman1,3,Panurginus,2
+Chipman2,1,Panurginus,0
+Chipman2,2,Panurginus,0
+Chipman2,3,Panurginus,0
+Clark1,1,Panurginus,0
+Clark1,2,Panurginus,0
+Clark1,3,Panurginus,0
+Clark2,1,Panurginus,0
+Clark2,2,Panurginus,0
+Clark2,3,Panurginus,0
+Hutchins,1,Panurginus,0
+Hutchins,2,Panurginus,0
+Hutchins,3,Panurginus,0
+Kamiak,1,Panurginus,0
+Kamiak,2,Panurginus,0
+Kamiak,3,Panurginus,0
+Plaza,1,Panurginus,0
+Plaza,2,Panurginus,1
+Plaza,3,Panurginus,0
+Smoot ,1,Panurginus,0
+Smoot ,2,Panurginus,0
+Smoot ,3,Panurginus,0
+Spangle,1,Panurginus,0
+Spangle,2,Panurginus,0
+Spangle,3,Panurginus,0
+Asotin,1,Peponapis,0
+Asotin,2,Peponapis,0
+Asotin,3,Peponapis,0
+Chipman1,1,Peponapis,0
+Chipman1,2,Peponapis,0
+Chipman1,3,Peponapis,0
+Chipman2,1,Peponapis,0
+Chipman2,2,Peponapis,0
+Chipman2,3,Peponapis,0
+Clark1,1,Peponapis,0
+Clark1,2,Peponapis,0
+Clark1,3,Peponapis,0
+Clark2,1,Peponapis,0
+Clark2,2,Peponapis,0
+Clark2,3,Peponapis,0
+Hutchins,1,Peponapis,0
+Hutchins,2,Peponapis,0
+Hutchins,3,Peponapis,1
+Kamiak,1,Peponapis,0
+Kamiak,2,Peponapis,0
+Kamiak,3,Peponapis,0
+Plaza,1,Peponapis,0
+Plaza,2,Peponapis,0
+Plaza,3,Peponapis,0
+Smoot ,1,Peponapis,0
+Smoot ,2,Peponapis,0
+Smoot ,3,Peponapis,0
+Spangle,1,Peponapis,0
+Spangle,2,Peponapis,0
+Spangle,3,Peponapis,0
+Asotin,1,Perdita,0
+Asotin,2,Perdita,1
+Asotin,3,Perdita,0
+Chipman1,1,Perdita,0
+Chipman1,2,Perdita,0
+Chipman1,3,Perdita,0
+Chipman2,1,Perdita,0
+Chipman2,2,Perdita,0
+Chipman2,3,Perdita,0
+Clark1,1,Perdita,0
+Clark1,2,Perdita,0
+Clark1,3,Perdita,0
+Clark2,1,Perdita,0
+Clark2,2,Perdita,0
+Clark2,3,Perdita,0
+Hutchins,1,Perdita,0
+Hutchins,2,Perdita,0
+Hutchins,3,Perdita,0
+Kamiak,1,Perdita,0
+Kamiak,2,Perdita,0
+Kamiak,3,Perdita,0
+Plaza,1,Perdita,0
+Plaza,2,Perdita,2
+Plaza,3,Perdita,0
+Smoot ,1,Perdita,0
+Smoot ,2,Perdita,0
+Smoot ,3,Perdita,0
+Spangle,1,Perdita,0
+Spangle,2,Perdita,2
+Spangle,3,Perdita,0
+Asotin,1,Protandrena,0
+Asotin,2,Protandrena,1
+Asotin,3,Protandrena,0
+Chipman1,1,Protandrena,0
+Chipman1,2,Protandrena,0
+Chipman1,3,Protandrena,0
+Chipman2,1,Protandrena,0
+Chipman2,2,Protandrena,0
+Chipman2,3,Protandrena,0
+Clark1,1,Protandrena,3
+Clark1,2,Protandrena,0
+Clark1,3,Protandrena,0
+Clark2,1,Protandrena,0
+Clark2,2,Protandrena,0
+Clark2,3,Protandrena,0
+Hutchins,1,Protandrena,0
+Hutchins,2,Protandrena,0
+Hutchins,3,Protandrena,0
+Kamiak,1,Protandrena,15
+Kamiak,2,Protandrena,0
+Kamiak,3,Protandrena,0
+Plaza,1,Protandrena,0
+Plaza,2,Protandrena,0
+Plaza,3,Protandrena,0
+Smoot ,1,Protandrena,0
+Smoot ,2,Protandrena,0
+Smoot ,3,Protandrena,0
+Spangle,1,Protandrena,0
+Spangle,2,Protandrena,0
+Spangle,3,Protandrena,0
+Asotin,1,Sphecodes,1
+Asotin,2,Sphecodes,0
+Asotin,3,Sphecodes,0
+Chipman1,1,Sphecodes,0
+Chipman1,2,Sphecodes,0
+Chipman1,3,Sphecodes,0
+Chipman2,1,Sphecodes,1
+Chipman2,2,Sphecodes,0
+Chipman2,3,Sphecodes,0
+Clark1,1,Sphecodes,4
+Clark1,2,Sphecodes,1
+Clark1,3,Sphecodes,0
+Clark2,1,Sphecodes,0
+Clark2,2,Sphecodes,2
+Clark2,3,Sphecodes,0
+Hutchins,1,Sphecodes,0
+Hutchins,2,Sphecodes,2
+Hutchins,3,Sphecodes,2
+Kamiak,1,Sphecodes,0
+Kamiak,2,Sphecodes,1
+Kamiak,3,Sphecodes,0
+Plaza,1,Sphecodes,0
+Plaza,2,Sphecodes,0
+Plaza,3,Sphecodes,0
+Smoot ,1,Sphecodes,4
+Smoot ,2,Sphecodes,1
+Smoot ,3,Sphecodes,0
+Spangle,1,Sphecodes,0
+Spangle,2,Sphecodes,0
+Spangle,3,Sphecodes,0

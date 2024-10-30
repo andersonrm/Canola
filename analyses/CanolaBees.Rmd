@@ -1,0 +1,407 @@
+---
+title: "Canola Bee Analysis"
+author: "Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+graphics: yes
+output:
+  github_document:
+    toc: yes
+    toc_depth: 5
+    pandoc_args: --webtex
+  html_document:
+    keep_md: yes
+    theme: readable
+    mathjax: default
+  html_notebook:
+    code_folding: hide
+    theme: readable
+    mathjax: default
+  pdf_document:
+    toc: yes
+header-includes:
+  \usepackage{float}
+  \floatplacement{figure}{H}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = F}
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @@@@@ Knitr Options
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Set root directory to the project directory
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+
+# Set default knitr options: 
+# Suppress warnings and messages, cache chunks, 
+#  set default figure size to 6x8 at 300 dpi, and save a png and pdf
+knitr::opts_chunk$set(warning = F, message = F, collapse = T, cache = T,
+    fig.height = 6, fig.width = 8, dpi = 300, # 6x8" @ 300dpi:1800x2400=4.3MP
+    dev = c('png', 'pdf'), dev.args = list(pdf = list(onefile = F)))
+
+```
+
+
+
+## Overview
+
+This analysis explores Salena and Olivia's canola experiment.
+
+### Summary of Results
+
+* No difference in bee community composition across habitat types (natural or semi-natural), or habitat types and bloom period.
+
+```{r Main_Code, include = F, cache = F}
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @@@@@ Setup - This code is run, but output is hidden
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Load Packages
+library(tidyverse) # Needed for data wrangling: dplyr, tidyr, ggplot2
+library(cowplot) # Needed for publication-quality ggplots
+library(glmmTMB)
+library(lme4)
+library(sjPlot)
+library(car)
+library(knitr)
+library(emmeans)
+library(vegan)
+library(randomForest)
+library(caret)
+
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @@@@@ Data Preparation
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Import datasets
+bees <- read.csv("data/Bee_Samples_2022.csv")
+
+plants <- read.csv("data/PlantDiv2022.csv")
+
+bee_hw <- read.csv("data/CleanPalouseBees.csv")
+
+###### Functions
+
+
+```
+
+
+```{r Data_Wrangling, echo = F, comment = ""}
+
+# clean up Salena's data:
+bee_hw <- bee_hw %>% 
+  mutate(across(
+    c(period : land_type), factor),
+    across(c(transect : genus), factor),
+    date = ymd(date),
+    week = week(date),
+    site = factor(case_when(
+      site == "Smoot " ~ "Smoot",
+      TRUE ~ site
+    )),
+    period = factor(case_when(
+      period == "1" ~ "Pre-Bloom",
+      period == "2" ~ "Peak-Bloom",
+      TRUE ~ "Post-Bloom"
+    )))
+
+# Clean up Olivia's data:
+bees <- bees %>% 
+  select(-X) %>% 
+  mutate(across(c(Period : Genus), factor),
+         Date = ymd(Date),
+         week = week(Date),
+         Family = factor(case_when(
+           Family == "Halictus " ~ "Halictidae",
+           Family == "Halictidae" & Genus == "Nomada" ~ "Apidae",
+           TRUE ~ Family
+         )),
+         Genus = factor(case_when(
+           Genus == "Ceratina " ~ "Ceratina",
+           Genus == "Melissodes " ~ "Melissodes",
+           TRUE ~ Genus
+         ))) %>% 
+  rename(date = Date,
+         period = Period,
+         site = Site,
+         transect = Transect,
+         morphogroup = Morphogroup,
+         family = Family,
+         genus = Genus)
+
+# Extract Salena's land type variable:
+land_type <- bee_hw %>% 
+  select(site, land_type) %>% 
+  distinct()
+
+# Add land type to Olivia's data:
+bees <- bees %>% 
+  left_join(land_type, by = "site")
+
+#######################################################
+
+# Which genera are found in both natural and semi-natural sites?
+
+# nat <- bees1 %>% 
+#   filter(land_type == "natural") %>% 
+#   select(genus) %>% 
+#   distinct()
+# 
+# seminat <- bees1 %>% 
+#   filter(land_type == "semi") %>% 
+#   select(genus) %>% 
+#   distinct()
+# 
+# # species only found in NATURAL sites:
+# bees_unique_natural <- anti_join(nat, seminat)
+# 
+# # species only found in SEMINATURAL sites:
+# bees_unique_semi <- anti_join(seminat, nat)
+# 
+# # overlapping species (species we can use in site comparison models)
+# overlap <- semi_join(nat, seminat, by = "genus")
+# 
+# # removing species that were only found in either natural or seminatural sites:
+# bees.reduced <- semi_join(bees1, overlap, by = "genus")
+# 
+# 
+# # removing genera with sample size < 3 in either land type:
+# good_samples <- bees.reduced %>% 
+#   group_by(land_type, genus) %>% 
+#   tally() %>% 
+#   filter(n > 2) %>% 
+#   ungroup() %>% 
+#   select(genus) %>% 
+#   distinct()
+# 
+# 
+# bees.reduced <- semi_join(bees.reduced, good_samples, by = "genus")
+
+
+
+```
+
+## Bee community composition
+
+```{r bee_diversity_by_land_type, echo = F}
+
+#####################################################
+# matrix assembly
+habitat_matrix <- bees %>% 
+  mutate(period_site_land = paste(
+    period, site, land_type, sep = "_")) %>% 
+  group_by(genus, period_site_land) %>% 
+  tally(n = "count") %>% 
+  pivot_wider(names_from = genus,
+              values_from = count,
+              values_fill = list(count = 0)) %>% 
+  column_to_rownames("period_site_land")
+
+habitat_meta <- bees %>% 
+  select(land_type, period, site) %>% 
+  distinct() %>% 
+  mutate(period_site_land = factor(
+    paste(period, site, land_type, sep = "_")))
+
+```
+
+```{r permanova_stats, echo = F, warning=FALSE}
+# land_type
+land_type_mod <- adonis2(habitat_matrix ~ land_type,
+        data = habitat_meta, method = "bray")
+
+land_type_mod
+
+permutest(betadisper(vegdist(habitat_matrix, method = "bray"),
+                     habitat_meta$land_type))
+
+# bloom period
+period_mod <- adonis2(habitat_matrix ~ period,
+        data = habitat_meta, method = "bray")
+
+period_mod
+
+permutest(betadisper(vegdist(habitat_matrix, method = "bray"),
+                     habitat_meta$period))
+
+# site
+site_mod <- adonis2(habitat_matrix ~ site,
+        data = habitat_meta, method = "bray")
+
+site_mod
+
+permutest(betadisper(vegdist(habitat_matrix, method = "bray"),
+                     habitat_meta$site))
+
+```
+
+
+### Site classification by species composition (Random Forest)
+```{r random_forest_class, echo = F}
+
+rf_matrix <- habitat_matrix %>% 
+  rownames_to_column("period_site_land") %>% 
+  separate_wider_delim(period_site_land, delim = "_",
+                       cols_remove = F,
+                       names = c("period", "site", "land_type")) %>% 
+  mutate(across(c(period : period_site_land), as.factor))
+
+rfmod <- randomForest(y = rf_matrix$land_type,
+                           x = select(rf_matrix,
+                                      -period, -site,
+                                      -period_site_land),
+                           importance = T, nPerm = 999,
+                           proximity = T)
+
+
+train(y = rf_matrix$land_type,
+      x = select(rf_matrix, -period, -site,
+                 -period_site_land),
+      method = "rf", na.action = na.omit)
+
+update(rfmod, mtry = 2)
+
+importance(rfmod)
+imp_vals_top <- data.frame(importance(rfmod)) %>% 
+  arrange(desc(MeanDecreaseGini)) %>% 
+  filter(MeanDecreaseGini > quantile(MeanDecreaseGini, 0.8))
+
+kable(imp_vals_top, format = "markdown", digits = 3)
+
+# MDSplot(rfmod, rf_matrix$land_type)
+```
+
+**Random Forest classification of habitat type by species composition.** The model was tuned without pre-processing. Overall model accuracy was 81%. The model can delineate the habitat types with an overall *out of bag error* of 3.33% using bee community composition as the predictor matrix. 
+
+
+
+
+```{r nmds_sites_calcs, eval = T, include = F}
+# NMDS scores
+nmds_ltp <- metaMDS(habitat_matrix, distance = "bray",
+                    k = 2, try = 250, autotransform = F)
+nmds_ltp$stress
+# 
+stressplot(nmds_ltp)
+
+ltp_scores <- data.frame(scores(nmds_ltp)$sites) %>%
+  rownames_to_column("period_site_land") %>% 
+  mutate(period_site_land = factor(period_site_land)) %>% 
+  left_join(habitat_meta, by = "period_site_land") 
+
+spp_scores <- data.frame(scores(nmds_ltp)$species) %>% 
+  rownames_to_column("Species")
+
+centroids_ltp <- ltp_scores %>% 
+  group_by(period_site_land) %>% 
+  summarise(NMDS1 = mean(NMDS1),
+            NMDS2 = mean(NMDS2))
+
+centroids_habitat <- ltp_scores %>% 
+  group_by(land_type) %>% 
+  summarise(NMDS1 = mean(NMDS1),
+            NMDS2 = mean(NMDS2))
+
+centroids_period <- ltp_scores %>% 
+  group_by(period) %>% 
+  summarise(NMDS1 = mean(NMDS1),
+            NMDS2 = mean(NMDS2))
+```
+
+### Bee composition by habitat type
+```{r nmds_habitat_fig, echo = F}
+
+imp_spp <- imp_vals_top %>% 
+  rownames_to_column("Species") %>% 
+  select(Species, MeanDecreaseGini)
+
+spp_scores <- right_join(spp_scores, imp_spp, by = "Species")
+
+spp_scores <- spp_scores %>% 
+  filter(!Species == "land_type")
+
+ltp_scores %>% 
+  ggplot(aes(x = NMDS1, y = NMDS2)) +
+  geom_point(aes(NMDS1, NMDS2, color = land_type),
+             size = 1) +
+  stat_ellipse(aes(color = land_type),
+               show.legend = F) +
+  geom_point(data = centroids_habitat,
+             aes(x = NMDS1, y = NMDS2, fill = land_type),
+             size = 4,
+             shape = 21, show.legend = F) +
+  theme_cowplot() +
+  ggrepel::geom_text_repel(data = spp_scores,
+                           aes(x = NMDS1, y = NMDS2,
+                               label = Species,
+                               size = MeanDecreaseGini),
+                           max.overlaps = 20)+
+  scale_size_continuous(
+    name = "      Mean\ndecrease Gini",
+    limits = c(.4, 3),
+    breaks = c(0.75, 2, 3),
+    range = c(1, 6)) +
+  guides(color = guide_legend(override.aes = list(size = 4, shape = 16))) +
+  scale_color_manual(values = c("#E69F00", "#56B4E9"),
+                     name = "Habitat type")+
+  scale_fill_manual(values = c("#E69F00", "#56B4E9"))
+
+
+
+```
+**Variation in community composition across habitat types.** Bee species are plotted on a two-dimensional non-metric multidimensional scaling ordination of the 30 combinations of site, period, and habitat type. Small points are the individual site/period/habitat combinations. Large points are the centroids of the two habitat types with natural habitat in orange, semi-natural habitat in blue. Ellipses are 95% confidence intervals around the habitat centroids. Bees species shown are the most representative (top 20th percentile of a random forest analysis) of the compositional differences among sites. Text size of the labels is proportional to variable importance score (mean decrease in Gini score).
+
+
+
+### Bee composition by habitat type and bloom period
+```{r nmds_period_habitat_fig, echo = F}
+
+ltp_scores %>% 
+  ggplot(aes(x = NMDS1, y = NMDS2)) +
+  geom_point(aes(NMDS1, NMDS2, color = period),
+             size = 1) +
+  stat_ellipse(aes(color = period),
+               show.legend = F) +
+  geom_point(data = centroids_period,
+             aes(x = NMDS1, y = NMDS2, fill = period),
+             size = 4,
+             shape = 21, show.legend = F) +
+  theme_cowplot() +
+  ggrepel::geom_text_repel(data = spp_scores,
+                           aes(x = NMDS1, y = NMDS2,
+                               label = Species,
+                               size = MeanDecreaseGini),
+                           max.overlaps = 20)+
+  scale_size_continuous(
+    name = "      Mean\ndecrease Gini",
+    limits = c(.4, 3),
+    breaks = c(0.75, 2, 3),
+    range = c(1, 6)) +
+  guides(color = guide_legend(override.aes = list(size = 4, shape = 16))) +
+  scale_color_manual(values = c("#E69F00", "#56B4E9", "#009E73"),
+                     name = "Bloom")+
+  scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73")) +
+  facet_wrap(~land_type) 
+
+```
+
+Note that there is considerable overlap in community composition at all comparisons (PERMANOVA **habitat;** *P* = 0.44, *F* = 0.99, **site;** *P* = 0.27, *F* = 1.12, **period**; *P* = 0.54, *F* = 0.94). From this analysis, we can conclude that community bee community composition does not vary across natural/semi-natural habitat types, sites, or bloom period.
+
+
+
+
+## Session Information
+
+```{r Session_Info, echo = F, comment = ""}
+
+# Add session information to help with reproduceability
+sessionInfo()
+
+
+```
+
+

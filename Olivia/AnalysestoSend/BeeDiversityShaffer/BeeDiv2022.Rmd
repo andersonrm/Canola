@@ -1,0 +1,769 @@
+---
+title: "BeeDiv2022"
+author: "Olivia Shaffer"
+date: "1/6/2023"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+Based on: <https://rpubs.com/mbh038/719881>
+
+
+
+```{r}
+library("ggplot2")
+library("vegan")
+library("tidyverse")
+library("dplyr")
+library(lme4)
+library(lmerTest)
+library(report)
+library(emmeans)
+library(multcompView)
+```
+
+Load in data
+
+```{r}
+bees <- read.csv("data/olivia_data/Bee_Samples_2022.csv")
+```
+
+Make SiteSeason column
+
+```{r}
+bees$SiteSeason <- paste(bees$Site, bees$Period, sep="_")
+```
+
+Create Interaction Matrices
+
+```{r}
+#By site
+BySite <- table(bees$Site, bees$Genus)
+as.matrix(BySite)
+
+SiteGen <- table(bees$Genus, bees$Site)
+as.matrix(SiteGen)
+
+#By Season
+BySeason <- table(bees$Period, bees$Genus)
+as.matrix(BySeason)
+
+SeasonGen <- table(bees$Genus, bees$Period)
+as.matrix(SeasonGen)
+
+
+#SiteSeason
+BySiteSeason<- table(bees$SiteSeason, bees$Genus)
+as.matrix(BySiteSeason)
+
+SiteSeasGen <- table(bees$Genus, bees$SiteSeason)
+as.matrix(SiteSeasGen)
+```
+
+Create presence/absence tables for sp. richness
+
+```{r}
+#By Site
+Sitepa<- decostand(SiteGen, method = "pa")
+
+#By Season
+Seasonpa <- decostand(SeasonGen, method = "pa")
+
+#All
+SiteSeasonpa <- decostand(SiteSeasGen, method="pa")
+```
+
+#Diversity by Site
+
+Bee Abundance - total bees found in each sites
+
+```{r}
+SiteAbun <- colSums(SiteGen)
+
+write.csv(SiteAbun, "AbunbySiteB.csv")
+
+SiteAbun <- as.data.frame(SiteAbun)
+```
+
+Species Richness - num. of sp found in each sites
+
+```{r}
+SiteRichness <- colSums(Sitepa)
+
+write.csv(SiteRichness, "SpRichnessbySiteB.csv")
+
+SiteRichnessdf <- data.frame(SiteRichness)
+```
+
+Sp Diversity
+
+```{r}
+DivbySite <- diversity(BySite,"shannon")
+write.csv(DivbySite, "DivBySiteB.csv")
+
+SiteDivdf <- data.frame(DivbySite)
+```
+
+#Diversity by Season
+
+Sp Abundance
+
+```{r}
+SeasAbun <- colSums(SeasonGen)
+
+write.csv(SeasAbun, "AbunbySeasB.csv")
+
+SeasAbun <- as.data.frame(SeasAbun)
+```
+
+Species Richness - num. of sp found in each sites
+
+```{r}
+SeasRichness <- colSums(Seasonpa)
+
+write.csv(SeasRichness, "SpRichnessbySeasonB.csv")
+
+SeasRichnessdf <- data.frame(SeasRichness)
+```
+
+Sp Diversity
+
+```{r}
+DivbySeas <- diversity(BySeason,"shannon")
+write.csv(DivbySeas, "DivBySeasonB.csv")
+```
+
+#Diversity by SiteSeason
+
+Abundance
+
+```{r}
+SiteSeasAbun <- colSums(SiteSeasGen)
+
+write.csv(SiteSeasAbun, "AbunbySiteSeasB.csv")
+
+SiteSeasAbun <- as.data.frame(SiteSeasAbun)
+```
+
+Species Richness - num. of sp found in each sites
+
+```{r}
+SiteSeasRichness <- colSums(SiteSeasonpa)
+
+write.csv(SiteSeasRichness, "AllSpRichness.csv")
+
+SiteSeasRichnessdf <- data.frame(SiteSeasRichness)
+```
+
+Diversity
+
+```{r}
+DivbyAll <- diversity(BySiteSeason,"shannon")
+write.csv(DivbyAll, "AllDiv.csv")
+```
+
+Graphs!
+
+Dissimilarity index -Determines whether species Diversity varies
+
+Season
+
+```{r}
+Seas.dist<-vegdist(BySeason,binary=FALSE)
+
+#standardize data
+Seas.dist <- vegdist(decostand(BySeason, "norm"), "euclidean")
+
+#Calc and plot
+Seas.hc<-hclust(Seas.dist)
+plot(Seas.hc)
+```
+
+Site
+
+```{r}
+Site.dist<-vegdist(BySite,binary=FALSE)
+
+#standardize data
+Site.dist <- vegdist(decostand(BySite, "norm"), "euclidean")
+
+#Calc and plot
+Site.hc<-hclust(Site.dist)
+plot(Site.hc)
+```
+
+#####Still needs edited from FloralDiv2022####
+
+-graph showing Abundance & Richness -graph showing diversity
+
+-Created combined datasets in excel
+
+Load in combined datasets
+
+```{r}
+AllSite <- read.csv("data/olivia_data/BeesbySite.csv")
+AllSite$Richness <- as.numeric(AllSite$Richness)
+
+AllSite <- AllSite %>%
+  select(Site, Richness, Shannon_Diversity) %>%
+  gather(key = "variable", value = "value", -Site)
+
+head(AllSite)
+
+AllSeason <- read.csv("data/olivia_data/BeesbySeason.csv")
+AllSeason$Richness <- as.numeric(AllSeason$Richness)
+
+AllSeason <- AllSeason %>%
+  select(Season, Richness, Shannon_Diversity) %>%
+  gather(key = "variable", value = "value", -Season)
+head(AllSeason)
+
+##to get seasons in the right order
+#AllSeason$Season <- as.character(AllSeason$Season)
+#AllSeason$Season <- factor(AllSeason$Season, levels=unique(AllSeason$Season))
+
+#AbundanceSeasonG <- read.csv("AbunbySeasB.csv")
+#AbundanceSeasonG$Season <- as.character(AbundanceSeasonG$Season)
+#AbundanceSeasonG$Season <- factor(AbundanceSeasonG$Season, levels=unique(AbundanceSeasonG$Season))
+```
+
+By Site:
+
+```{r}
+#Richness & Diversity
+ggplot(AllSite, aes(fill= variable, x = Site, y=value, group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  scale_fill_manual(values = c( '#FFC300', '#FF5733')) +
+  ggtitle("Bee Diversity by Field Site")+
+  theme(text = element_text(size = 20), axis.text.x = element_text(size = 15, angle = 90))
+
+
+#Abundance
+AbunbySite <- read.csv("data/olivia_data/AbunbySiteB.csv")
+
+ggplot(AbunbySite, aes(x = Site, y=Abundance, fill = '#900C3F', group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  theme(legend.position = "none") +
+  ggtitle("Bee Abundance by Field Site")+
+  theme(text = element_text(size = 20), axis.text.x = element_text(size = 15, angle = 90))
+
+```
+
+By Season:
+
+```{r}
+#Changing order of seasons. Above code not working for some reason
+AllSeason$Season <- factor(AllSeason$Season, levels=c("Pre-Bloom", "Peak-Bloom", "Post-Bloom"))
+AbundanceSeasonG$Season <- factor(AbundanceSeasonG$Season, levels=c("Pre-Bloom", "Peak-Bloom", "Post-Bloom"))
+
+#Richness & Diversity
+ggplot(AllSeason, aes(fill= variable, x = Season, y=value, group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  scale_fill_manual(values = c( '#FFC300', '#FF5733')) +
+  ggtitle("Bee Diversity by Sampling Period")
+
+#Abundance
+ggplot(AbundanceSeasonG, aes(x = Season, y=Abundance, fill = '#900C3F', group=1)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  theme(legend.position = "none") +
+  ggtitle("Bee Abundance by Sampling Period")
+```
+
+Testing for Sig Diff
+
+```{r}
+#Load in bee data by site & season
+AllBees <- read.csv("BeesbySiteSeason.csv")
+#Corresponding floral data
+AllFloral <- read.csv("AllFloral.csv")
+
+
+##Sites
+#Abundance
+BeeAbunSite <- lm(Abundance~Site, data = AllBees)
+summary(aov(BeeAbunSite))
+summary(lm(Abundance~Site, data = AllBees))
+#P = 0.6332
+report(BeeAbunSite)
+
+#Richness
+BeeRichSite <- lm(Richness~Site, data = AllBees)
+summary(aov(BeeRichSite))
+summary(lm(Richness~Site, data = AllBees))
+#P=0.009583
+report(BeeRichSite)
+
+#Diversity
+BeeDivSite <- lm(Shannon_Diversity~Site, data = AllBees)
+summary(aov(BeeDivSite))
+summary(lm(Shannon_Diversity~Site, data = AllBees))
+#P=0.00657
+report(BeeDivSite)
+
+##Seasons
+#Abundance
+AbundanceSeason <- lm(Abundance~Season, data = AllBees)
+#P=0.1821
+summary(aov(AbundanceSeason))
+AbundanceSeasonMixed <- lmer(Abundance~Season +(1|Site),data=AllBees)
+summary(AbundanceSeasonMixed)
+
+report(AbundanceSeasonMixed)
+#no sig diff between the two models. Report the 1st one
+summary(AbundanceSeason)
+report(AbundanceSeason)
+
+
+AbundanceSite <- lmer(Abundance~ (1|Site),data=AllBees)
+
+
+#Richness
+RichSeason <- lm(Richness~Season, data = AllBees)
+#P=0.7995
+summary(aov(RichSeason))
+RichSeasonMixed <- lmer(Richness~Season +(1|Site),data=AllBees)
+summary(RichSeasonMixed)
+report(RichSeason)
+
+RichSite <- lmer(Richness~ (1|Site),data=AllBees)
+
+#Diversity
+DivSeason<- lm(Shannon_Diversity~Season, data = AllBees)
+#P=0.8309
+summary(aov(DivSeason))
+DivSeasonMixed <- lmer(Shannon_Diversity~Season +(1|Site),data=AllBees)
+summary(DivSeasonMixed)
+report(DivSeason)
+report(DivSeasonMixed)
+
+DivSite <- lmer(Shannon_Diversity~ (1|Site),data=AllBees)
+
+#Richness & Diversity vary by site
+
+
+#Are mixed effect models better?
+anova(AbundanceSeasonMixed, AbundanceSeason)
+#simple model
+anova(RichSeasonMixed, RichSeason)
+#mixed better
+anova(DivSeasonMixed, DivSeason)
+#mixed better
+
+#Should season be included or by site?
+anova(AbundanceSite, AbundanceSeason)
+anova(RichSite, RichSeason)
+anova(DivSite, DivSeason)
+```
+
+Tukey Tests
+
+```{r}
+#Restructured tukey dataset
+BeeTukey <- read.csv("BeeTukey.csv")
+
+#Tukey Test
+anova1 <- aov(Abundance~Season, data = AllBees)
+tukey1 <- TukeyHSD(anova1, conf.level=.95)
+tukey1.cld <-multcompLetters4(anova1,tukey1)
+summary(anova1)
+print(tukey1)
+print(tukey1.cld)
+
+report(anova1)
+
+anova2 <- aov(Richness~Season, data = AllBees)
+tukey2 <- TukeyHSD(anova2, conf.level=.95)
+tukey2.cld <-multcompLetters4(anova2,tukey2)
+summary(anova2)
+print(tukey2)
+print(tukey2.cld)
+
+anova3 <- aov(Shannon_Diversity~Season, data = AllBees)
+tukey3 <- TukeyHSD(anova3, conf.level=.95)
+tukey3.cld <-multcompLetters4(anova3,tukey3)
+summary(anova3)
+print(tukey3)
+print(tukey3.cld)
+
+#Add tukey test results to dataset
+Abundance.cld <- as.data.frame.list(tukey1.cld$'Season')
+BeeTukey$Abundance_Tukey <- Abundance.cld$Letters 
+
+Richness.cld <- as.data.frame.list(tukey2.cld$'Season')
+BeeTukey$Richness_Tukey <- Richness.cld$Letters 
+
+Diversity.cld <- as.data.frame.list(tukey3.cld$'Season')
+BeeTukey$Diversity_Tukey <- Diversity.cld$Letters 
+
+#Save restructured dataset
+write.csv(BeeTukey, "BeeTukey.csv")
+
+#Plot
+str(BeeTukey)
+BeeTukey$Season <- as.factor(BeeTukey$Season)
+
+#Abundance
+ggplot(BeeTukey, aes(Season, Abundance_mean, fill =Abundance_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Set2")+
+  labs(x = "Season", y = "Average Bee Abundance")+ 
+  theme_bw()+
+  scale_x_discrete(breaks=c("1PreBloom","2PeakBloom","3DeclineBloom"),
+        labels=c("PreBloom", "PeakBloom", "DeclineBloom"))+
+  geom_errorbar(aes(ymin=Abundance_mean-Abundance_SE, ymax=Abundance_mean+Abundance_SE), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Abundance_Tukey), nudge_y = 20, size = 5)+
+  ggtitle("Average Bee Abundance by Season")
+
+#Richness
+ggplot(BeeTukey, aes(Season, Richness_mean, fill =Richness_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Spectral")+
+  labs(x = "Season", y = "Average Bee Richness")+ 
+  theme_bw()+
+  scale_x_discrete(breaks=c("1PreBloom","2PeakBloom","3DeclineBloom"),
+        labels=c("PreBloom", "PeakBloom", "DeclineBloom"))+
+  geom_errorbar(aes(ymin=Richness_mean-Richness_SE, ymax=Richness_mean+Richness_SE), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Richness_Tukey), nudge_y = 1.5, size = 5)+
+  ggtitle("Average Bee Species Richness by Season")
+  
+#Diversity
+ggplot(BeeTukey, aes(Season, Shannon_Diversity_mean, fill =Diversity_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Accent")+
+  labs(x = "Season", y = "Average Bee Shannon Diversity")+ 
+  theme_bw()+
+  scale_x_discrete(breaks=c("1PreBloom","2PeakBloom","3DeclineBloom"),
+        labels=c("PreBloom", "PeakBloom", "DeclineBloom"))+
+  geom_errorbar(aes(ymin=Shannon_Diversity_mean-Shannon_Diversity_SE, ymax=Shannon_Diversity_mean+Shannon_Diversity_SE), width = 0.2, color = "gray30")+
+  geom_text(aes(label =Diversity_Tukey), nudge_y = 0.3, size = 5)+
+  ggtitle("Average Bee Shannon Diversity by Season")
+```
+
+-By Site
+
+```{r}
+#Tukey Test
+anova4 <- aov(Abundance~Site, data = AllBees)
+tukey4 <- TukeyHSD(anova4, conf.level=.95)
+tukey4.cld <-multcompLetters4(anova4,tukey4)
+print(tukey4)
+print(tukey4.cld)
+
+anova5 <- aov(Richness~Site, data = AllBees)
+tukey5 <- TukeyHSD(anova5, conf.level=.95)
+tukey5.cld <-multcompLetters4(anova5,tukey5)
+print(tukey5)
+print(tukey5.cld)
+
+anova6 <- aov(Shannon_Diversity~Site, data = AllBees)
+tukey6 <- TukeyHSD(anova6, conf.level=.95)
+tukey6.cld <-multcompLetters4(anova6,tukey6)
+print(tukey6)
+print(tukey6.cld)
+
+#Restructured dataset for error bars
+BeeSiteTukey <- read.csv("BeeSiteTukey.csv")
+
+#Add tukey test results to dataset
+Abundance.cld4 <- as.data.frame.list(tukey4.cld$'Site')
+BeeSiteTukey$Abundance_Tukey <- Abundance.cld4$Letters 
+
+Richness.cld5 <- as.data.frame.list(tukey5.cld$'Site')
+BeeSiteTukey$Richness_Tukey <- Richness.cld5$Letters 
+
+Diversity.cld6 <- as.data.frame.list(tukey6.cld$'Site')
+BeeSiteTukey$Diversity_Tukey <- Diversity.cld6$Letters 
+
+#Save restructured dataset
+write.csv(BeeSiteTukey, "BeeSiteTukey.csv")
+
+BeeSiteTukey <- read.csv("BeeSiteTukey.csv")
+
+#Plot
+str(BeeSiteTukey)
+BeeSiteTukey$Site <- as.factor(BeeSiteTukey$Site)
+
+#Abundance
+ggplot(BeeSiteTukey, aes(Site, BeeSiteTukey$Abun_mean, fill = Abundance_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Set2")+
+  labs(x = "Site", y = "Average Bee Abundance")+ 
+  theme_bw()+
+  geom_errorbar(ymin=BeeSiteTukey$Abun_mean-BeeSiteTukey$Abundance_SE, ymax =BeeSiteTukey$Abun_mean+BeeSiteTukey$Abundance_SE, width = 0.2)+ 
+  geom_text(aes(label =Abundance_Tukey), nudge_y = 60, size = 5)+
+  scale_y_continuous(limits=c(0,150))+
+  ggtitle("Average Bee Abundance by Site")
+
+#Richness
+ggplot(BeeSiteTukey, aes(Site, Rich_mean, fill =Richness_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Paired")+
+  labs(x = "Site", y = "Average Bee Richness")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Rich_mean-Richness_SE, ymax=Rich_mean+Richness_SE), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Richness_Tukey), nudge_y = 1.5, size = 5)+
+  ggtitle("Average Bee Species Richness by Site")
+  
+#Diversity
+ggplot(BeeSiteTukey, aes(Site, Shannon_mean, fill =Diversity_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Accent")+
+  labs(x = "Site", y = "Average Bee Shannon Diversity")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Shannon_mean-Shannon_Diversity_SE, ymax=Shannon_mean+Shannon_Diversity_SE), width = 0.2, color = "gray30")+
+  geom_text(aes(label =Diversity_Tukey), nudge_y = 0.1, size = 5)+
+  ggtitle("Average Bee Shannon Diversity by Site")
+```
+
+Floral & Bee Combined Tukeys
+
+```{r}
+CombinedSiteTukey <- read.csv("CombinedSiteTukey.csv")
+```
+
+-By Season
+
+```{r}
+#Abundance
+ggplot(CombinedSiteTukey, aes(Site, Abundance_mean, fill = Type))+
+  geom_bar(stat= "identity", width =0.8, position=position_dodge())+
+  scale_fill_brewer(palette = "Paired")+
+  scale_color_brewer(palette = "Paired")+
+  labs(x = "Site", y = "Abundance")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Abundance_mean-Abundance_SD, ymax=Abundance_mean+Abundance_SD), width = 0.5, position = position_dodge())+ 
+  geom_text(aes(label =Abundance_Tukey, color = Type), position = position_dodge(0.90), size = 6, vjust=-2)+
+  ggtitle("Average Abundance by Site")
+
+#Richness
+ggplot(CombinedSiteTukey, aes(Site, Richness_mean, fill = Richness_Tukey))+
+  geom_bar(stat= "identity", width =0.8, position=position_dodge())+
+  scale_fill_brewer(palette = "Paired")+
+  scale_color_brewer(palette = "Paired")+
+  labs(x = "Site", y = "Richness")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Richness_mean-Richness_SD, ymax=Richness_mean+Richness_SD), width = 0.5, position = position_dodge())+ 
+  geom_text(aes(label =Richness_Tukey, color = Type), position = position_dodge(0.90), size = 6, vjust=-2)+
+  ggtitle("Average Richness by Site")
+#b isnt showing up
+  
+#Diversity
+ggplot(CombinedSiteTukey, aes(Site, Shannon_Diversity, fill =Diversity_Tukey))+
+  geom_bar(stat= "identity", width =0.8)+
+  scale_fill_brewer(palette = "Paired")+
+  labs(x = "Site", y = "Average Bee Shannon Diversity")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Shannon_Diversity-Shannon_Diversity_SD, ymax=Shannon_Diversity+Shannon_Diversity_SD), width = 0.2, color = "gray30")+
+  geom_text(aes(label =Diversity_Tukey, color = Diversity_Tukey), nudge_y = 0.1, size = 5)+
+  ggtitle("Average Bee Shannon Diversity by Site")
+```
+
+-By Site
+
+```{r}
+#Abundance
+ggplot(BeeSiteTukey, aes(Site, Abundance_mean, fill =Abundance_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Set2")+
+  labs(x = "Site", y = "Average Bee Abundance")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Abundance_mean-Abundance_SD, ymax=Abundance_mean+Abundance_SD), width = 0.5, color = "gray30")+ 
+  geom_text(aes(label =Abundance_Tukey), nudge_y = 60, size = 5)+
+  ggtitle("Average Bee Abundance by Site")
+
+#Richness
+ggplot(BeeSiteTukey, aes(Site, Richness_mean, fill =Richness_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Paired")+
+  labs(x = "Site", y = "Average Bee Richness")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Richness_mean-Richness_SD, ymax=Richness_mean+Richness_SD), width = 0.2, color = "gray30")+ 
+  geom_text(aes(label =Richness_Tukey), nudge_y = 1.5, size = 5)+
+  ggtitle("Average Bee Species Richness by Site")
+  
+#Diversity
+ggplot(BeeSiteTukey, aes(Site, Shannon_Diversity_mean, fill =Diversity_Tukey))+
+  geom_bar(stat= "identity", width =0.8, show.legend = FALSE)+
+  scale_fill_brewer(palette = "Accent")+
+  labs(x = "Site", y = "Average Bee Shannon Diversity")+ 
+  theme_bw()+
+  geom_errorbar(aes(ymin=Shannon_Diversity_mean-Shannon_Diversity_SD, ymax=Shannon_Diversity_mean+Shannon_Diversity_SD), width = 0.2, color = "gray30")+
+  geom_text(aes(label =Diversity_Tukey), nudge_y = 0.1, size = 5)+
+  ggtitle("Average Bee Shannon Diversity by Site")
+```
+
+Least Square Means for sites
+
+BEES
+
+```{r}
+#Abundance
+Amodel <- lm(Abundance ~ Site, data = AllBees)
+anova(Amodel)
+#no sig diff between sites
+A <- emmeans(Amodel, ~ Site)
+write.csv(A, "A.csv")
+
+pairs(A)
+
+pwpm(A)
+
+#Richness 
+Rmodel <- lm(Richness ~ Site, data = AllBees)
+anova(Rmodel)
+#sig diff between sites
+R <- emmeans(Rmodel, ~ Site)
+write.csv(R, "R.csv")
+
+pairs(R)
+# Kamiak - TurnbullSpangle           7.333 1.61 20   4.568  0.0056
+# Smoot - TurnbullPlaza              3.667 1.61 20   2.284  0.4386
+
+pwpm(R)
+
+#Diversity
+Dmodel <- lm(Shannon_Diversity ~ Site, data = AllBees)
+anova(Dmodel)
+#sig diff between sites
+D <- emmeans(Dmodel, ~ Site)
+write.csv(D, "D.csv")
+
+pairs(D)
+
+# Kamiak - TurnbullPlaza           0.99975 0.291 20   3.436  0.0617
+# Kamiak - TurnbullSpangle         1.15031 0.291 20   3.954  0.0212
+```
+
+PLANTS
+
+```{r}
+#Abundance
+FAmodel <- lm(Abundance ~ Site, data = AllFloral)
+anova(FAmodel)
+#no sig diff between sites
+FA <- emmeans(FAmodel, ~ Site)
+
+write.csv(t, "t.csv")
+
+pairs(FA)
+
+#Richness 
+FRmodel <- lm(Richness ~ Site, data = AllFloral)
+anova(FRmodel)
+#no sig diff between sites
+FR <- emmeans(FRmodel, ~ Site)
+
+write.csv(FR, "FR.csv")
+
+pairs(FR)
+
+
+#Diversity
+FDmodel <- lm(Shannon_Diversity ~ Site, data = AllFloral)
+anova(FDmodel)
+#no sig diff between sites
+FD <- emmeans(FDmodel, ~ Site)
+
+pairs(FD)
+
+write.csv(FD, "FD.csv")
+```
+
+Relationship with Canola
+
+```{r}
+Canola <- read.csv("CanolaPercentages.csv")
+SiteFloral <- read.csv("BySiteFloral.csv")
+```
+
+Distance
+
+```{r}
+cor.test(Canola$DistancetoCanola, SiteFloral$Abundance)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Abundance, x= Canola$DistancetoCanola, color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Abundance, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Abundance", x = "Distance to Canola", colour = "Site") +
+  ggtitle("Floral Abundance and Distance to Canola")
+
+cor.test(Canola$DistancetoCanola, SiteFloral$Richness)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Richness, x= Canola$DistancetoCanola, color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Richness, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Richness", x = "Distance to Canola", colour = "Site") +
+  ggtitle("Floral Richness and Distance to Canola")
+
+cor.test(Canola$DistancetoCanola, SiteFloral$Shannon_Diversity)
+
+ggplot() + 
+  geom_point(mapping = aes(y = SiteFloral$Shannon_Diversity, x= Canola$DistancetoCanola, color = Canola$Site)) + 
+  geom_smooth(mapping = aes(y = SiteFloral$Shannon_Diversity, x = Canola$DistancetoCanola), method = lm) +
+  labs(y = "Floral Shannon Diversity", x = "Distance to Canola", colour = "Site") +
+  ggtitle("Floral Diversity and Distance to Canola")
+```
+
+Corr between bee div and plant div
+
+```{r}
+AllFloral <- read.csv("AllFloral.csv")
+AllBees <- read.csv("BeesbySiteSeason.csv")
+
+
+AbunAbun <- cor.test(AllFloral$Abundance, AllBees$Abundance)
+#p-value = 0.7365
+summary(lm(AllBees$Abundance~AllFloral$Abundance))
+summary(lmer(AllBees$Abundance~AllFloral$Abundance + (1|AllFloral$Site)))
+
+AbunRich <- cor.test(AllFloral$Abundance, AllBees$Richness)
+#p-value = 0.2721
+summary(lm(AllBees$Richness~AllFloral$Abundance))
+summary(lmer(AllBees$Richness~AllFloral$Abundance + (1|AllFloral$Site)))
+
+AbunDiv <- cor.test(AllFloral$Abundance, AllBees$Shannon_Diversity)
+#p-value = 0.5245
+summary(lm(AllBees$Shannon_Diversity~AllFloral$Abundance))
+summary(lmer(AllBees$Shannon_Diversity~AllFloral$Abundance + (1|AllFloral$Site)))
+
+report(AbunDiv)
+#floral abundance does not increase bee abundance, richness, or diversity
+
+
+RichAbun <- cor.test(AllFloral$Richness, AllBees$Abundance)
+#p-value = 0.1176
+summary(lm(AllBees$Abundance~AllFloral$Richness))
+summary(lmer(AllBees$Abundance~AllFloral$Richness + (1|AllFloral$Site)))
+
+RichRich <- cor.test(AllFloral$Richness, AllBees$Richness)
+#p-value = 0.4744
+summary(lm(AllBees$Richness~AllFloral$Richness))
+summary(lmer(AllBees$Richness~AllFloral$Richness + (1|AllFloral$Site)))
+
+RichDiv <- cor.test(AllFloral$Richness, AllBees$Shannon_Diversity)
+#p-value = 0.5027
+summary(lm(AllBees$Shannon_Diversity~AllFloral$Richness))
+summary(lmer(AllBees$Shannon_Diversity~AllFloral$Richness + (1|AllFloral$Site)))
+
+#floral richness does not increase bee abundance, richness, or diversity
+
+cor.test(AllFloral$Shannon_Diversity, AllBees$Abundance)
+#p-value = 0.4771
+summary(lm(AllBees$Abundance~AllFloral$Shannon_Diversity))
+summary(lmer(AllBees$Abundance~AllFloral$Shannon_Diversity + (1|AllFloral$Site)))
+
+cor.test(AllFloral$Shannon_Diversity, AllBees$Richness)
+#p-value = 0.5315
+summary(lm(AllBees$Richness~AllFloral$Shannon_Diversity))
+summary(lmer(AllBees$Richness~AllFloral$Shannon_Diversity + (1|AllFloral$Site)))
+
+cor.test(AllFloral$Shannon_Diversity, AllBees$Shannon_Diversity)
+#p-value = 0.7075
+summary(lm(AllBees$Shannon_Diversity~AllFloral$Shannon_Diversity))
+summary(lmer(AllBees$Shannon_Diversity~AllFloral$Shannon_Diversity + (1|AllFloral$Site)))
+#floral div does not increase bee abundance, richness, or diversity
+
+#No relationship between plant div and bee div
+```

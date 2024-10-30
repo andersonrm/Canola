@@ -1,0 +1,1343 @@
+---
+title: "Ch1Lms"
+author: "Olivia Shaffer"
+date: "2023-04-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("ggplot2")
+install.packages("ggThemeAssist")
+install.packages("lme4")
+install.packages("report")
+install.packages("psych")
+install.packages("PerformanceAnalytics")
+install.packages("corrplot")
+```
+
+```{r}
+library(ggplot2)
+library(ggThemeAssist)
+library(lme4)
+library(report)
+library(psych)
+library(PerformanceAnalytics)
+library(corrplot)
+```
+
+
+Load in Data
+```{r}
+All <- read.csv("StabilityLandscape.csv")
+Corr <- read.csv("Corr.csv")
+```
+ 
+#Bee Stability
+ 
+##Bee Stability x Canola%
+
+```{r}
+#linear regression
+summary(lmer(BeeStability ~ X2kmCan. + (1|Site), data = All))
+#Error in h(simpleError(msg, call)) : error in evaluating the argument 'object' in selecting a method for function 'summary': number of levels of each grouping factor must be < number of observations (problems: Site)
+
+#Should have site as random effect. However, can't bc there's only 1 value per site. Should I calc Stability by transect?
+```
+
+
+Bee Stability ~ 2kmCanola%
+```{r}
+Stab2km <- lm(Beestability ~ X2kmCan., data = All)
+
+summary(lm(Beestability ~ X2kmCan., data = All))
+#Residual standard error: 0.7021 on 8 degrees of freedom
+#Multiple R-squared:  0.3563,	Adjusted R-squared:  0.2759 
+#F-statistic: 4.429 on 1 and 8 DF,  p-value: 0.06846
+
+report(Stab2km)
+#We fitted a linear model (estimated using OLS) to predict BeeStability with X2kmCan. (formula:BeeStability ~ X2kmCan.). The model explains a statistically not significant and substantial proportion of variance (R2 = 0.36, F(1, 8) = 4.43, p = 0.068, adj. R2 = 0.28). The model's intercept, corresponding to X2kmCan. = 0, is at 2.15 (95% CI [1.48, 2.83], t(8) = 7.34, p <.001). Within this model:
+
+#- The effect of X2kmCan is statistically non-significant and negative (beta = -0.03, 95% CI[-0.07, 3.20e-03], t(8) = -2.10, p = 0.068; Std. beta = -0.60, 95% CI [-1.25, 0.06])
+
+```
+
+
+Bee Stability ~ 1kmCanola%
+```{r}
+Stab1km <- lm(Beestability ~ X1kmCan., data = All)
+
+summary(lm(Beestability ~ X1kmCan., data = All))
+#Residual standard error: 0.8086 on 8 degrees of freedom Multiple R-squared:  0.1463,	Adjusted R-squared:  0.03956 F-statistic: 1.371 on 1 and 8 DF,  p-value: 0.2754
+
+report(Stab1km)
+#We fitted a linear model (estimated using OLS) to predict BeeStability with X1kmCan. (formula:BeeStability ~ X1kmCan.). The model explains a statistically not significant and moderate proportion of variance (R2 = 0.15, F(1, 8) = 1.37, p = 0.275, adj. R2 = 0.04). The model's intercept, corresponding to X1kmCan. = 0, is at 1.95 (95% CI [1.24, 2.66], t(8) = 6.34, p <.001). Within this model:
+
+#- The effect of X1kmCan is statistically non-significant and negative (beta = -0.02, 95% CI[-0.05, 0.01], t(8) = -1.17, p = 0.275; Std. beta = -0.38, 95% CI [-1.14, 0.37])
+```
+
+
+Bee Stability ~ 500mCanola%
+```{r}
+Stab500m <- lm(Beestability ~ X500mCan., data = All)
+
+summary(lm(Beestability ~ X500mCan., data = All))
+#Residual standard error: 0.8748 on 8 degrees of freedom Multiple R-squared:  0.0006502,	Adjusted R-squared:  -0.1243 F-statistic: 0.005205 on 1 and 8 DF,  p-value: 0.9443
+
+report(Stab500m)
+#We fitted a linear model (estimated using OLS) to predict BeeStability with X500mCan. (formula: BeeStability ~ X500mCan.). The model explains a statistically not significant and very weak proportion of variance (R2 = 6.50e-04, F(1, 8) = 5.21e-03, p = 0.944, adj. R2 = -0.12). The model's intercept, corresponding to X500mCan. = 0, is at 1.77 (95% CI [0.94, 2.59], t(8) = 4.96, p = 0.001). Within this model:
+
+#- The effect of X500mCan is statistically non-significant and negative (beta = -1.29e-03, 95% CI [-0.04, 0.04], t(8) = -0.07, p = 0.944; Std. beta = -0.03, 95% CI [-0.84, 0.79])
+```
+
+##Bee Stability x CanolaDistance
+
+Bee Stability ~ CanolaDistance
+```{r}
+StabDistance <- lm(Beestability ~ DistancetoCanola, data = All)
+
+summary(lm(Beestability ~ DistancetoCanola, data = All))
+#Residual standard error: 0.8748 on 8 degrees of freedom Multiple R-squared:  0.0005578,	Adjusted R-squared:  -0.1244 F-statistic: 0.004465 on 1 and 8 DF,  p-value: 0.9484
+
+report(StabDistance)
+#We fitted a linear model (estimated using OLS) to predict BeeStability with DistancetoCanola (formula: BeeStability ~ DistancetoCanola). The model explains a statistically not significant and very weak proportion of variance (R2 = 5.58e-04, F(1, 8) = 4.46e-03, p = 0.948, adj. R2 = -0.12). The model's intercept, corresponding to DistancetoCanola = 0, is at 1.74 (95% CI [0.95, 2.53], t(8) = 5.07, p < .001). Within this model:
+
+#- The effect of DistancetoCanola is statistically non-significant and positive (beta = 8.12e-06, 95% CI [-2.72e-04, 2.89e-04], t(8) = 0.07, p = 0.948; Std. beta = 0.02, 95% CI [-0.79, 0.84])
+```
+
+##Bee stability x Landscape Types
+```{r}
+#Non flowering ag
+StabNonflower <- lm(BeeStability ~ Non.flowering.ag, data = All)
+
+summary(lm(BeeStability ~ Non.flowering.ag, data = All))
+#Residual standard error: 0.7928 on 8 degrees of freedom
+#Multiple R-squared:  0.1791,	Adjusted R-squared:  0.07652 
+#F-statistic: 1.746 on 1 and 8 DF,  p-value: 0.2229
+
+
+#Barren
+StabBarren <- lm(BeeStability ~ Barren, data = All)
+
+summary(lm(BeeStability ~ Barren, data = All))
+#Residual standard error: 0.874 on 8 degrees of freedom
+#Multiple R-squared:  0.0026,	Adjusted R-squared:  -0.1221 
+#F-statistic: 0.02085 on 1 and 8 DF,  p-value: 0.8888
+
+
+#Development
+StabDev <- lm(BeeStability ~ Development, data = All)
+
+summary(lm(BeeStability ~ Development, data = All))
+#Residual standard error: 0.8174 on 8 degrees of freedom
+#Multiple R-squared:  0.1274,	Adjusted R-squared:  0.01832 
+#F-statistic: 1.168 on 1 and 8 DF,  p-value: 0.3113
+
+
+#Tree Fruit
+StabTree <- lm(BeeStability ~ Tree.Fruit.Crops, data = All)
+
+summary(lm(BeeStability ~ Tree.Fruit.Crops, data = All))
+#Residual standard error: 0.8328 on 8 degrees of freedom
+#Multiple R-squared:  0.0944,	Adjusted R-squared:  -0.0188 
+#F-statistic: 0.8339 on 1 and 8 DF,  p-value: 0.3878
+
+
+#Forest & Tree
+StabForest <- lm(BeeStability ~ Forest.and.Tree.Crops, data = All)
+
+summary(lm(BeeStability ~ Forest.and.Tree.Crops, data = All))
+#Residual standard error: 0.8745 on 8 degrees of freedom
+#Multiple R-squared:  0.001393,	Adjusted R-squared:  -0.1234 
+#F-statistic: 0.01116 on 1 and 8 DF,  p-value: 0.9185
+
+#Wetland & water
+StabWater <- lm(BeeStability ~ Wetland.and.Open.Water, data = All)
+
+summary(lm(BeeStability ~ Wetland.and.Open.Water, data = All))
+#Residual standard error: 0.8739 on 8 degrees of freedom
+#Multiple R-squared:  0.002742,	Adjusted R-squared:  -0.1219 
+#F-statistic: 0.022 on 1 and 8 DF,  p-value: 0.8858
+
+
+#Pasture
+StabPasture <- lm(BeeStability ~ Pasture, data = All)
+
+summary(lm(BeeStability ~ Pasture, data = All))
+#Residual standard error: 0.8401 on 8 degrees of freedom
+#Multiple R-squared:  0.0783,	Adjusted R-squared:  -0.03691 
+#F-statistic: 0.6796 on 1 and 8 DF,  p-value: 0.4336
+
+
+#Other flowering ag
+Stabflowerag <- lm(BeeStability ~ Other.Flowering.ag, data = All)
+
+summary(lm(BeeStability ~ Other.Flowering.ag, data = All))
+#Residual standard error: 0.8324 on 8 degrees of freedom
+#Multiple R-squared:  0.09512,	Adjusted R-squared:  -0.01799 
+#F-statistic: 0.841 on 1 and 8 DF,  p-value: 0.3859
+
+```
+
+
+#Bee PDI
+##Bee PDI x Canola%
+
+```{r}
+#linear regression
+summary(lmer(BeePDI ~ X2kmCan. + (1|Site), data = All))
+#Error in h(simpleError(msg, call)) : error in evaluating the argument 'object' in selecting a method for function 'summary': number of levels of each grouping factor must be < number of observations (problems: Site)
+
+#Should have site as random effect. However, can't bc there's only 1 value per site. Should I calc PDI by transect?
+```
+
+
+Bee PDI ~ 2kmCanola%
+```{r}
+PDI2km <- lm(BeePDI ~ X2kmCan., data = All)
+
+summary(lm(BeePDI ~ X2kmCan., data = All))
+#Residual standard error: 0.1338 on 8 degrees of freedom
+#Multiple R-squared:  0.2004,	Adjusted R-squared:  0.1004 
+#F-statistic: 2.005 on 1 and 8 DF,  p-value: 0.1945
+
+report(PDI2km)
+#We fitted a linear model (estimated using OLS) to predict BeePDI with X2kmCan. (formula: BeePDI ~ X2kmCan.). The model explains a statistically not significant and moderate proportion of variance (R2 = 0.20, F(1, 8) = 2.00, p = 0.195, adj. R2 = 0.10). The model's intercept, corresponding to X2kmCan. = 0, is at 0.81 (95% CI [0.68, 0.94], t(8) = 14.46, p <.001). Within this model:
+
+# - The effect of X2kmCan is statistically non-significant and positive (beta = 4.28e-03, 95% CI [-2.69e-03, 0.01], t(8) = 1.42, p = 0.195; Std. beta = 0.45, 95% CI [-0.28, 1.18])
+```
+
+
+Bee PDI ~ 1kmCanola%
+```{r}
+PDI1km <- lm(BeePDI ~ X1kmCan., data = All)
+
+summary(lm(BeePDI ~ X1kmCan., data = All))
+#Residual standard error: 0.1367 on 8 degrees of freedom Multiple R-squared:  0.1657,	Adjusted R-squared:  0.06145 F-statistic: 1.589 on 1 and 8 DF,  p-value: 0.2429
+
+report(PDI1km)
+#We fitted a linear model (estimated using OLS) to predict BeePDI with X1kmCan. (formula: BeePDI ~ X1kmCan.). The model explains a statistically not significant and moderate proportion of variance (R2 = 0.17, F(1, 8) = 1.59, p = 0.243, adj. R2 = 0.06). The model's intercept, corresponding to X1kmCan. = 0, is at 0.82 (95% CI [0.70, 0.94], t(8) = 15.82, p <.001). Within this model:
+
+#- The effect of X1kmCan is statistically non-significant and positive (beta = 2.77e-03, 95% CI [-2.29e-03, 7.83e-03], t(8) = 1.26, p = 0.243; Std. beta = 0.41, 95% CI [-0.34, 1.15])
+```
+
+
+Bee PDI ~ 500mCanola%
+```{r}
+PDI500m <- lm(BeePDI ~ X500mCan., data = All)
+
+summary(lm(BeePDI ~ X500mCan., data = All))
+#Residual standard error: 0.147 on 8 degrees of freedom Multiple R-squared:  0.03486,	Adjusted R-squared:  -0.08578 F-statistic: 0.289 on 1 and 8 DF,  p-value: 0.6055
+
+report(PDI500m)
+#We fitted a linear model (estimated using OLS) to predict BeePDI with X500mCan. (formula: BeePDI ~ X500mCan.). The model explains a statistically not significant and weak proportion of variance (R2 = 0.03, F(1, 8) = 0.29, p = 0.606, adj. R2 = -0.09). The model's intercept, corresponding to X500mCan. = 0, is at 0.84 (95% CI [0.70, 0.98], t(8) = 14.01, p < .001).Within this model:
+
+#- The effect of X500mCan is statistically non-significant and positive (beta = 1.62e-03, 95% CI [-5.33e-03, 8.57e-03], t(8) = 0.54, p = 0.606; Std. beta = 0.19, 95% CI [-0.61, 0.99])
+```
+
+##Bee PDI x CanolaDistance
+
+Bee PDI ~ CanolaDistance
+```{r}
+PDIDistance <- lm(BeePDI ~ DistancetoCanola, data = All)
+
+summary(lm(BeePDI ~ DistancetoCanola, data = All))
+#Residual standard error: 0.1458 on 8 degrees of freedom Multiple R-squared:  0.05087,	Adjusted R-squared:  -0.06777F-statistic: 0.4288 on 1 and 8 DF,  p-value: 0.531
+
+report(PDIDistance)
+#We fitted a linear model (estimated using OLS) to predict BeePDI with DistancetoCanola (formula: BeePDI ~ DistancetoCanola). The model explains a statistically not significant and weak proportion of variance (R2 = 0.05, F(1, 8) = 0.43, p = 0.531, adj. R2 = -0.07). Themodel's intercept, corresponding to DistancetoCanola = 0, is at 0.84 (95% CI [0.71, 0.97],t(8) = 14.67, p < .001). Within this model:
+
+#- The effect of DistancetoCanola is statistically non-significant and positive (beta =1.33e-05, 95% CI [-3.35e-05, 6.00e-05], t(8) = 0.65, p = 0.531; Std. beta = 0.23, 95% CI[-0.57, 1.02])
+```
+
+##Bee PDI x Landscape Types
+```{r}
+#Non flowering ag
+PDINonflower <- lm(BeePDI ~ Non.flowering.ag, data = All)
+
+summary(lm(BeePDI ~ Non.flowering.ag, data = All))
+#Residual standard error: 0.1497 on 8 degrees of freedom Multiple R-squared:  4.757e-06,	Adjusted R-squared:  -0.125 F-statistic: 3.806e-05 on 1 and 8 DF,  p-value: 0.9952
+
+
+#Barren
+PDIBarren <- lm(BeePDI ~ Barren, data = All)
+
+summary(lm(BeePDI ~ Barren, data = All))
+#Residual standard error: 0.1496 on 8 degrees of freedom Multiple R-squared:  0.0002947,	Adjusted R-squared:  -0.1247 F-statistic: 0.002359 on 1 and 8 DF,  p-value: 0.9625
+
+
+#Development
+PDIDev <- lm(BeePDI ~ Development, data = All)
+
+summary(lm(BeePDI ~ Development, data = All))
+#Residual standard error: 0.1467 on 8 degrees of freedom Multiple R-squared:  0.03979,	Adjusted R-squared:  -0.08024 F-statistic: 0.3315 on 1 and 8 DF,  p-value: 0.5806
+
+
+#Tree Fruit
+PDITree <- lm(BeePDI ~ Tree.Fruit.Crops, data = All)
+
+summary(lm(BeePDI ~ Tree.Fruit.Crops, data = All))
+#Residual standard error: 0.1387 on 8 degrees of freedom Multiple R-squared:  0.141,	Adjusted R-squared:  0.03364 F-statistic: 1.313 on 1 and 8 DF,  p-value: 0.2849
+
+
+#Forest & Tree
+PDIForest <- lm(BeePDI ~ Forest.and.Tree.Crops, data = All)
+
+summary(lm(BeePDI ~ Forest.and.Tree.Crops, data = All))
+#Residual standard error: 0.1414 on 8 degrees of freedom Multiple R-squared:  0.1075,	Adjusted R-squared:  -0.004058 F-statistic: 0.9636 on 1 and 8 DF,  p-value: 0.355
+
+#Wetland & water
+PDIWater <- lm(BeePDI ~ Wetland.and.Open.Water, data = All)
+
+summary(lm(BeePDI ~ Wetland.and.Open.Water, data = All))
+#Residual standard error: 0.1374 on 8 degrees of freedom Multiple R-squared:  0.1566,	Adjusted R-squared:  0.05116 F-statistic: 1.485 on 1 and 8 DF,  p-value: 0.2577
+
+
+#Pasture
+PDIPasture <- lm(BeePDI ~ Pasture, data = All)
+
+summary(lm(BeePDI ~ Pasture, data = All))
+#Residual standard error: 0.149 on 8 degrees of freedom Multiple R-squared:  0.008802,	Adjusted R-squared:  -0.1151 F-statistic: 0.07104 on 1 and 8 DF,  p-value: 0.7966
+
+
+#Other flowering ag
+PDIflowerag <- lm(BeePDI ~ Other.Flowering.ag, data = All)
+
+summary(lm(BeePDI ~ Other.Flowering.ag, data = All))
+#Residual standard error: 0.1417 on 8 degrees of freedom Multiple R-squared:  0.1038,	Adjusted R-squared:  -0.008252 F-statistic: 0.9263 on 1 and 8 DF,  p-value: 0.364
+```
+
+
+
+#Plant Stability
+ 
+##Plant Stability x Canola%
+
+```{r}
+#linear regression
+summary(lmer(Plantstability ~ X2kmCan. + (1|Site), data = All))
+#Error in h(simpleError(msg, call)) : error in evaluating the argument 'object' in selecting a method for function 'summary': number of levels of each grouping factor must be < number of observations (problems: Site)
+
+#Should have site as random effect. However, can't bc there's only 1 value per site. Should I calc Stability by transect?
+```
+
+
+Plant Stability ~ 2kmCanola%
+```{r}
+PStab2km <- lm(Plantstability ~ X2kmCan., data = All)
+
+summary(lm(Plantstability ~ X2kmCan., data = All))
+#Residual standard error: 0.2613 on 8 degrees of freedom Multiple R-squared:  0.1784,	Adjusted R-squared:  0.07572 F-statistic: 1.737 on 1 and 8 DF,  p-value: 0.224
+
+report(PStab2km)
+#We fitted a linear model (estimated using OLS) to predict Plantstability with X2kmCan. (formula: Plantstability ~ X2kmCan.). The model explains a statistically not significant and moderate proportion of variance (R2 = 0.18, F(1, 8) = 1.74, p = 0.224, adj. R2 = 0.08). The model's intercept, corresponding to X2kmCan. = 0, is at 0.17 (95% CI [-0.08, 0.42], t(8) = 1.53, p = 0.164). Within this model:
+
+#- The effect of X2kmCan is statistically non-significant and positive (beta = 7.78e-03, 95% CI [-5.83e-03, 0.02], t(8) = 1.32, p = 0.224; Std. beta = 0.42, 95% CI [-0.32, 1.16])
+```
+
+
+Plant Stability ~ 1kmCanola%
+```{r}
+PStab1km <- lm(Plantstability ~ X1kmCan., data = All)
+
+summary(lm(Plantstability ~ X1kmCan., data = All))
+#Residual standard error: 0.269 on 8 degrees of freedom Multiple R-squared:  0.1297,	Adjusted R-squared:  0.02091 F-statistic: 1.192 on 1 and 8 DF,  p-value: 0.3067
+
+report(PStab1km)
+#We fitted a linear model (estimated using OLS) to predict Plantstability with X1kmCan. (formula: Plantstability ~ X1kmCan.). The model explains a statistically not significant and weak proportion of variance (R2 = 0.13, F(1, 8) = 1.19, p = 0.307, adj. R2 = 0.02). The model's intercept, corresponding to X1kmCan. = 0, is at 0.20 (95% CI [-0.04, 0.43], t(8) =1.94, p = 0.088). Within this model:
+
+#- The effect of X1kmCan is statistically non-significant and positive (beta = 4.72e-03, 95% CI [-5.24e-03, 0.01], t(8) = 1.09, p = 0.307; Std. beta = 0.36, 95% CI [-0.40, 1.12])
+```
+
+Plant Stability ~ 500mCanola%
+```{r}
+PStab500m <- lm(Plantstability ~ X500mCan., data = All)
+
+summary(lm(Plantstability ~ X500mCan., data = All))
+#Residual standard error: 0.2536 on 8 degrees of freedom Multiple R-squared:  0.2265,	Adjusted R-squared:  0.1299 F-statistic: 2.343 on 1 and 8 DF,  p-value: 0.1644
+
+report(PStab500m)
+#We fitted a linear model (estimated using OLS) to predict Plantstability with X500mCan. (formula: Plantstability ~ X500mCan.). The model explains a statistically not significant and moderate proportion of variance (R2 = 0.23, F(1, 8) = 2.34, p = 0.164, adj. R2 = 0.13). The model's intercept, corresponding to X500mCan. = 0, is at 0.16 (95% CI [-0.08, 0.40], t(8) =1.56, p = 0.157). Within this model:
+
+#- The effect of X500mCan is statistically non-significant and positive (beta = 7.96e-03, 95% CI [-4.03e-03, 0.02], t(8) = 1.53, p = 0.164; Std. beta = 0.48, 95% CI [-0.24, 1.19])
+```
+
+##Plant Stability x CanolaDistance
+
+Plant Stability ~ CanolaDistance
+```{r}
+PStabDistance <- lm(Plantstability ~ DistancetoCanola, data = All)
+
+summary(lm(Plantstability ~ DistancetoCanola, data = All))
+#Residual standard error: 0.2735 on 8 degrees of freedom Multiple R-squared:  0.1001,	Adjusted R-squared:  -0.01235 F-statistic: 0.8902 on 1 and 8 DF,  p-value: 0.373
+
+report(PStabDistance)
+#We fitted a linear model (estimated using OLS) to predict Plantstability with DistancetoCanola (formula: Plantstability ~ DistancetoCanola). The model explains a statistically not significant and weak proportion of variance (R2 = 0.10, F(1, 8) = 0.89, p = 0.373, adj. R2 = -0.01). The model's intercept, corresponding to DistancetoCanola = 0, is at0.32 (95% CI [0.07, 0.57], t(8) = 2.99, p = 0.017). Within this model:
+
+#- The effect of DistancetoCanola is statistically non-significant and negative (beta =-3.59e-05, 95% CI [-1.24e-04, 5.18e-05], t(8) = -0.94, p = 0.373; Std. beta = -0.32, 95% CI[-1.09, 0.46])
+```
+
+##Plant stability x Landscape Types
+```{r}
+#Non flowering ag
+PStabNonflower <- lm(Plantstability ~ Non.flowering.ag, data = All)
+
+summary(lm(Plantstability ~ Non.flowering.ag, data = All))
+#Residual standard error: 0.2812 on 8 degrees of freedom Multiple R-squared:  0.049,	Adjusted R-squared:  -0.06988 F-statistic: 0.4122 on 1 and 8 DF,  p-value: 0.5388
+
+
+#Barren
+PStabBarren <- lm(Plantstability ~ Barren, data = All)
+
+summary(lm(Plantstability ~ Barren, data = All))
+#Residual standard error: 0.2862 on 8 degrees of freedom Multiple R-squared:  0.01461,	Adjusted R-squared:  -0.1086 F-statistic: 0.1186 on 1 and 8 DF,  p-value: 0.7395
+
+
+#Development
+PStabDev <- lm(Plantstability ~ Development, data = All)
+
+summary(lm(Plantstability ~ Development, data = All))
+#Residual standard error: 0.286 on 8 degrees of freedom Multiple R-squared:  0.01635,	Adjusted R-squared:  -0.1066 F-statistic: 0.1329 on 1 and 8 DF,  p-value: 0.7248
+
+
+#Tree Fruit
+PStabTree <- lm(Plantstability ~ Tree.Fruit.Crops, data = All)
+
+summary(lm(Plantstability ~ Tree.Fruit.Crops, data = All))
+#Residual standard error: 0.2838 on 8 degrees of freedom Multiple R-squared:  0.03137,	Adjusted R-squared:  -0.08971 F-statistic: 0.2591 on 1 and 8 DF,  p-value: 0.6245
+
+
+#Forest & Tree
+PStabForest <- lm(Plantstability ~ Forest.and.Tree.Crops, data = All)
+
+summary(lm(Plantstability ~ Forest.and.Tree.Crops, data = All))
+#Residual standard error: 0.2729 on 8 degrees of freedom Multiple R-squared:  0.1038,	Adjusted R-squared:  -0.008203 F-statistic: 0.9268 on 1 and 8 DF,  p-value: 0.3639
+
+#Wetland & water
+PStabWater <- lm(Plantstability ~ Wetland.and.Open.Water, data = All)
+
+summary(lm(Plantstability ~ Wetland.and.Open.Water, data = All))
+#Residual standard error: 0.2823 on 8 degrees of freedom Multiple R-squared:  0.04142,	Adjusted R-squared:  -0.0784 F-statistic: 0.3457 on 1 and 8 DF,  p-value: 0.5728
+
+#Pasture
+PStabPasture <- lm(Plantstability ~ Pasture, data = All)
+
+summary(lm(Plantstability ~ Pasture, data = All))
+#Residual standard error: 0.2661 on 8 degrees of freedom Multiple R-squared:  0.1484,	Adjusted R-squared:  0.04194 F-statistic: 1.394 on 1 and 8 DF,  p-value: 0.2716
+
+
+#Other flowering ag
+PStabflowerag <- lm(Plantstability ~ Other.Flowering.ag, data = All)
+
+summary(lm(Plantstability ~ Other.Flowering.ag, data = All))
+#Residual standard error: 0.2391 on 8 degrees of freedom Multiple R-squared:  0.3124,	Adjusted R-squared:  0.2265 F-statistic: 3.635 on 1 and 8 DF,  p-value: 0.09303
+
+```
+
+
+#Plant PDI
+
+
+#Plant PDI
+##Plant PDI x Canola%
+
+```{r}
+#linear regression
+summary(lmer(PlantPDI ~ X2kmCan. + (1|Site), data = All))
+#Error in h(simpleError(msg, call)) : error in evaluating the argument 'object' in selecting a method for function 'summary': number of levels of each grouping factor must be < number of observations (problems: Site)
+
+#Should have site as random effect. However, can't bc there's only 1 value per site. Should I calc PDI by transect?
+```
+
+
+Plant PDI ~ 2kmCanola%
+```{r}
+PPDI2km <- lm(PlantPDI ~ X2kmCan., data = All)
+
+summary(lm(PlantPDI ~ X2kmCan., data = All))
+#Residual standard error: 0.1212 on 8 degrees of freedom Multiple R-squared:  0.0669,	Adjusted R-squared:  -0.04974 F-statistic: 0.5735 on 1 and 8 DF,  p-value: 0.4706
+
+report(PPDI2km)
+#We fitted a linear model (estimated using OLS) to predict PlantPDI with X2kmCan. (formula:PlantPDI ~ X2kmCan.). The model explains a statistically not significant and weak proportionof variance (R2 = 0.07, F(1, 8) = 0.57, p = 0.471, adj. R2 = -0.05). The model's intercept,corresponding to X2kmCan. = 0, is at 0.94 (95% CI [0.82, 1.05], t(8) = 18.50, p < .001).Within this model:
+
+#- The effect of X2kmCan is statistically non-significant and positive (beta = 2.07e-03, 95%CI [-4.24e-03, 8.39e-03], t(8) = 0.76, p = 0.471; Std. beta = 0.26, 95% CI [-0.53, 1.05])
+```
+
+
+Plant PDI ~ 1kmCanola%
+```{r}
+PPDI1km <- lm(PlantPDI ~ X1kmCan., data = All)
+
+summary(lm(PlantPDI ~ X1kmCan., data = All))
+#Residual standard error: 0.1228 on 8 degrees of freedom Multiple R-squared:  0.04298,	Adjusted R-squared:  -0.07665 F-statistic: 0.3593 on 1 and 8 DF,  p-value: 0.5655
+
+
+report(PPDI1km)
+#We fitted a linear model (estimated using OLS) to predict PlantPDI with X1kmCan. (formula:PlantPDI ~ X1kmCan.). The model explains a statistically not significant and weak proportion of variance (R2 = 0.04, F(1, 8) = 0.36, p = 0.565, adj. R2 = -0.08). The model's intercept, corresponding to X1kmCan. = 0, is at 0.95 (95% CI [0.84, 1.05], t(8) = 20.25, p < .001).Within this model:
+
+#- The effect of X1kmCan is statistically non-significant and positive (beta = 1.18e-03, 95%CI [-3.36e-03, 5.73e-03], t(8) = 0.60, p = 0.565; Std. beta = 0.21, 95% CI [-0.59, 1.00])
+```
+
+
+Plant PDI ~ 500mCanola%
+```{r}
+PPDI500m <- lm(PlantPDI ~ X500mCan., data = All)
+
+summary(lm(PlantPDI ~ X500mCan., data = All))
+#Residual standard error: 0.1211 on 8 degrees of freedom Multiple R-squared:  0.06868,	Adjusted R-squared:  -0.04774 F-statistic: 0.5899 on 1 and 8 DF,  p-value: 0.4645
+
+report(PPDI500m)
+#We fitted a linear model (estimated using OLS) to predict PlantPDI with X500mCan. (formula: PlantPDI ~ X500mCan.). The model explains a statistically not significant and weak proportion of variance (R2 = 0.07, F(1, 8) = 0.59, p = 0.465, adj. R2 = -0.05). The model's intercept,corresponding to X500mCan. = 0, is at 0.94 (95% CI [0.82, 1.05], t(8) = 19.01, p < .001).Within this model:
+
+#- The effect of X500mCan is statistically non-significant and positive (beta = 1.91e-03, 95% CI [-3.82e-03, 7.64e-03], t(8) = 0.77, p = 0.465; Std. beta = 0.26, 95% CI [-0.52, 1.05])
+```
+
+##Plant PDI x CanolaDistance
+
+Plant PDI ~ CanolaDistance
+```{r}
+PPDIDistance <- lm(PlantPDI ~ DistancetoCanola, data = All)
+
+summary(lm(PlantPDI ~ DistancetoCanola, data = All))
+#Residual standard error: 0.1255 on 8 degrees of freedom Multiple R-squared:  1.152e-06,	Adjusted R-squared:  -0.125 F-statistic: 9.219e-06 on 1 and 8 DF,  p-value: 0.9977
+
+report(PPDIDistance)
+#We fitted a linear model (estimated using OLS) to predict PlantPDI with DistancetoCanola (formula: PlantPDI ~ DistancetoCanola). The model explains a statistically not significant and very weak proportion of variance (R2 = 1.15e-06, F(1, 8) = 9.22e-06, p = 0.998, adj. R2 =-0.12). The model's intercept, corresponding to DistancetoCanola = 0, is at 0.96 (95% CI[0.85, 1.08], t(8) = 19.57, p < .001). Within this model:
+
+#- The effect of DistancetoCanola is statistically non-significant and negative (beta = -5.30e-08, 95% CI [-4.03e-05, 4.02e-05], t(8) = -3.04e-03, p = 0.998; Std. beta = -1.07e-03, 95% CI [-0.82, 0.81])
+```
+
+##Plant PDI x Landscape Types
+```{r}
+#Non flowering ag
+PPDINonflower <- lm(PlantPDI ~ Non.flowering.ag, data = All)
+
+summary(lm(PlantPDI ~ Non.flowering.ag, data = All))
+#Residual standard error: 0.112 on 8 degrees of freedom Multiple R-squared:  0.2031,	Adjusted R-squared:  0.1035 F-statistic: 2.039 on 1 and 8 DF,  p-value: 0.1911
+
+
+#Barren
+PPDIBarren <- lm(PlantPDI ~ Barren, data = All)
+
+summary(lm(PlantPDI ~ Barren, data = All))
+#Residual standard error: 0.1207 on 8 degrees of freedom Multiple R-squared:  0.07507,	Adjusted R-squared:  -0.04055 F-statistic: 0.6493 on 1 and 8 DF,  p-value: 0.4437
+
+
+#Development
+PPDIDev <- lm(PlantPDI ~ Development, data = All)
+
+summary(lm(PlantPDI ~ Development, data = All))
+#Residual standard error: 0.1247 on 8 degrees of freedom Multiple R-squared:  0.01325,	Adjusted R-squared:  -0.1101 F-statistic: 0.1075 on 1 and 8 DF,  p-value: 0.7515
+
+
+#Tree Fruit
+PPDITree <- lm(PlantPDI ~ Tree.Fruit.Crops, data = All)
+
+summary(lm(PlantPDI ~ Tree.Fruit.Crops, data = All))
+#Residual standard error: 0.1042 on 8 degrees of freedomMultiple R-squared:  0.3102,	Adjusted R-squared:  0.224 F-statistic: 3.598 on 1 and 8 DF,  p-value: 0.09444
+
+
+#Forest & Tree
+PPDIForest <- lm(PlantPDI ~ Forest.and.Tree.Crops, data = All)
+
+summary(lm(PlantPDI ~ Forest.and.Tree.Crops, data = All))
+#Residual standard error: 0.09462 on 8 degrees of freedom Multiple R-squared:  0.4316,	Adjusted R-squared:  0.3606 F-statistic: 6.075 on 1 and 8 DF,  p-value: 0.03903
+
+##Sig
+report(PPDIForest)
+
+#Wetland & water
+PPDIWater <- lm(PlantPDI ~ Wetland.and.Open.Water, data = All)
+
+summary(lm(PlantPDI ~ Wetland.and.Open.Water, data = All))
+#Residual standard error: 0.1245 on 8 degrees of freedom Multiple R-squared:  0.01586,	Adjusted R-squared:  -0.1072 F-statistic: 0.1289 on 1 and 8 DF,  p-value: 0.7288
+
+#Pasture
+PPDIPasture <- lm(PlantPDI ~ Pasture, data = All)
+
+summary(lm(PlantPDI ~ Pasture, data = All))
+#Residual standard error: 0.1218 on 8 degrees of freedom Multiple R-squared:  0.05817,	Adjusted R-squared:  -0.05956 F-statistic: 0.4941 on 1 and 8 DF,  p-value: 0.502
+
+
+#Other flowering ag
+PPDIflowerag <- lm(PlantPDI ~ Other.Flowering.ag, data = All)
+
+summary(lm(PlantPDI ~ Other.Flowering.ag, data = All))
+#Residual standard error: 0.1167 on 8 degrees of freedom Multiple R-squared:  0.1349,	Adjusted R-squared:  0.0268 F-statistic: 1.248 on 1 and 8 DF,  p-value: 0.2964
+```
+
+
+#Bee Diversity Metrics
+
+#Shannon_Diversity
+
+##Bee Shannon_Diversity x Canola%
+
+
+Bee Shannon_Diversity ~ 2kmCanola%
+```{r}
+Div2km <- lm(BeeShannon_Diversity ~ X2kmCan., data = All)
+
+summary(lm(BeeShannon_Diversity ~ X2kmCan., data = All))
+#Residual standard error: 3.428 on 8 degrees of freedom Multiple R-squared:  0.03691,	Adjusted R-squared:  -0.08347 F-statistic: 0.3066 on 1 and 8 DF,  p-value: 0.5949
+
+report(Div2km)
+```
+
+
+Bee Shannon_Diversity ~ 1kmCanola%
+```{r}
+Div1km <- lm(BeeShannon_Diversity ~ X1kmCan., data = All)
+
+summary(Div1km)
+#Residual standard error: 3.406 on 8 degrees of freedom Multiple R-squared:  0.04926,	Adjusted R-squared:  -0.06958 F-statistic: 0.4145 on 1 and 8 DF,  p-value: 0.5377
+
+report(Div1km)
+```
+
+
+Bee diversity ~ 500mCanola%
+```{r}
+Div500m <- lm(BeeShannon_Diversity ~ X500mCan., data = All)
+
+summary(Div500m)
+#Residual standard error: 3.395 on 8 degrees of freedom Multiple R-squared:  0.05516,	Adjusted R-squared:  -0.06295 F-statistic: 0.467 on 1 and 8 DF,  p-value: 0.5137
+
+report(Div500m)
+```
+
+##Bee Shannon_Diversity x CanolaDistance
+
+Bee Shannon_Diversity ~ CanolaDistance
+```{r}
+DivDistance <- lm(BeeShannon_Diversity ~ DistancetoCanola, data = All)
+
+summary(DivDistance)
+#Residual standard error: 0.3827 on 8 degrees of freedom Multiple R-squared:  0.0003627,	Adjusted R-squared:  -0.1246 F-statistic: 0.002902 on 1 and 8 DF,  p-value: 0.9584
+
+
+report(DivDistance)
+```
+
+##Bee Diversity x Landscape Types
+```{r}
+#Non flowering ag
+BeeDivNonflower <- lm(BeeShannon_Diversity ~ Non.flowering.ag, data = All)
+
+summary(BeeDivNonflower)
+#Residual standard error: 0.3822 on 8 degrees of freedom Multiple R-squared:  0.002701,	Adjusted R-squared:  -0.122  F-statistic: 0.02166 on 1 and 8 DF,  p-value: 0.8866
+
+
+#Barren
+BeeDivBarren <- lm(BeeShannon_Diversity  ~ Barren, data = All)
+
+summary(BeeDivBarren)
+#Residual standard error: 0.3824 on 8 degrees of freedom Multiple R-squared:  0.001771,	Adjusted R-squared:  -0.123 F-statistic: 0.01419 on 1 and 8 DF,  p-value: 0.9081
+
+
+#Development
+BeeDivDev <- lm(BeeShannon_Diversity ~ Development, data = All)
+
+summary(BeeDivDev)
+#Residual standard error: 0.3805 on 8 degrees of freedom Multiple R-squared:  0.01193,	Adjusted R-squared:  -0.1116 F-statistic: 0.09661 on 1 and 8 DF,  p-value: 0.7639
+
+
+#Tree Fruit
+BeeDivTree <- lm(BeeShannon_Diversity ~ Tree.Fruit.Crops, data = All)
+
+summary(BeeDivTree)
+#Residual standard error: 0.334 on 8 degrees of freedom Multiple R-squared:  0.2387,	Adjusted R-squared:  0.1435 F-statistic: 2.508 on 1 and 8 DF,  p-value: 0.1519
+
+
+#Forest & Tree
+BeeDivForest <- lm(BeeShannon_Diversity ~ Forest.and.Tree.Crops, data = All)
+
+summary(BeeDivForest)
+#Residual standard error: 0.3827 on 8 degrees of freedom Multiple R-squared:  0.0003369,	Adjusted R-squared:  -0.1246 F-statistic: 0.002696 on 1 and 8 DF,  p-value: 0.9599
+
+#Wetland & water
+BeeDivWater <- lm(BeeShannon_Diversity ~ Wetland.and.Open.Water, data = All)
+
+summary(BeeDivWater)
+#Residual standard error: 0.3797 on 8 degrees of freedom Multiple R-squared:  0.0159,	Adjusted R-squared:  -0.1071 F-statistic: 0.1293 on 1 and 8 DF,  p-value: 0.7285
+
+#Pasture
+BeeDivPasture <- lm(BeeShannon_Diversity ~ Pasture, data = All)
+
+summary(BeeDivPasture)
+#Residual standard error: 0.3713 on 8 degrees of freedom Multiple R-squared:  0.05891,	Adjusted R-squared:  -0.05872 F-statistic: 0.5008 on 1 and 8 DF,  p-value: 0.4992
+
+
+#Other flowering ag
+BeeDivflowerag <- lm(BeeShannon_Diversity ~ Other.Flowering.ag, data = All)
+
+summary(BeeDivflowerag)
+#Residual standard error: 0.3761 on 8 degrees of freedom Multiple R-squared:  0.0342,	Adjusted R-squared:  -0.08652 F-statistic: 0.2833 on 1 and 8 DF,  p-value: 0.609
+```
+
+
+#Richness
+
+##Bee Richness x Canola%
+
+
+Bee Richness ~ 2kmCanola%
+```{r}
+Rich2km <- lm(BeeRichness ~ X2kmCan., data = All)
+
+summary(lm(BeeRichness ~ X2kmCan., data = All))
+#Residual standard error: 0.3827 on 8 degrees of freedom Multiple R-squared:  0.000517,	Adjusted R-squared:  -0.1244 F-statistic: 0.004138 on 1 and 8 DF,  p-value: 0.9503
+
+
+report(Rich2km)
+#We fitted a linear model (estimated using OLS) to predict BeeRichness with X2kmCan. (formula: BeeRichness ~ X2kmCan.). The model explains a statistically not significant and weak proportion of variance (R2 = 0.04, F(1, 8) = 0.31, p = 0.595,adj. R2 = -0.08). The model's intercept, corresponding to X2kmCan. = 0, is at11.72 (95% CI [8.42, 15.02], t(8) = 8.19, p < .001). Within this model:
+
+#- The effect of X2kmCan is statistically non-significant and negative (beta =-0.04, 95% CI [-0.22, 0.14], t(8) = -0.55, p = 0.595; Std. beta = -0.19, 95% CI[-0.99, 0.61])
+
+```
+
+
+Bee Richness ~ 1kmCanola%
+```{r}
+Rich1km <- lm(BeeRichness ~ X1kmCan., data = All)
+
+summary(Rich1km)
+#Residual standard error: 0.3805 on 8 degrees of freedomMultiple R-squared:  0.01194,	Adjusted R-squared:  -0.1116 F-statistic: 0.09666 on 1 and 8 DF,  p-value: 0.7638
+
+
+report(Rich1km)
+```
+
+
+Bee Richness ~ 500mCanola%
+```{r}
+Rich500m <- lm(BeeRichness ~ X500mCan., data = All)
+
+summary(Rich500m)
+#Residual standard error: 0.3713 on 8 degrees of freedom Multiple R-squared:  0.05885,	Adjusted R-squared:  -0.0588 F-statistic: 0.5002 on 1 and 8 DF,  p-value: 0.4995
+
+
+report(Rich500m)
+```
+
+##Bee Richness x CanolaDistance
+
+Bee Richness ~ CanolaDistance
+```{r}
+RichDistance <- lm(BeeRichness ~ DistancetoCanola, data = All)
+
+summary(RichDistance)
+#Residual standard error: 3.483 on 8 degrees of freedom Multiple R-squared:  0.005688,	Adjusted R-squared:  -0.1186 F-statistic: 0.04576 on 1 and 8 DF,  p-value: 0.836
+
+report(RichDistance)
+```
+
+##Bee Richness x Landscape Types
+```{r}
+#Non flowering ag
+BeeRichNonflower <- lm(BeeRichness ~ Non.flowering.ag, data = All)
+
+summary(BeeRichNonflower)
+#Residual standard error: 3.492 on 8 degrees of freedom Multiple R-squared:  0.0003191,	Adjusted R-squared:  -0.1246 F-statistic: 0.002553 on 1 and 8 DF,  p-value: 0.9609
+
+
+#Barren
+BeeRichBarren <- lm(BeeRichness  ~ Barren, data = All)
+
+summary(BeeRichBarren)
+#Residual standard error: 3.49 on 8 degrees of freedom Multiple R-squared:  0.001612,	Adjusted R-squared:  -0.1232  F-statistic: 0.01292 on 1 and 8 DF,  p-value: 0.9123
+
+#Development
+BeeRichDev <- lm(BeeRichness ~ Development, data = All)
+
+summary(BeeRichDev)
+#Residual standard error: 3.352 on 8 degrees of freedom Multiple R-squared:  0.07913,	Adjusted R-squared:  -0.03598 F-statistic: 0.6875 on 1 and 8 DF,  p-value: 0.4311
+
+
+
+#Tree Fruit
+BeeRichTree <- lm(BeeRichness ~ Tree.Fruit.Crops, data = All)
+
+summary(BeeRichTree)
+#Residual standard error: 3.484 on 8 degrees of freedom Multiple R-squared:  0.005088,	Adjusted R-squared:  -0.1193 F-statistic: 0.04091 on 1 and 8 DF,  p-value: 0.8448
+
+
+#Forest & Tree
+BeeRichForest <- lm(BeeRichness ~ Forest.and.Tree.Crops, data = All)
+
+summary(BeeRichForest)
+#Residual standard error: 3.479 on 8 degrees of freedom Multiple R-squared:  0.007802,	Adjusted R-squared:  -0.1162 F-statistic: 0.0629 on 1 and 8 DF,  p-value: 0.8083
+
+
+
+#Wetland & water
+BeeRichWater <- lm(BeeRichness ~ Wetland.and.Open.Water, data = All)
+
+summary(BeeRichWater)
+#Residual standard error: 3.318 on 8 degrees of freedom Multiple R-squared:  0.0974,	Adjusted R-squared:  -0.01543 F-statistic: 0.8633 on 1 and 8 DF,  p-value: 0.38
+
+
+#Pasture
+BeeRichPasture <- lm(BeeRichness ~ Pasture, data = All)
+
+summary(BeeRichPasture)
+#Residual standard error: 3.125 on 8 degrees of freedom Multiple R-squared:  0.1995,	Adjusted R-squared:  0.09949 F-statistic: 1.994 on 1 and 8 DF,  p-value: 0.1956
+
+
+#Other flowering ag
+BeeRichflowerag <- lm(BeeRichness ~ Other.Flowering.ag, data = All)
+
+summary(BeeRichflowerag)
+#Residual standard error: 3.404 on 8 degrees of freedom Multiple R-squared:  0.05037,	Adjusted R-squared:  -0.06833 F-statistic: 0.4244 on 1 and 8 DF,  p-value: 0.533
+```
+
+#Abundance
+
+##Bee Abundance x Canola%
+
+
+Bee Abundance ~ 2kmCanola%
+```{r}
+Abun2km <- lm(BeeAbundance ~ X2kmCan., data = All)
+
+summary(lm(BeeAbundance ~ X2kmCan., data = All))
+#Residual standard error: 0.3827 on 8 degrees of freedom Multiple R-squared:  0.000517,	Adjusted R-squared:  -0.1244 F-statistic: 0.004138 on 1 and 8 DF,  p-value: 0.9503
+
+
+report(Abun2km)
+
+
+```
+
+
+Bee Abundance ~ 1kmCanola%
+```{r}
+Abun1km <- lm(BeeAbundance ~ X1kmCan., data = All)
+
+summary(Abun1km)
+#Residual standard error: 0.3805 on 8 degrees of freedomMultiple R-squared:  0.01194,	Adjusted R-squared:  -0.1116 F-statistic: 0.09666 on 1 and 8 DF,  p-value: 0.7638
+
+
+report(Abun1km)
+```
+
+
+Bee Abundance ~ 500mCanola%
+```{r}
+Abun500m <- lm(BeeAbundance ~ X500mCan., data = All)
+
+summary(Abun500m)
+#Residual standard error: 0.3713 on 8 degrees of freedom Multiple R-squared:  0.05885,	Adjusted R-squared:  -0.0588 F-statistic: 0.5002 on 1 and 8 DF,  p-value: 0.4995
+
+
+report(Abun500m)
+```
+
+##Bee Abundance x CanolaDistance
+
+Bee Abundance ~ CanolaDistance
+```{r}
+AbunDistance <- lm(BeeAbundance ~ DistancetoCanola, data = All)
+
+summary(AbunDistance)
+#Residual standard error: 63.76 on 8 degrees of freedomMultiple R-squared:  0.2158,	Adjusted R-squared:  0.1178 F-statistic: 2.201 on 1 and 8 DF,  p-value: 0.1762
+
+report(AbunDistance)
+```
+
+##Bee Abundance x Landscape Types
+```{r}
+#Non flowering ag
+BeeAbunNonflower <- lm(BeeAbundance ~ Non.flowering.ag, data = All)
+
+summary(BeeAbunNonflower)
+#Residual standard error: 72 on 8 degrees of freedom Multiple R-squared:  9.215e-05,	Adjusted R-squared:  -0.1249  F-statistic: 0.0007373 on 1 and 8 DF,  p-value: 0.979
+
+
+
+#Barren
+BeeAbunBarren <- lm(BeeAbundance  ~ Barren, data = All)
+
+summary(BeeAbunBarren)
+#Residual standard error: 71.23 on 8 degrees of freedom Multiple R-squared:  0.0214,	Adjusted R-squared:  -0.1009  F-statistic: 0.175 on 1 and 8 DF,  p-value: 0.6867
+
+
+#Development
+BeeAbunDev <- lm(BeeAbundance ~ Development, data = All)
+
+summary(BeeAbunDev)
+#Residual standard error: 63.76 on 8 degrees of freedom Multiple R-squared:  0.2158,	Adjusted R-squared:  0.1178 F-statistic: 2.201 on 1 and 8 DF,  p-value: 0.1762
+
+
+
+#Tree Fruit
+BeeAbunTree <- lm(BeeAbundance ~ Tree.Fruit.Crops, data = All)
+
+summary(BeeAbunTree)
+#Residual standard error: 70.78 on 8 degrees of freedom Multiple R-squared:  0.03363,	Adjusted R-squared:  -0.08716 F-statistic: 0.2784 on 1 and 8 DF,  p-value: 0.6121
+
+
+#Forest & Tree
+BeeAbunForest <- lm(BeeAbundance ~ Forest.and.Tree.Crops, data = All)
+
+summary(BeeAbunForest)
+#Residual standard error: 71.4 on 8 degrees of freedom Multiple R-squared:  0.01655,	Adjusted R-squared:  -0.1064 F-statistic: 0.1346 on 1 and 8 DF,  p-value: 0.7232
+
+
+#Wetland & water
+BeeAbunWater <- lm(BeeAbundance ~ Wetland.and.Open.Water, data = All)
+
+summary(BeeAbunWater)
+#Residual standard error: 59.76 on 8 degrees of freedom Multiple R-squared:  0.3111,	Adjusted R-squared:  0.225  F-statistic: 3.613 on 1 and 8 DF,  p-value: 0.09387
+
+#Pasture
+BeeAbunPasture <- lm(BeeAbundance ~ Pasture, data = All)
+
+summary(BeeAbunPasture)
+#RResidual standard error: 62.17 on 8 degrees of freedom Multiple R-squared:  0.2543,	Adjusted R-squared:  0.1611  F-statistic: 2.729 on 1 and 8 DF,  p-value: 0.1372
+
+
+#Other flowering ag
+BeeAbunflowerag <- lm(BeeAbundance ~ Other.Flowering.ag, data = All)
+
+summary(BeeAbunflowerag)
+#Residual standard error: 71.57 on 8 degrees of freedom Multiple R-squared:  0.0118,	Adjusted R-squared:  -0.1117 F-statistic: 0.09556 on 1 and 8 DF,  p-value: 0.7651
+```
+
+#Plant Diversity Metrics
+
+#Shannon_Diversity
+
+##Plant Shannon_Diversity x Canola%
+
+
+Plant Shannon_Diversity ~ 2kmCanola%
+```{r}
+PDiv2km <- lm(PlantShannon_Diversity ~ X2kmCan., data = All)
+
+summary(lm(PlantShannon_Diversity ~ X2kmCan., data = All))
+#Residual standard error: 0.5891 on 8 degrees of freedom Multiple R-squared:  0.209,	Adjusted R-squared:  0.1101 F-statistic: 2.114 on 1 and 8 DF,  p-value: 0.1841
+
+report(PDiv2km)
+```
+
+
+Plant Shannon_Diversity ~ 1kmCanola%
+```{r}
+PDiv1km <- lm(PlantShannon_Diversity ~ X1kmCan., data = All)
+
+summary(PDiv1km)
+#Residual standard error: 0.6138 on 8 degrees of freedom Multiple R-squared:  0.1414,	Adjusted R-squared:  0.03406 F-statistic: 1.317 on 1 and 8 DF,  p-value: 0.2842
+
+report(Div1km)
+```
+
+
+Plant Shannon_Diversity  ~ 500mCanola%
+```{r}
+PDiv500m <- lm(PlantShannon_Diversity ~ X500mCan., data = All)
+
+summary(PDiv500m)
+#Residual standard error: 0.6572 on 8 degrees of freedom Multiple R-squared:  0.01561,	Adjusted R-squared:  -0.1074 F-statistic: 0.1269 on 1 and 8 DF,  p-value: 0.7309
+
+report(Div500m)
+```
+
+##Plant Shannon_Diversity x CanolaDistance
+
+Plant Shannon_Diversity ~ CanolaDistance
+```{r}
+PDivDistance <- lm(PlantShannon_Diversity ~ DistancetoCanola, data = All)
+
+summary(PDivDistance)
+#Residual standard error: 0.6623 on 8 degrees of freedomMultiple R-squared:  6.801e-05,	Adjusted R-squared:  -0.1249 F-statistic: 0.0005441 on 1 and 8 DF,  p-value: 0.982
+
+report(PDivDistance)
+```
+
+##Plant Shannon_Diversity  x Landscape Types
+```{r}
+#Non flowering ag
+PlantDivNonflower <- lm(PlantShannon_Diversity ~ Non.flowering.ag, data = All)
+
+summary(PlantDivNonflower)
+#Residual standard error: 0.6624 on 8 degrees of freedom Multiple R-squared:  6.183e-06,	Adjusted R-squared:  -0.125F-statistic: 4.947e-05 on 1 and 8 DF,  p-value: 0.9946
+
+
+#Barren
+PlantDivBarren <- lm(PlantShannon_Diversity  ~ Barren, data = All)
+
+summary(PlantDivBarren)
+#Residual standard error: 0.6524 on 8 degrees of freedom Multiple R-squared:  0.02999,	Adjusted R-squared:  -0.09126 F-statistic: 0.2474 on 1 and 8 DF,  p-value: 0.6323
+
+#Development
+PlantDivDev <- lm(PlantShannon_Diversity ~ Development, data = All)
+
+summary(PlantDivDev)
+#Residual standard error: 0.613 on 8 degrees of freedom Multiple R-squared:  0.1436,	Adjusted R-squared:  0.03652 F-statistic: 1.341 on 1 and 8 DF,  p-value: 0.2802
+
+#Tree Fruit
+PlantDivTree <- lm(PlantShannon_Diversity ~ Tree.Fruit.Crops, data = All)
+
+summary(PlantDivTree)
+#Residual standard error: 0.5669 on 8 degrees of freedom Multiple R-squared:  0.2676,	Adjusted R-squared:  0.176 F-statistic: 2.923 on 1 and 8 DF,  p-value: 0.1257
+
+
+#Forest & Tree
+PlantDivForest <- lm(PlantShannon_Diversity ~ Forest.and.Tree.Crops, data = All)
+
+summary(PlantDivForest)
+#Residual standard error: 0.5805 on 8 degrees of freedom Multiple R-squared:  0.2318,	Adjusted R-squared:  0.1358 F-statistic: 2.415 on 1 and 8 DF,  p-value: 0.1588
+
+#Wetland & water
+PlantDivWater <- lm(PlantShannon_Diversity ~ Wetland.and.Open.Water, data = All)
+
+summary(PlantDivWater)
+#Residual standard error: 0.6611 on 8 degrees of freedom Multiple R-squared:  0.003872,	Adjusted R-squared:  -0.1206 F-statistic: 0.03109 on 1 and 8 DF,  p-value: 0.8644
+
+#Pasture
+PlantDivPasture <- lm(PlantShannon_Diversity ~ Pasture, data = All)
+
+summary(PlantDivPasture)
+#Residual standard error: 0.6303 on 8 degrees of freedom Multiple R-squared:  0.09438,	Adjusted R-squared:  -0.01882 F-statistic: 0.8338 on 1 and 8 DF,  p-value: 0.3879
+
+
+#Other flowering ag
+PlantDivflowerag <- lm(PlantShannon_Diversity ~ Other.Flowering.ag, data = All)
+
+summary(PlantDivflowerag)
+#Residual standard error: 0.589 on 8 degrees of freedom Multiple R-squared:  0.2092,	Adjusted R-squared:  0.1103 F-statistic: 2.116 on 1 and 8 DF,  p-value: 0.1839
+```
+
+
+#Richness
+
+##Plant Richness x Canola%
+
+
+Plant Richness ~ 2kmCanola%
+```{r}
+PRich2km <- lm(PlantRichness ~ X2kmCan., data = All)
+
+summary(lm(PlantRichness ~ X2kmCan., data = All))
+#Residual standard error: 5.83 on 8 degrees of freedom Multiple R-squared:  0.234,	Adjusted R-squared:  0.1382 F-statistic: 2.443 on 1 and 8 DF,  p-value: 0.1567
+
+
+report(PRich2km)
+```
+
+
+Plant Richness ~ 1kmCanola%
+```{r}
+PRich1km <- lm(PlantRichness ~ X1kmCan., data = All)
+
+summary(PRich1km)
+#Residual standard error: 6.109 on 8 degrees of freedom Multiple R-squared:  0.1589,	Adjusted R-squared:  0.05371 F-statistic: 1.511 on 1 and 8 DF,  p-value: 0.2539
+
+
+report(PRich1km)
+```
+
+
+Plant Richness ~ 500mCanola%
+```{r}
+PRich500m <- lm(PlantRichness ~ X500mCan., data = All)
+
+summary(PRich500m)
+#Residual standard error: 6.6 on 8 degrees of freedom Multiple R-squared:  0.01798,	Adjusted R-squared:  -0.1048 F-statistic: 0.1465 on 1 and 8 DF,  p-value: 0.7119
+
+
+report(PRich500m)
+```
+
+##Plant Richness x CanolaDistance
+
+Plant Richness ~ CanolaDistance
+```{r}
+PRichDistance <- lm(PlantRichness ~ DistancetoCanola, data = All)
+
+summary(PRichDistance)
+#Residual standard error: 6.627 on 8 degrees of freedom Multiple R-squared:  0.009895,	Adjusted R-squared:  -0.1139 F-statistic: 0.07995 on 1 and 8 DF,  p-value: 0.7845
+
+report(PRichDistance)
+```
+
+##Plant Richness x Landscape Types
+```{r}
+#Non flowering ag
+PlantRichNonflower <- lm(PlantRichness ~ Non.flowering.ag, data = All)
+
+summary(PlantRichNonflower)
+#Residual standard error: 6.648 on 8 degrees of freedom Multiple R-squared:  0.003852,	Adjusted R-squared:  -0.1207 F-statistic: 0.03093 on 1 and 8 DF,  p-value: 0.8648
+
+
+#Barren
+PlantRichBarren <- lm(PlantRichness  ~ Barren, data = All)
+
+summary(PlantRichBarren)
+#Residual standard error: 6.375 on 8 degrees of freedom Multiple R-squared:  0.08397,	Adjusted R-squared:  -0.03054 F-statistic: 0.7333 on 1 and 8 DF,  p-value: 0.4167
+
+#Development
+PlantRichDev <- lm(PlantRichness ~ Development, data = All)
+
+summary(PlantRichDev)
+#Residual standard error: 5.671 on 8 degrees of freedom Multiple R-squared:  0.275,	Adjusted R-squared:  0.1844 F-statistic: 3.034 on 1 and 8 DF,  p-value: 0.1197
+
+
+
+#Tree Fruit
+PlantRichTree <- lm(PlantRichness ~ Tree.Fruit.Crops, data = All)
+
+summary(PlantRichTree)
+#Residual standard error: 5.899 on 8 degrees of freedom Multiple R-squared:  0.2157,	Adjusted R-squared:  0.1177 F-statistic:   2.2 on 1 and 8 DF,  p-value: 0.1763
+
+
+#Forest & Tree
+PlantRichForest <- lm(PlantRichness ~ Forest.and.Tree.Crops, data = All)
+
+summary(PlantRichForest)
+#Residual standard error: 5.99 on 8 degrees of freedom Multiple R-squared:  0.1913,	Adjusted R-squared:  0.09025 F-statistic: 1.893 on 1 and 8 DF,  p-value: 0.2062
+
+
+#Wetland & water
+PlantRichWater <- lm(PlantRichness ~ Wetland.and.Open.Water, data = All)
+
+summary(PlantRichWater)
+#Residual standard error: 6.639 on 8 degrees of freedom Multiple R-squared:  0.006494,	Adjusted R-squared:  -0.1177 F-statistic: 0.05229 on 1 and 8 DF,  p-value: 0.8249
+
+#Pasture
+PlantRichPasture <- lm(PlantRichness ~ Pasture, data = All)
+
+summary(PlantRichPasture)
+#Residual standard error: 6.034 on 8 degrees of freedom Multiple R-squared:  0.1793,	Adjusted R-squared:  0.0767 F-statistic: 1.748 on 1 and 8 DF,  p-value: 0.2227
+
+
+#Other flowering ag
+PlantRichflowerag <- lm(PlantRichness ~ Other.Flowering.ag, data = All)
+
+summary(PlantRichflowerag)
+#Residual standard error: 5.998 on 8 degrees of freedom Multiple R-squared:  0.1892,	Adjusted R-squared:  0.0878 F-statistic: 1.866 on 1 and 8 DF,  p-value: 0.2091
+```
+
+#Abundance
+
+##Plant Abundance x Canola%
+
+
+Plant Abundance ~ 2kmCanola%
+```{r}
+PAbun2km <- lm(PlantAbundance ~ X2kmCan., data = All)
+
+summary(lm(PlantAbundance ~ X2kmCan., data = All))
+#Residual standard error: 201.4 on 8 degrees of freedom Multiple R-squared:  0.1091,	Adjusted R-squared:  -0.002228 F-statistic:  0.98 on 1 and 8 DF,  p-value: 0.3512
+
+
+report(PAbun2km)
+```
+
+
+Plant Abundance ~ 1kmCanola%
+```{r}
+PAbun1km <- lm(PlantAbundance ~ X1kmCan., data = All)
+
+summary(PAbun1km)
+#Residual standard error: 204.7 on 8 degrees of freedom Multiple R-squared:  0.07966,	Adjusted R-squared:  -0.03539 F-statistic: 0.6924 on 1 and 8 DF,  p-value: 0.4295
+
+
+report(PAbun1km)
+```
+
+
+Plant Abundance ~ 500mCanola%
+```{r}
+PAbun500m <- lm(PlantAbundance ~ X500mCan., data = All)
+
+summary(PAbun500m)
+#Residual standard error: 198.6 on 8 degrees of freedom Multiple R-squared:  0.1335,	Adjusted R-squared:  0.02518 F-statistic: 1.233 on 1 and 8 DF,  p-value: 0.2992
+
+
+report(PAbun500m)
+```
+
+##Plant Abundance x CanolaDistance
+
+Plant Abundance ~ CanolaDistance
+```{r}
+PAbunDistance <- lm(PlantAbundance ~ DistancetoCanola, data = All)
+
+summary(PAbunDistance)
+#Residual standard error: 126.9 on 8 degrees of freedom Multiple R-squared:  0.6461,	Adjusted R-squared:  0.6019 F-statistic: 14.61 on 1 and 8 DF,  p-value: 0.005075
+
+report(PAbunDistance)
+```
+
+##Plant Abundance x Landscape Types
+```{r}
+#Non flowering ag
+PlantAbunNonflower <- lm(PlantAbundance ~ Non.flowering.ag, data = All)
+
+summary(PlantAbunNonflower)
+#Residual standard error: 194.5 on 8 degrees of freedom Multiple R-squared:  0.169,	Adjusted R-squared:  0.06513 F-statistic: 1.627 on 1 and 8 DF,  p-value: 0.2379
+
+
+#Barren
+PlantAbunBarren <- lm(PlantAbundance  ~ Barren, data = All)
+
+summary(PlantAbunBarren)
+#Residual standard error: 205.1 on 8 degrees of freedom Multiple R-squared:  0.0756,	Adjusted R-squared:  -0.03995 F-statistic: 0.6543 on 1 and 8 DF,  p-value: 0.442
+
+#Development
+PlantAbunDev <- lm(PlantAbundance ~ Development, data = All)
+
+summary(PlantAbunDev)
+#Residual standard error: 192.2 on 8 degrees of freedom Multiple R-squared:  0.1887,	Adjusted R-squared:  0.08725 F-statistic:  1.86 on 1 and 8 DF,  p-value: 0.2097
+
+
+#Tree Fruit
+PlantAbunTree <- lm(PlantAbundance ~ Tree.Fruit.Crops, data = All)
+
+summary(PlantAbunTree)
+#Residual standard error: 209.7 on 8 degrees of freedom Multiple R-squared:  0.0344,	Adjusted R-squared:  -0.0863 F-statistic: 0.285 on 1 and 8 DF,  p-value: 0.608
+
+
+#Forest & Tree
+PlantAbunForest <- lm(PlantAbundance ~ Forest.and.Tree.Crops, data = All)
+
+summary(PlantAbunForest)
+#Residual standard error: 204.2 on 8 degrees of freedom Multiple R-squared:  0.08424,	Adjusted R-squared:  -0.03023 F-statistic: 0.736 on 1 and 8 DF,  p-value: 0.4159
+
+
+#Wetland & water
+PlantAbunWater <- lm(PlantAbundance ~ Wetland.and.Open.Water, data = All)
+
+summary(PlantAbunWater)
+#Residual standard error: 130.2 on 8 degrees of freedom Multiple R-squared:  0.6277,	Adjusted R-squared:  0.5812 F-statistic: 13.49 on 1 and 8 DF,  p-value: 0.006285
+
+#Sig
+
+report(PlantAbunWater)
+
+#Pasture
+PlantAbunPasture <- lm(PlantAbundance ~ Pasture, data = All)
+
+summary(PlantAbunPasture)
+#Residual standard error: 212.7 on 8 degrees of freedom Multiple R-squared:  0.005984,	Adjusted R-squared:  -0.1183 F-statistic: 0.04816 on 1 and 8 DF,  p-value: 0.8318
+
+
+#Other flowering ag
+PlantAbunflowerag <- lm(PlantAbundance ~ Other.Flowering.ag, data = All)
+
+summary(PlantAbunflowerag)
+#Residual standard error: 201.8 on 8 degrees of freedom Multiple R-squared:  0.1055,	Adjusted R-squared:  -0.006301 F-statistic: 0.9436 on 1 and 8 DF,  p-value: 0.3598
+```
+
+
+Other Range Sizes
+```{r}
+stab150 <- lm(Beestability ~ X150mCan., data = All)
+summary(stab150)
+#NULL
+stab75 <- lm(Beestability ~ X75mCan., data = All)
+summary(stab75)
+#NULL
+stab50 <- lm(Beestability ~ X50mCan., data = All)
+summary(stab50)
+#NULL
+
+PDI150 <- lm(BeePDI ~ X150mCan., data = All)
+summary(PDI150)
+#NU
+summary(lm(BeePDI ~ X75mCan., data = All))
+#NULL
+summary(lm(BeePDI ~ X50mCan., data = All))
+#NULL
+
+summary(lm(BeeAbundance ~ X150mCan., data = All))
+#NULL
+summary(lm(BeeAbundance ~ X75mCan., data = All))
+#NULL
+summary(lm(BeeAbundance ~ X50mCan., data = All))
+#NULL
+
+summary(lm(BeeRichness ~ X150mCan., data = All))
+#NULL
+summary(lm(BeeRichness ~ X75mCan., data = All))
+#NULL
+summary(lm(BeeRichness ~ X50mCan., data = All))
+#NULL
+
+summary(lm(BeeShannon_Diversity ~ X150mCan., data = All))
+#NULL
+summary(lm(BeeShannon_Diversity ~ X75mCan., data = All))
+#NULL
+summary(lm(BeeShannon_Diversity ~ X50mCan., data = All))
+#NULL
+```
+
+
+#Correlation of all variables
+```{r}
+corr.test(Corr)
+
+cor(Corr)
+
+#insig results
+cor.test(Corr$FloralAbundance,Corr$BeeRichness)
+#t = -0.14927, df = 8, p-value = 0.885
+cor.test(Corr$FloralAbundance,Corr$BeeAbundance)
+#t = -0.77504, df = 8, p-value = 0.4606
+cor.test(Corr$FloralAbundance,Corr$BeeDiversity)
+#t = 0.15651, df = 8, p-value = 0.8795
+
+cor.test(Corr$FloralRichness,Corr$BeeRichness)
+#t = 0.70812, df = 8, p-value = 0.499
+cor.test(Corr$FloralRichness,Corr$BeeAbundance)
+#t = 0.52054, df = 8, p-value = 0.6168
+cor.test(Corr$FloralRichness,Corr$BeeDiversity)
+#t = 1.6813, df = 8, p-value = 0.1312
+
+cor.test(Corr$FloralDiversity,Corr$BeeRichness)
+#t = -0.14927, df = 8, p-value = 0.885
+cor.test(Corr$FloralDiversity,Corr$BeeAbundance)
+#t = -0.77504, df = 8, p-value = 0.4606
+cor.test(Corr$FloralDiversity,Corr$BeeDiversity)
+#t = 0.15651, df = 8, p-value = 0.8795
+
+cor.test(Corr$FloralVA, Corr$BeeVA)
+#t = -0.95952, df = 8, p-value = 0.3654
+cor.test(Corr$FloralVA, Corr$BeePDI)
+#t = 0.3734, df = 8, p-value = 0.7185
+cor.test(Corr$FloralVA, Corr$BeeAbundance)
+#t = 0.16566, df = 8, p-value = 0.8725
+cor.test(Corr$FloralVA, Corr$BeeRichness)
+#t = 0.34266, df = 8, p-value = 0.7407
+cor.test(Corr$FloralVA, Corr$BeeDiversity)
+#t = 0.83421, df = 8, p-value = 0.4284
+
+cor.test(Corr$FloralPDI, Corr$BeeVA)
+#t = 0.29205, df = 8, p-value = 0.7777
+
+#sig resutls
+cor.test(Corr$BeeRichness,Corr$BeeDiversity)
+#t = 2.4465, df = 8, p-value = 0.04016
+cor.test(Corr$FloralRichness,Corr$FloralDiversity)
+#t = 8.7386, df = 8, p-value = 2.3e-05
+
+cor.test(Corr$BeePDI,Corr$FloralPDI)
+
+cor.test(Corr$BeePDI,Corr$FloralDiversity)
+#t = 2.6802, df = 8, p-value = 0.02792
+cor.test(Corr$FloralPDI,Corr$FloralDiversity)
+#t = 3.1684, df = 8, p-value = 0.01323
+
+pairs.panels(Corr, method = "pearson", hist.col = 'grey', lm = TRUE, ellipses = FALSE, stars = TRUE, cex.cor = 1, scale = TRUE, cex.labels = 0.9)
+
+#make into correlation matrix
+matcor <- cor(Corr)
+
+corrplot(matcor, type="upper", tl.col="grey20", tl.srt=45)
+```
+
