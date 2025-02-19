@@ -1,19 +1,32 @@
 Canola Bee Analysis
 ================
 Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich
-October 30, 2024
+February 18, 2025
 
   
 
 - [Overview](#overview)
   - [Summary of Results](#summary-of-results)
-- [Bee community composition](#bee-community-composition)
-  - [Site classification by species composition (Random
-    Forest)](#site-classification-by-species-composition-random-forest)
-  - [Bee composition by habitat type](#bee-composition-by-habitat-type)
-  - [Bee composition by habitat type and bloom
-    period](#bee-composition-by-habitat-type-and-bloom-period)
-- [Session Information](#session-information)
+- [Plant community composition](#plant-community-composition)
+  - [Plant diversity across bloom
+    period](#plant-diversity-across-bloom-period)
+  - [Plant community diversity across bloom period and
+    canola](#plant-community-diversity-across-bloom-period-and-canola)
+  - [Turnover of floral resources](#turnover-of-floral-resources)
+- [Bee diversity across bloom
+  periods](#bee-diversity-across-bloom-periods)
+- [Bee turnover across bloom
+  periods](#bee-turnover-across-bloom-periods)
+- [Testing Olivia’s predictions](#testing-olivias-predictions)
+  - [Bee community composition](#bee-community-composition)
+    - [](#section)
+    - [Site classification by species composition (Random
+      Forest)](#site-classification-by-species-composition-random-forest)
+    - [Bee composition by habitat
+      type](#bee-composition-by-habitat-type)
+    - [Bee composition by habitat type and bloom
+      period](#bee-composition-by-habitat-type-and-bloom-period)
+  - [Session Information](#session-information)
 
 ## Overview
 
@@ -24,18 +37,326 @@ This analysis explores Salena and Olivia’s canola experiment.
 - No difference in bee community composition across habitat types
   (natural or semi-natural), or habitat types and bloom period.
 
+## Plant community composition
+
+### Plant diversity across bloom period
+
+![](CanolaBees_files/figure-gfm/plant_diversity_bloomperiod-1.png)<!-- -->
+
+### Plant community diversity across bloom period and canola
+
+![](CanolaBees_files/figure-gfm/plant_diversity_bloom_canola-1.png)<!-- -->
+
+### Turnover of floral resources
+
+![\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta") diversity
+
+![](CanolaBees_files/figure-gfm/plant_betadiv_by_site_fig-1.png)<!-- -->
+
+![](CanolaBees_files/figure-gfm/plant_betadiv_prop_canola_fig-1.png)<!-- -->
+
+## Bee diversity across bloom periods
+
+## Bee turnover across bloom periods
+
+# Testing Olivia’s predictions
+
+1)  The stability of bee communities (measured as turnover from the pre-
+    to peak- to post-bloom) will be greater in landscapes with less
+    access to pulse-blooming resources. **Evidence in support of this
+    prediction will be a positive relationship between
+    ![\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta")
+    diversity and the proportion of canola surrounding each site or a
+    negative relationship between
+    ![\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta")
+    diversity and the distance to the nearest canola.**
+
+![](CanolaBees_files/figure-gfm/prediction_1-1.png)<!-- -->![](CanolaBees_files/figure-gfm/prediction_1-2.png)<!-- -->![](CanolaBees_files/figure-gfm/prediction_1-3.png)<!-- -->![](CanolaBees_files/figure-gfm/prediction_1-4.png)<!-- -->
+
+2)  Bee communities at sites with more canola in the landscape will have
+    less stability due to a reliance on pulsed floral resources
+
+**How is this different from the first prediction?**
+
+3)  Bee communities will be more diverse during peak bloom than pre- and
+    post-bloom
+    ![](CanolaBees_files/figure-gfm/bee_divesity_over_bloom_period-1.png)<!-- -->
+
+<!-- -->
+
+    ## 
+    ## Call:
+    ## lm(formula = div ~ period, data = bee_div)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -0.83433 -0.31602  0.07863  0.36834  0.88282 
+    ## 
+    ## Coefficients:
+    ##                  Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)       1.28489    0.16024   8.019 1.29e-08 ***
+    ## periodPeak-Bloom  0.12301    0.22661   0.543    0.592    
+    ## periodPost-Bloom -0.01293    0.22661  -0.057    0.955    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5067 on 27 degrees of freedom
+    ## Multiple R-squared:  0.01598,    Adjusted R-squared:  -0.05691 
+    ## F-statistic: 0.2193 on 2 and 27 DF,  p-value: 0.8045
+
+4)  Bee health metrics will be greater in landscapes with more canola
+
+<!-- -->
+
+    ## Linear mixed model fit by REML ['lmerMod']
+    ## Formula: head_width ~ propCan500m + scale(DistanceToCanola) + (propCan500m |  
+    ##     genus)
+    ##    Data: bee_hw
+    ## 
+    ## REML criterion at convergence: 1304.2
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.6629 -0.4708 -0.0622  0.3798  8.9505 
+    ## 
+    ## Random effects:
+    ##  Groups   Name        Variance Std.Dev. Corr 
+    ##  genus    (Intercept) 0.7891   0.8883        
+    ##           propCan500m 1.0483   1.0239   -0.48
+    ##  Residual             0.1517   0.3895        
+    ## Number of obs: 1238, groups:  genus, 25
+    ## 
+    ## Fixed effects:
+    ##                         Estimate Std. Error t value
+    ## (Intercept)              2.64920    0.18253   14.51
+    ## propCan500m             -0.86958    0.33839   -2.57
+    ## scale(DistanceToCanola) -0.04624    0.01562   -2.96
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) prC500
+    ## propCan500m -0.334       
+    ## scl(DstnTC) -0.078  0.209
+
+![](CanolaBees_files/figure-gfm/bee_health_by_canola-1.png)<!-- -->
+
+5)  Bee health metrics will be positively related to stability of floral
+    resources in the landscape
+
 ## Bee community composition
+
+    ## Square root transformation
+    ## Wisconsin double standardization
+    ## Run 0 stress 0.1506233 
+    ## Run 1 stress 0.1506236 
+    ## ... Procrustes: rmse 0.0001942086  max resid 0.0004285341 
+    ## ... Similar to previous best
+    ## Run 2 stress 0.1551155 
+    ## Run 3 stress 0.1506231 
+    ## ... New best solution
+    ## ... Procrustes: rmse 0.0004923118  max resid 0.001029397 
+    ## ... Similar to previous best
+    ## Run 4 stress 0.1506231 
+    ## ... Procrustes: rmse 0.0001769166  max resid 0.0004186002 
+    ## ... Similar to previous best
+    ## Run 5 stress 0.1531276 
+    ## Run 6 stress 0.1535258 
+    ## Run 7 stress 0.1652858 
+    ## Run 8 stress 0.1551145 
+    ## Run 9 stress 0.1506233 
+    ## ... Procrustes: rmse 0.0005241053  max resid 0.001100657 
+    ## ... Similar to previous best
+    ## Run 10 stress 0.1506231 
+    ## ... New best solution
+    ## ... Procrustes: rmse 5.267158e-05  max resid 0.0001202805 
+    ## ... Similar to previous best
+    ## Run 11 stress 0.1506233 
+    ## ... Procrustes: rmse 0.0002227961  max resid 0.000457188 
+    ## ... Similar to previous best
+    ## Run 12 stress 0.153126 
+    ## Run 13 stress 0.1506231 
+    ## ... Procrustes: rmse 0.0003453836  max resid 0.000813457 
+    ## ... Similar to previous best
+    ## Run 14 stress 0.1601341 
+    ## Run 15 stress 0.1506233 
+    ## ... Procrustes: rmse 0.0001914441  max resid 0.0004053326 
+    ## ... Similar to previous best
+    ## Run 16 stress 0.1602459 
+    ## Run 17 stress 0.1506235 
+    ## ... Procrustes: rmse 0.0006440394  max resid 0.001423343 
+    ## ... Similar to previous best
+    ## Run 18 stress 0.160104 
+    ## Run 19 stress 0.1531217 
+    ## Run 20 stress 0.1506232 
+    ## ... Procrustes: rmse 0.0005007227  max resid 0.001105443 
+    ## ... Similar to previous best
+    ## *** Best solution repeated 6 times
+    ## 
+    ## ***VECTORS
+    ## 
+    ##                          NMDS1    NMDS2    NMDS3     r2 Pr(>r)  
+    ## log(DistanceToCanola) -0.19644  0.03528  0.97988 0.1715  0.170  
+    ## propCan1km             0.64350 -0.49823 -0.58110 0.2460  0.053 .
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## ***FACTORS:
+    ## 
+    ## Centroids:
+    ##                    NMDS1   NMDS2   NMDS3
+    ## periodPeak-Bloom -0.2994 -0.0914 -0.0277
+    ## periodPost-Bloom  0.0053  0.1644  0.2780
+    ## periodPre-Bloom   0.2940 -0.0730 -0.2502
+    ## 
+    ## Goodness of fit:
+    ##            r2 Pr(>r)   
+    ## period 0.1744  0.008 **
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## Family: gaussian 
+    ## Link function: identity 
+    ## 
+    ## Formula:
+    ## log(DistanceToCanola) ~ s(NMDS1, NMDS2, NMDS3, k = 9) + period
+    ## 
+    ## Parametric coefficients:
+    ##                  Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)        6.1671     0.5654  10.908 2.31e-09 ***
+    ## periodPost-Bloom  -0.7830     0.8679  -0.902    0.379    
+    ## periodPre-Bloom    0.6845     0.8845   0.774    0.449    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Approximate significance of smooth terms:
+    ##                      edf Ref.df     F p-value   
+    ## s(NMDS1,NMDS2,NMDS3)   9      9 3.645 0.00939 **
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## R-sq.(adj) =  0.429   Deviance explained = 64.6%
+    ## GCV = 4.3379  Scale est. = 2.6028    n = 30
+    ## 
+    ## Family: gaussian 
+    ## Link function: identity 
+    ## 
+    ## Formula:
+    ## propCan1km ~ s(NMDS1, NMDS2, NMDS3, k = 2) + period
+    ## 
+    ## Parametric coefficients:
+    ##                  Estimate Std. Error t value Pr(>|t|)  
+    ## (Intercept)       0.13955    0.06279   2.222   0.0393 *
+    ## periodPost-Bloom  0.06739    0.09639   0.699   0.4934  
+    ## periodPre-Bloom  -0.09049    0.09824  -0.921   0.3692  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Approximate significance of smooth terms:
+    ##                      edf Ref.df     F p-value  
+    ## s(NMDS1,NMDS2,NMDS3)   9      9 2.027  0.0965 .
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## R-sq.(adj) =    0.2   Deviance explained = 50.3%
+    ## GCV = 0.053507  Scale est. = 0.032104  n = 30
+    ## Permutation test for adonis under reduced model
+    ## Terms added sequentially (first to last)
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## adonis2(formula = bee_mat_species ~ log(DistanceToCanola) + propCan1km + period, data = bee_mat)
+    ##                       Df SumOfSqs      R2      F Pr(>F)   
+    ## log(DistanceToCanola)  1   0.1881 0.02258 0.7390  0.707   
+    ## propCan1km             1   0.7290 0.08751 2.8637  0.002 **
+    ## period                 2   1.0489 0.12591 2.0601  0.007 **
+    ## Residual              25   6.3642 0.76399                 
+    ## Total                 29   8.3303 1.00000                 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Permutation test for adonis under reduced model
+    ## Terms added sequentially (first to last)
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## adonis2(formula = bee_mat_species ~ splines::ns(log(DistanceToCanola), df = 3) + propCan1km + period, data = bee_mat)
+    ##                                            Df SumOfSqs      R2      F Pr(>F)   
+    ## splines::ns(log(DistanceToCanola), df = 3)  3   1.1608 0.13935 1.5420  0.038 * 
+    ## propCan1km                                  1   0.3493 0.04193 1.3919  0.142   
+    ## period                                      2   1.0489 0.12591 2.0900  0.003 **
+    ## Residual                                   23   5.7713 0.69281                 
+    ## Total                                      29   8.3303 1.00000                 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Permutation test for adonis under reduced model
+    ## Terms added sequentially (first to last)
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## adonis2(formula = bee_mat_species ~ splines::ns(propCan1km, df = 3) + DistanceToCanola + period, data = bee_mat)
+    ##                                 Df SumOfSqs      R2      F Pr(>F)   
+    ## splines::ns(propCan1km, df = 3)  2   0.8194 0.09837 1.6126  0.050 * 
+    ## DistanceToCanola                 1   0.3641 0.04370 1.4329  0.158   
+    ## period                           2   1.0489 0.12591 2.0641  0.004 **
+    ## Residual                        24   6.0979 0.73201                 
+    ## Total                           29   8.3303 1.00000                 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Permutation test for adonis under reduced model
+    ## Terms added sequentially (first to last)
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## adonis2(formula = bee_mat_species ~ splines::ns(propCan1km, df = 3) + splines::ns(DistanceToCanola, df = 3) + period, data = bee_mat)
+    ##                                       Df SumOfSqs      R2      F Pr(>F)   
+    ## splines::ns(propCan1km, df = 3)        2   0.8194 0.09837 1.6508  0.028 * 
+    ## splines::ns(DistanceToCanola, df = 3)  3   1.0015 0.12023 1.3450  0.104   
+    ## period                                 2   1.0489 0.12591 2.1130  0.008 **
+    ## Residual                              22   5.4604 0.65549                 
+    ## Total                                 29   8.3303 1.00000                 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    ## 
+    ## Family: gaussian 
+    ## Link function: identity 
+    ## 
+    ## Formula:
+    ## propCan1km ~ s(NMDS1, NMDS2, bs = "ts")
+    ## 
+    ## Parametric coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)   0.1318     0.0342   3.856 0.000628 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Approximate significance of smooth terms:
+    ##                  edf Ref.df     F p-value  
+    ## s(NMDS1,NMDS2) 1.352     29 0.144  0.0616 .
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## R-sq.(adj) =  0.126   Deviance explained = 16.6%
+    ## GCV = 0.038069  Scale est. = 0.035084  n = 30
+
+![](CanolaBees_files/figure-gfm/bee_comp_by_canola_plot-1.png)<!-- -->
+
+### 
 
     ## Permutation test for adonis under reduced model
     ## Terms added sequentially (first to last)
     ## Permutation: free
     ## Number of permutations: 999
     ## 
-    ## adonis2(formula = habitat_matrix ~ land_type, data = habitat_meta, method = "bray")
-    ##           Df SumOfSqs      R2      F Pr(>F)
-    ## land_type  1   0.2837 0.03403 0.9863  0.468
-    ## Residual  28   8.0535 0.96597              
-    ## Total     29   8.3372 1.00000
+    ## adonis2(formula = habitat_matrix ~ land_type * period, data = habitat_meta, method = "bray")
+    ##                  Df SumOfSqs      R2      F Pr(>F)
+    ## land_type         1   0.2837 0.03403 0.9741  0.478
+    ## period            2   0.5423 0.06505 0.9310  0.534
+    ## land_type:period  2   0.5212 0.06251 0.8947  0.585
+    ## Residual         24   6.9900 0.83842              
+    ## Total            29   8.3372 1.00000
     ## 
     ## Permutation test for homogeneity of multivariate dispersions
     ## Permutation: free
@@ -43,7 +364,7 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## 
     ## Response: Distances
     ##           Df  Sum Sq   Mean Sq      F N.Perm Pr(>F)
-    ## Groups     1 0.00197 0.0019684 0.1395    999  0.726
+    ## Groups     1 0.00197 0.0019684 0.1395    999  0.727
     ## Residuals 28 0.39496 0.0141059
     ## Permutation test for adonis under reduced model
     ## Terms added sequentially (first to last)
@@ -52,7 +373,7 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## 
     ## adonis2(formula = habitat_matrix ~ period, data = habitat_meta, method = "bray")
     ##          Df SumOfSqs      R2      F Pr(>F)
-    ## period    2   0.5423 0.06505 0.9392  0.559
+    ## period    2   0.5423 0.06505 0.9392  0.529
     ## Residual 27   7.7949 0.93495              
     ## Total    29   8.3372 1.00000
     ## 
@@ -62,7 +383,7 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## 
     ## Response: Distances
     ##           Df   Sum Sq  Mean Sq      F N.Perm Pr(>F)
-    ## Groups     2 0.026775 0.013388 1.2897    999  0.294
+    ## Groups     2 0.026775 0.013388 1.2897    999  0.299
     ## Residuals 27 0.280276 0.010381
     ## Permutation test for adonis under reduced model
     ## Terms added sequentially (first to last)
@@ -71,7 +392,7 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## 
     ## adonis2(formula = habitat_matrix ~ site, data = habitat_meta, method = "bray")
     ##          Df SumOfSqs      R2      F Pr(>F)
-    ## site      9   2.7920 0.33488 1.1189  0.227
+    ## site      9   2.7920 0.33488 1.1189  0.242
     ## Residual 20   5.5452 0.66512              
     ## Total    29   8.3372 1.00000
     ## 
@@ -81,7 +402,7 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## 
     ## Response: Distances
     ##           Df  Sum Sq  Mean Sq      F N.Perm Pr(>F)
-    ## Groups     9 0.16911 0.018791 0.6796    999  0.726
+    ## Groups     9 0.16911 0.018791 0.6796    999  0.701
     ## Residuals 20 0.55301 0.027650
 
 ### Site classification by species composition (Random Forest)
@@ -97,10 +418,10 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## Summary of sample sizes: 30, 30, 30, 30, 30, 30, ... 
     ## Resampling results across tuning parameters:
     ## 
-    ##   mtry  Accuracy   Kappa   
-    ##    2    0.7271692  0.420075
-    ##   14    1.0000000  1.000000
-    ##   27    1.0000000  1.000000
+    ##   mtry  Accuracy   Kappa    
+    ##    2    0.7428952  0.4984826
+    ##   14    0.9771429  0.9600000
+    ##   27    0.9771429  0.9600000
     ## 
     ## Accuracy was used to select the optimal model using the largest value.
     ## The final value used for the model was mtry = 14.
@@ -111,48 +432,63 @@ This analysis explores Salena and Olivia’s canola experiment.
     ##                      Number of trees: 500
     ## No. of variables tried at each split: 2
     ## 
-    ##         OOB estimate of  error rate: 10%
+    ##         OOB estimate of  error rate: 23.33%
     ## Confusion matrix:
     ##         natural semi class.error
     ## natural      17    1  0.05555556
-    ## semi          2   10  0.16666667
-    ##                  natural       semi MeanDecreaseAccuracy MeanDecreaseGini
-    ## land_type    21.18790786 21.9966570           24.1855669       6.32626353
-    ## Agapostemon  -1.55615058 -0.6871270           -1.0810774       0.06355599
-    ## Andrena      -1.72813968 -1.2372234           -1.6572448       0.67066678
-    ## Anthidium    -0.30681487  1.0010015            0.4078739       0.07747130
-    ## Anthophora    0.00000000  0.0000000            0.0000000       0.05594915
-    ## Apis         -1.78959241 -0.7699222           -1.8370620       0.17257545
-    ## Bombus       -1.57099249 -0.1808250           -1.5344281       0.30029351
-    ## Ceratina      5.29131507  5.6296743            7.4108625       1.58064589
-    ## Colletes     -1.38942504 -1.0010015           -1.7360614       0.04510748
-    ## Diadasia      0.00000000  0.0000000            0.0000000       0.02270397
-    ## Dufourea     -1.00100150  1.7200523            0.9208256       0.07173164
-    ## Epoleus       0.00000000  0.0000000            0.0000000       0.02277216
-    ## Halictus     -1.92118443 -1.8724892           -2.1274674       0.55917587
-    ## Heriades      0.00000000  0.0000000            0.0000000       0.02348263
-    ## Hoplitis      0.00000000  0.0000000            0.0000000       0.05398612
-    ## Hylaeus      -0.81877047  0.5578407           -0.4602527       0.16253444
-    ## Lasioglossum  0.04624097 -1.7661357           -0.5613434       0.94861036
-    ## Megachile     3.12017130 -0.3387059            2.0558658       0.29562769
-    ## Melissodes   -0.29831233  0.4725986            0.3215256       0.18905735
-    ## Nomada       -2.05877225 -3.0448975           -3.2479400       0.44057224
-    ## Nomia         0.00000000  0.0000000            0.0000000       0.01116724
-    ## Osmia         1.58114740  0.9607080            1.2700882       0.63165417
-    ## Panurginus   -1.00100150  0.0000000           -1.0010015       0.06525045
-    ## Peponapis     0.00000000  0.0000000            0.0000000       0.08848862
-    ## Perdita       1.34406228  1.2669398            2.0008436       0.20096079
-    ## Protandrena  -0.15339661 -1.0010015           -0.3221117       0.08116881
-    ## Sphecodes     0.28006849 -2.0240647           -1.3281100       0.42264849
+    ## semi          6    6  0.50000000
+    ##                 natural       semi MeanDecreaseAccuracy MeanDecreaseGini
+    ## land_type    21.9224479 21.1064934           24.0121931      6.182612016
+    ## Agapostemon  -1.0010015  1.3020693            0.7041178      0.040929881
+    ## Andrena      -1.8734867 -1.3171152           -2.1846462      0.700327133
+    ## Anthidium     1.0010015  1.0010015            1.4160757      0.076424879
+    ## Anthophora    1.7346908  1.0010015            1.6013751      0.065005102
+    ## Apis         -2.0194689 -2.6058064           -2.4972083      0.193285889
+    ## Bombus       -1.5056962 -2.1111012           -2.3579551      0.321981590
+    ## Ceratina      5.5273397  3.1290963            5.6267554      1.576521605
+    ## Colletes     -2.6004050 -1.1066158           -2.2259947      0.062988719
+    ## Diadasia      0.0000000  0.0000000            0.0000000      0.032191304
+    ## Dufourea      1.9883796  0.0000000            1.9926647      0.062735702
+    ## Epoleus       0.0000000  0.0000000            0.0000000      0.025431158
+    ## Halictus     -0.6098231 -2.4390369           -2.0628896      0.749649307
+    ## Heriades      0.0000000  0.0000000            0.0000000      0.006565423
+    ## Hoplitis      0.0000000  0.0000000            0.0000000      0.035003071
+    ## Hylaeus      -1.8094746 -1.7614476           -1.8680348      0.196791120
+    ## Lasioglossum -1.6774286 -2.8397302           -2.5864748      0.927957115
+    ## Megachile     1.7457552  1.1361148            2.1135119      0.272919749
+    ## Melissodes    0.9180676 -0.2831824            0.4454042      0.213937201
+    ## Nomada       -1.8830734 -3.1078544           -3.8089643      0.510707732
+    ## Nomia         0.0000000  0.0000000            0.0000000      0.015850899
+    ## Osmia         1.6757713  0.3486643            1.4647412      0.593804974
+    ## Panurginus    0.0000000 -1.0010015           -1.0010015      0.045545937
+    ## Peponapis     0.0000000  0.0000000            0.0000000      0.148566218
+    ## Perdita       0.6340438  1.9058067            1.8977683      0.120270107
+    ## Protandrena  -0.6547178  1.0010015           -0.1002678      0.070488165
+    ## Sphecodes     1.3652526 -0.9806404            0.1964027      0.403610469
 
 |              | natural |   semi | MeanDecreaseAccuracy | MeanDecreaseGini |
 |:-------------|--------:|-------:|---------------------:|-----------------:|
-| land_type    |  21.188 | 21.997 |               24.186 |            6.326 |
-| Ceratina     |   5.291 |  5.630 |                7.411 |            1.581 |
-| Lasioglossum |   0.046 | -1.766 |               -0.561 |            0.949 |
-| Andrena      |  -1.728 | -1.237 |               -1.657 |            0.671 |
-| Osmia        |   1.581 |  0.961 |                1.270 |            0.632 |
-| Halictus     |  -1.921 | -1.872 |               -2.127 |            0.559 |
+| land_type    |  21.922 | 21.106 |               24.012 |            6.183 |
+| Ceratina     |   5.527 |  3.129 |                5.627 |            1.577 |
+| Lasioglossum |  -1.677 | -2.840 |               -2.586 |            0.928 |
+| Halictus     |  -0.610 | -2.439 |               -2.063 |            0.750 |
+| Andrena      |  -1.873 | -1.317 |               -2.185 |            0.700 |
+| Osmia        |   1.676 |  0.349 |                1.465 |            0.594 |
+
+    ## 
+    ## Call:
+    ##  randomForest(x = select(rf_matrix, -period, -site, -period_site_land),      y = rf_matrix$land_type, importance = T, nPerm = 999, proximity = T) 
+    ##                Type of random forest: classification
+    ##                      Number of trees: 500
+    ## No. of variables tried at each split: 5
+    ## 
+    ##         OOB estimate of  error rate: 3.33%
+    ## Confusion matrix:
+    ##         natural semi class.error
+    ## natural      17    1  0.05555556
+    ## semi          0   12  0.00000000
+
+![](CanolaBees_files/figure-gfm/random_forest_class-1.png)<!-- -->
 
 **Random Forest classification of habitat type by species composition.**
 The model was tuned without pre-processing. Overall model accuracy was
@@ -231,18 +567,17 @@ period.
     [43] lifecycle_1.0.4      future_1.33.2        MASS_7.3-58.2       
     [46] zoo_1.8-12           scales_1.3.0         ipred_0.9-14        
     [49] hms_1.1.3            parallel_4.2.3       sandwich_3.1-0      
-    [52] RColorBrewer_1.1-3   TMB_1.9.11           yaml_2.3.8          
-    [55] rpart_4.1.23         stringi_1.8.4        highr_0.11          
-    [58] foreach_1.5.2        e1071_1.7-14         hardhat_1.4.0       
-    [61] boot_1.3-28.1        lava_1.8.0           rlang_1.1.4         
-    [64] pkgconfig_2.0.3      evaluate_0.24.0      labeling_0.4.3      
-    [67] recipes_1.0.10       tidyselect_1.2.1     parallelly_1.37.1   
-    [70] plyr_1.8.9           magrittr_2.0.3       R6_2.5.1            
-    [73] generics_0.1.3       multcomp_1.4-25      pillar_1.9.0        
-    [76] withr_3.0.0          mgcv_1.8-42          survival_3.5-3      
-    [79] datawizard_0.11.0    abind_1.4-5          nnet_7.3-18         
-    [82] future.apply_1.11.2  performance_0.12.0   utf8_1.2.4          
-    [85] tzdb_0.4.0           rmarkdown_2.27       grid_4.2.3          
-    [88] data.table_1.15.4    ModelMetrics_1.2.2.2 digest_0.6.35       
-    [91] xtable_1.8-4         numDeriv_2016.8-1.1  stats4_4.2.3        
-    [94] munsell_0.5.1       
+    [52] TMB_1.9.11           yaml_2.3.8           rpart_4.1.23        
+    [55] stringi_1.8.4        highr_0.11           foreach_1.5.2       
+    [58] e1071_1.7-14         hardhat_1.4.0        boot_1.3-28.1       
+    [61] lava_1.8.0           rlang_1.1.4          pkgconfig_2.0.3     
+    [64] evaluate_0.24.0      labeling_0.4.3       recipes_1.0.10      
+    [67] tidyselect_1.2.1     parallelly_1.37.1    plyr_1.8.9          
+    [70] magrittr_2.0.3       R6_2.5.1             generics_0.1.3      
+    [73] multcomp_1.4-25      pillar_1.9.0         withr_3.0.0         
+    [76] mgcv_1.8-42          survival_3.5-3       datawizard_0.11.0   
+    [79] abind_1.4-5          nnet_7.3-18          future.apply_1.11.2 
+    [82] performance_0.12.0   utf8_1.2.4           tzdb_0.4.0          
+    [85] rmarkdown_2.27       grid_4.2.3           data.table_1.15.4   
+    [88] ModelMetrics_1.2.2.2 digest_0.6.35        xtable_1.8-4        
+    [91] numDeriv_2016.8-1.1  stats4_4.2.3         munsell_0.5.1       

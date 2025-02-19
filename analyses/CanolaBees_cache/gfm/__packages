@@ -22,3 +22,7 @@ lattice
 vegan
 randomForest
 caret
+adespatial
+ggrepel
+nlme
+mgcv
