@@ -1,7 +1,7 @@
 Canola Bee Analysis
 ================
 Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich
-February 18, 2025
+June 17, 2025
 
   
 
@@ -10,13 +10,20 @@ February 18, 2025
 - [Plant community composition](#plant-community-composition)
   - [Plant diversity across bloom
     period](#plant-diversity-across-bloom-period)
+- [Multivariate analysis of plant species turnover across bloom period
+  and habitat
+  types](#multivariate-analysis-of-plant-species-turnover-across-bloom-period-and-habitat-types)
+  - [Plant floral diversity across bloom
+    period](#plant-floral-diversity-across-bloom-period)
+- [Multivariate analysis of floral resources across bloom
+  periods](#multivariate-analysis-of-floral-resources-across-bloom-periods)
   - [Plant community diversity across bloom period and
     canola](#plant-community-diversity-across-bloom-period-and-canola)
   - [Turnover of floral resources](#turnover-of-floral-resources)
-- [Bee diversity across bloom
-  periods](#bee-diversity-across-bloom-periods)
-- [Bee turnover across bloom
-  periods](#bee-turnover-across-bloom-periods)
+  - [Bee diversity across bloom
+    periods](#bee-diversity-across-bloom-periods)
+  - [Bee turnover across bloom
+    periods](#bee-turnover-across-bloom-periods)
 - [Testing Olivia’s predictions](#testing-olivias-predictions)
   - [Bee community composition](#bee-community-composition)
     - [](#section)
@@ -42,6 +49,320 @@ This analysis explores Salena and Olivia’s canola experiment.
 ### Plant diversity across bloom period
 
 ![](CanolaBees_files/figure-gfm/plant_diversity_bloomperiod-1.png)<!-- -->
+
+    ## Analysis of Variance Table
+    ## 
+    ## Response: div
+    ##                  Df Sum Sq Mean Sq F value Pr(>F)
+    ## period            2 0.8131 0.40655  1.4373 0.2573
+    ## land_type         1 0.6297 0.62970  2.2262 0.1487
+    ## period:land_type  2 0.5257 0.26287  0.9293 0.4086
+    ## Residuals        24 6.7887 0.28286
+    ## 
+    ## Call:
+    ## lm(formula = div ~ period * land_type, data = plant_div)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -1.11282 -0.26129 -0.04568  0.31947  0.89647 
+    ## 
+    ## Coefficients:
+    ##                                Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)                      0.9687     0.2171   4.461 0.000163 ***
+    ## periodPeak-Bloom                 0.1441     0.3071   0.469 0.643007    
+    ## periodPost-Bloom                -0.1955     0.3071  -0.637 0.530328    
+    ## land_typesemi                    0.6688     0.3433   1.948 0.063200 .  
+    ## periodPeak-Bloom:land_typesemi  -0.6314     0.4855  -1.301 0.205768    
+    ## periodPost-Bloom:land_typesemi  -0.4877     0.4855  -1.004 0.325171    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5318 on 24 degrees of freedom
+    ## Multiple R-squared:  0.2248, Adjusted R-squared:  0.06329 
+    ## F-statistic: 1.392 on 5 and 24 DF,  p-value: 0.2626
+
+# Multivariate analysis of plant species turnover across bloom period and habitat types
+
+    ## Permutation test for adonis under reduced model
+    ## Terms added sequentially (first to last)
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## adonis2(formula = plant_matrix ~ period * land_type, data = meta_plants)
+    ##                  Df SumOfSqs      R2      F Pr(>F)  
+    ## period            2   1.0798 0.08110 1.1836  0.148  
+    ## land_type         1   0.6164 0.04629 1.3512  0.084 .
+    ## period:land_type  2   0.6698 0.05031 0.7342  0.970  
+    ## Residual         24  10.9481 0.82229                
+    ## Total            29  13.3141 1.00000                
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Contrast: natural_semi 
+    ## 
+    ##                            average       sd    ratio      ava      avb cumsum
+    ## Symphoricarpos albus       0.19206  0.24506  0.78370  7.83000 35.33000  0.201
+    ## Sisymbrium altissimum      0.06430  0.17089  0.37630  4.17000  4.00000  0.269
+    ## Vicia villosa              0.06189  0.12639  0.48960  4.06000  6.67000  0.334
+    ## Allium acuminatum          0.05382  0.15691  0.34300 34.61000  0.08000  0.390
+    ## Amsinckia menziesii        0.04410  0.13633  0.32340  0.00000 11.58000  0.436
+    ## Lupinus sericeus           0.04269  0.06664  0.64060  0.78000  7.67000  0.481
+    ## Phlox speciosa             0.03759  0.13707  0.27420  0.00000  4.83000  0.520
+    ## Eriogonum heracleoides     0.02928  0.09221  0.31750  8.39000  0.00000  0.551
+    ## Claytonia perfoliata       0.02781  0.05684  0.48930  4.50000  1.50000  0.580
+    ## Microsteris gracilis       0.02165  0.05417  0.39970  4.39000  1.33000  0.603
+    ## Helianthella uniflora      0.02140  0.06692  0.31980  3.83000  0.00000  0.625
+    ## Achillea millefolium       0.02009  0.03783  0.53100  1.61000  1.83000  0.646
+    ## Valerianella locusta       0.01949  0.06443  0.30250  0.11000  7.75000  0.667
+    ## Myosotis laxa              0.01918  0.03473  0.55220  4.22000  0.50000  0.687
+    ## Centaurea solstitialis     0.01842  0.08687  0.21210  2.22000  0.00000  0.706
+    ## Rosa sp                    0.01811  0.05170  0.35040  0.33000  2.50000  0.725
+    ## Galium aparine             0.01794  0.03403  0.52720  6.33000  0.75000  0.744
+    ## Myosotis discolor          0.01704  0.05610  0.30370  0.11000  6.75000  0.762
+    ## Prunus emarginata          0.01607  0.07688  0.20900  1.83000  0.00000  0.778
+    ## Hesperis matronalis        0.01579  0.06487  0.24340  3.17000  0.33000  0.795
+    ## Potentilla gracilis        0.01516  0.03259  0.46510  0.39000  2.25000  0.811
+    ## Lamium purpureum           0.01247  0.04237  0.29420  0.00000  5.08000  0.824
+    ## Delphinium sp              0.01077  0.03944  0.27300  0.00000  1.33000  0.835
+    ## Crataegus douglasii        0.01029  0.06019  0.17100  0.72000  0.08000  0.846
+    ## Hieracium caespilosum      0.00930  0.04271  0.21790  0.67000  0.00000  0.856
+    ## Prunus virginiana          0.00921  0.03913  0.23540  1.67000  0.00000  0.866
+    ## Geum triflorum             0.00895  0.01865  0.47990  0.56000  2.08000  0.875
+    ## Physocarpus malvaceus      0.00817  0.02334  0.35020  0.56000  0.83000  0.883
+    ## Daucus carota              0.00741  0.03616  0.20500  0.00000  0.25000  0.891
+    ## Geranium viscosissimum     0.00674  0.01452  0.46410  0.22000  0.92000  0.898
+    ## Acmispon americanus        0.00654  0.04365  0.14970  0.39000  0.00000  0.905
+    ## Anthiscus caucalis         0.00606  0.02147  0.28250  1.11000  0.00000  0.911
+    ## Apocynum androsaemifolium  0.00599  0.02823  0.21210  0.72000  0.00000  0.918
+    ## Madia gracilis             0.00561  0.02815  0.19940  0.56000  0.00000  0.924
+    ## Sidalcea oregana           0.00537  0.02763  0.19450  0.50000  0.00000  0.929
+    ## Onopordum acanthium        0.00534  0.03361  0.15890  0.33000  0.00000  0.935
+    ## Collinsia parviflora       0.00529  0.01584  0.33390  1.83000  0.00000  0.940
+    ## Clematis hirsutissima      0.00528  0.01431  0.36930  0.22000  1.58000  0.946
+    ## Lupinus argentus           0.00454  0.01654  0.27420  0.00000  0.58000  0.951
+    ## Euthamia oceidentalis      0.00432  0.01548  0.27930  0.00000  0.67000  0.955
+    ## Senceio serra              0.00420  0.01546  0.27170  0.00000  0.50000  0.960
+    ## Veronica hederifolia       0.00409  0.01475  0.27730  0.00000  0.58000  0.964
+    ## Triteleia grandiflora      0.00358  0.01269  0.28190  0.78000  0.08000  0.968
+    ## Clarkia pulchella          0.00298  0.01059  0.28130  0.67000  0.00000  0.971
+    ## Castilleja hispidia        0.00292  0.01398  0.20900  0.33000  0.00000  0.974
+    ## Lomatium dissectum         0.00274  0.00942  0.29070  0.56000  0.00000  0.977
+    ## Heuchera cylindrica        0.00261  0.01181  0.22120  0.39000  0.00000  0.979
+    ## Senceio sericeus           0.00238  0.00719  0.33080  0.50000  0.08000  0.982
+    ## Iris missouriensis         0.00231  0.00731  0.31630  0.28000  0.33000  0.984
+    ## Hypericum perforatum       0.00230  0.01086  0.21210  0.28000  0.00000  0.987
+    ## Camassia quamash           0.00184  0.00800  0.23030  0.39000  0.00000  0.989
+    ## Wyethia amplexicaulis      0.00182  0.00579  0.31330  0.28000  0.00000  0.991
+    ## Senceio intergrrimus       0.00162  0.00580  0.27930  0.00000  0.25000  0.992
+    ## Penestemon confertus       0.00143  0.00486  0.29420  0.00000  0.58000  0.994
+    ## Toxicoscordion venenosum   0.00140  0.00583  0.24080  1.17000  0.00000  0.995
+    ## Lupinus sp                 0.00125  0.00376  0.33200  0.06000  0.33000  0.997
+    ## Delphinium nuttallianum    0.00119  0.00454  0.26300  0.39000  0.00000  0.998
+    ## Amelianchier alnifolia     0.00087  0.00262  0.33230  0.06000  0.17000  0.999
+    ## Gaillardia sp              0.00082  0.00281  0.29140  0.00000  0.25000  1.000
+    ## Arnica sororia             0.00020  0.00083  0.24080  0.17000  0.00000  1.000
+    ## Castilleja tenuis          0.00020  0.00083  0.24080  0.17000  0.00000  1.000
+    ##                               p  
+    ## Symphoricarpos albus      0.018 *
+    ## Sisymbrium altissimum     0.605  
+    ## Vicia villosa             0.058 .
+    ## Allium acuminatum         0.985  
+    ## Amsinckia menziesii       0.064 .
+    ## Lupinus sericeus          0.025 *
+    ## Phlox speciosa            0.071 .
+    ## Eriogonum heracleoides    0.969  
+    ## Claytonia perfoliata      0.966  
+    ## Microsteris gracilis      0.684  
+    ## Helianthella uniflora     0.947  
+    ## Achillea millefolium      0.911  
+    ## Valerianella locusta      0.216  
+    ## Myosotis laxa             0.969  
+    ## Centaurea solstitialis    0.902  
+    ## Rosa sp                   0.087 .
+    ## Galium aparine            0.978  
+    ## Myosotis discolor         0.221  
+    ## Prunus emarginata         0.900  
+    ## Hesperis matronalis       0.866  
+    ## Potentilla gracilis       0.160  
+    ## Lamium purpureum          0.172  
+    ## Delphinium sp             0.063 .
+    ## Crataegus douglasii       0.833  
+    ## Hieracium caespilosum     0.864  
+    ## Prunus virginiana         0.912  
+    ## Geum triflorum            0.344  
+    ## Physocarpus malvaceus     0.177  
+    ## Daucus carota             0.014 *
+    ## Geranium viscosissimum    0.386  
+    ## Acmispon americanus       0.787  
+    ## Anthiscus caucalis        0.936  
+    ## Apocynum androsaemifolium 0.890  
+    ## Madia gracilis            0.882  
+    ## Sidalcea oregana          0.893  
+    ## Onopordum acanthium       0.799  
+    ## Collinsia parviflora      0.975  
+    ## Clematis hirsutissima     0.398  
+    ## Lupinus argentus          0.071 .
+    ## Euthamia oceidentalis     0.061 .
+    ## Senceio serra             0.077 .
+    ## Veronica hederifolia      0.069 .
+    ## Triteleia grandiflora     0.744  
+    ## Clarkia pulchella         0.951  
+    ## Castilleja hispidia       0.900  
+    ## Lomatium dissectum        0.935  
+    ## Heuchera cylindrica       0.904  
+    ## Senceio sericeus          0.935  
+    ## Iris missouriensis        0.753  
+    ## Hypericum perforatum      0.890  
+    ## Camassia quamash          0.886  
+    ## Wyethia amplexicaulis     0.943  
+    ## Senceio intergrrimus      0.061 .
+    ## Penestemon confertus      0.172  
+    ## Toxicoscordion venenosum  0.933  
+    ## Lupinus sp                0.224  
+    ## Delphinium nuttallianum   0.939  
+    ## Amelianchier alnifolia    0.709  
+    ## Gaillardia sp             0.152  
+    ## Arnica sororia            0.932  
+    ## Castilleja tenuis         0.932  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## Call:
+    ## capscale(formula = plant_matrix ~ land_type, data = meta_plants,      distance = "bray") 
+    ## 
+    ## Partitioning of squared Bray distance:
+    ##               Inertia Proportion
+    ## Total         13.3400    1.00000
+    ## Constrained    0.6168    0.04624
+    ## Unconstrained 12.7232    0.95376
+    ## 
+    ## Eigenvalues, and their contribution to the squared Bray distance 
+    ## 
+    ## Importance of components:
+    ##                          CAP1   MDS1    MDS2    MDS3    MDS4    MDS5    MDS6
+    ## Eigenvalue            0.61680 1.7396 1.13774 0.97524 0.85498 0.70817 0.65176
+    ## Proportion Explained  0.04624 0.1304 0.08529 0.07311 0.06409 0.05309 0.04886
+    ## Cumulative Proportion 0.04624 0.1766 0.26193 0.33503 0.39912 0.45221 0.50107
+    ##                          MDS7    MDS8   MDS9   MDS10   MDS11   MDS12   MDS13
+    ## Eigenvalue            0.60283 0.57687 0.5163 0.50479 0.49651 0.47518 0.46598
+    ## Proportion Explained  0.04519 0.04324 0.0387 0.03784 0.03722 0.03562 0.03493
+    ## Cumulative Proportion 0.54626 0.58950 0.6282 0.66605 0.70326 0.73889 0.77382
+    ##                         MDS14   MDS15   MDS16   MDS17   MDS18   MDS19   MDS20
+    ## Eigenvalue            0.43063 0.42969 0.39179 0.37672 0.29367 0.24476 0.23452
+    ## Proportion Explained  0.03228 0.03221 0.02937 0.02824 0.02201 0.01835 0.01758
+    ## Cumulative Proportion 0.80610 0.83831 0.86768 0.89592 0.91793 0.93628 0.95386
+    ##                         MDS21   MDS22    MDS23    MDS24    MDS25    MDS26
+    ## Eigenvalue            0.19035 0.13927 0.114892 0.071817 0.054363 0.041200
+    ## Proportion Explained  0.01427 0.01044 0.008613 0.005384 0.004075 0.003088
+    ## Cumulative Proportion 0.96813 0.97857 0.987182 0.992565 0.996640 0.999729
+    ##                           MDS27
+    ## Eigenvalue            0.0036176
+    ## Proportion Explained  0.0002712
+    ## Cumulative Proportion 1.0000000
+    ## 
+    ## Accumulated constrained eigenvalues
+    ## Importance of components:
+    ##                         CAP1
+    ## Eigenvalue            0.6168
+    ## Proportion Explained  1.0000
+    ## Cumulative Proportion 1.0000
+
+![](CanolaBees_files/figure-gfm/multi_plants-1.png)<!-- -->
+
+- No differences in plant community across bloom period or land type.
+
+This may be expected, as the plants don’t get up and walk away…certainly
+not within a season anyway.
+
+**However, we should expect floral resources to vary across bloom
+periods.**
+
+### Plant floral diversity across bloom period
+
+![](CanolaBees_files/figure-gfm/floral_diversity_bloomperiod-1.png)<!-- -->
+
+    ## Analysis of Variance Table
+    ## 
+    ## Response: div
+    ##                  Df Sum Sq Mean Sq F value  Pr(>F)  
+    ## period            2 1.5073 0.75366  2.8799 0.07568 .
+    ## land_type         1 0.7702 0.77020  2.9431 0.09913 .
+    ## period:land_type  2 0.5247 0.26237  1.0026 0.38178  
+    ## Residuals        24 6.2806 0.26169                  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Call:
+    ## lm(formula = div ~ period * land_type, data = floral_div)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -1.00959 -0.34499  0.04998  0.36183  1.04611 
+    ## 
+    ## Coefficients:
+    ##                                Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)                      0.8755     0.2088   4.192 0.000324 ***
+    ## periodPeak-Bloom                 0.1341     0.2953   0.454 0.653880    
+    ## periodPost-Bloom                -0.1965     0.2953  -0.665 0.512101    
+    ## land_typesemi                    0.6313     0.3302   1.912 0.067909 .  
+    ## periodPeak-Bloom:land_typesemi  -0.2566     0.4670  -0.549 0.587744    
+    ## periodPost-Bloom:land_typesemi  -0.6561     0.4670  -1.405 0.172838    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5116 on 24 degrees of freedom
+    ## Multiple R-squared:  0.3085, Adjusted R-squared:  0.1645 
+    ## F-statistic: 2.142 on 5 and 24 DF,  p-value: 0.09491
+
+![](CanolaBees_files/figure-gfm/floral_units_over_time-1.png)<!-- -->
+
+    ## Analysis of Variance Table
+    ## 
+    ## Response: total_FU
+    ##               Df Sum Sq Mean Sq F value  Pr(>F)  
+    ## doy            1  87579   87579  5.1705 0.03084 *
+    ## land_type      1  34441   34441  2.0333 0.16494  
+    ## doy:land_type  1  44109   44109  2.6041 0.11780  
+    ## Residuals     28 474273   16938                  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Call:
+    ## lm(formula = total_FU ~ doy * land_type, data = total_floral)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -206.67  -64.93  -12.47   20.68  416.96 
+    ## 
+    ## Coefficients:
+    ##                   Estimate Std. Error t value Pr(>|t|)   
+    ## (Intercept)       1002.900    296.796   3.379  0.00216 **
+    ## doy                 -4.630      1.601  -2.892  0.00732 **
+    ## land_typesemi     -734.166    416.115  -1.764  0.08858 . 
+    ## doy:land_typesemi    3.684      2.283   1.614  0.11780   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 130.1 on 28 degrees of freedom
+    ## Multiple R-squared:  0.2594, Adjusted R-squared:  0.1801 
+    ## F-statistic: 3.269 on 3 and 28 DF,  p-value: 0.03586
+
+# Multivariate analysis of floral resources across bloom periods
+
+    ## Permutation test for adonis under reduced model
+    ## Terms added sequentially (first to last)
+    ## Permutation: free
+    ## Number of permutations: 999
+    ## 
+    ## adonis2(formula = floral_matrix ~ period * land_type, data = meta_plants)
+    ##                  Df SumOfSqs      R2      F Pr(>F)
+    ## period            2   0.9752 0.07154 1.0350  0.357
+    ## land_type         1   0.4979 0.03653 1.0568  0.354
+    ## period:land_type  2   0.8504 0.06239 0.9025  0.753
+    ## Residual         24  11.3077 0.82954              
+    ## Total            29  13.6313 1.00000
 
 ### Plant community diversity across bloom period and canola
 

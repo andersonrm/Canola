@@ -87,6 +87,8 @@ bee_hw <- read.csv("data/CleanPalouseBees.csv")
 
 canola <- read.csv("data/canola_coverage.csv")
 
+canola_bees <- read.csv("data/bees_in_canola.csv")
+
 ###### Functions
 
 
@@ -112,6 +114,27 @@ bee_hw <- bee_hw %>%
       TRUE ~ "Post-Bloom"
     )))
 
+
+canola_bees <- canola_bees %>% 
+  filter(!is.na(ID)) %>% 
+  mutate(across(c(
+    Site : sex), factor),
+    across(c(County : Catch), factor)) %>% 
+  unite(new_date, c(Year, Month, Day), sep = "-") %>% 
+  mutate(date = ymd(new_date),
+         Period = factor(case_when(
+      Period == "2" ~ "Peak-Bloom",
+      Period == "3" ~ "Post-Bloom",
+      TRUE ~ NA))) %>% 
+  rename(site = Site,
+         period = Period,
+         transect = Transect,
+         genus = Genus,
+         species = Species,
+         head_width = HW)
+  
+
+
 # Clean up Olivia's data:
 bees <- bees %>% 
   select(-X) %>% 
@@ -127,7 +150,8 @@ bees <- bees %>%
            Genus == "Ceratina " ~ "Ceratina",
            Genus == "Melissodes " ~ "Melissodes",
            TRUE ~ Genus
-         ))) %>% 
+         )),
+         land_type = "canola") %>% 
   rename(date = Date,
          period = Period,
          site = Site,
@@ -151,6 +175,7 @@ bees <- bees %>%
 
 # plant data:
 plants <- plants %>% 
+  filter(Genus != "UK") %>% 
   mutate(Date = mdy(Date),
          across(c(
            Period : Species
@@ -165,14 +190,21 @@ plants <- plants %>%
            Site == "TurnbullPlaza" ~ "Plaza",
            Site == "TurnbullSpangle" ~ "Spangle",
            TRUE ~ Site
-         ))) %>% 
+         )),
+         siteID = factor(paste(Site, Period, sep = "_")),
+         FloralUnits = case_when(
+           is.na(FloralUnits) ~ 0,
+           TRUE ~ FloralUnits
+         )) %>% 
+  unite(spp, c(Genus, Species), sep = " ", remove = F) %>% 
   rename(date = Date,
          period = Period,
          site = Site,
          transect = Transect,
          family = Family,
          genus = Genus,
-         species = Species)
+         species = Species) %>% 
+  left_join(., land_type, by = "site")
 
 plant_counts <- plants %>% 
   uncount(Amount) %>% 
@@ -235,9 +267,9 @@ plant_div_fun <- function(data, bloom_period){
   data %>% 
     uncount(Amount) %>% 
     filter(period == bloom_period) %>% 
-    group_by(site, CommonName) %>% 
+    group_by(site, spp) %>% 
     tally(name = "plant_count") %>% 
-    pivot_wider(names_from = CommonName,
+    pivot_wider(names_from = spp,
               values_from = plant_count,
               values_fill = list(plant_count = 0)) %>% 
     column_to_rownames("site") %>% 
@@ -267,9 +299,201 @@ plant_div %>%
   geom_boxplot() +
   theme_cowplot(font_size = 16) +
   labs(y = "Shannon diversity") +
-  theme(axis.title.x = element_blank())
+  theme(axis.title.x = element_blank()) +
+  facet_wrap(~land_type)
+
+div_model1 <- lm(div ~ period * land_type,
+                 data = plant_div)
+
+anova(div_model1)
+summary(div_model1)
+```
+
+# Multivariate analysis of plant species turnover across bloom period and habitat types
+
+```{r multi_plants, echo = F, fig.width=10, fig.height=8}
+
+plant_totals <- plants %>% 
+  uncount(Amount) %>% 
+  group_by(siteID, spp) %>% 
+  tally() %>% 
+  group_by(spp) %>% 
+  summarise(total_counts = sum(n)) %>% 
+  arrange(desc(total_counts)) %>% 
+  # adjust quantile to exclude rare species -----v
+  filter(total_counts > quantile(total_counts, 0.1))
+
+
+meta_plants <- plants %>% 
+  select(siteID, period, site, land_type) %>% 
+  distinct()
+
+
+plant_matrix <- plants %>% 
+  semi_join(., plant_totals, by = "spp") %>% 
+  uncount(Amount) %>% 
+  group_by(siteID, spp) %>% 
+  tally() %>% 
+  pivot_wider(names_from = spp,
+              values_from = n,
+              values_fill = list(n = 0)) %>% 
+  column_to_rownames("siteID")
+
+plant_perm <- adonis2(plant_matrix ~ period * land_type,
+                      data = meta_plants)
+
+plant_perm
+
+simper_plants <- simper(plant_matrix,
+                        group = meta_plants$land_type)
+
+summary(simper_plants)
+
+plant_lt_cap <- capscale(plant_matrix ~ land_type,
+                         data = meta_plants,
+                         distance = "bray")
+summary(plant_lt_cap)
+
+
+site_scores <- scores(plant_lt_cap, display = "sites") %>%
+  as.data.frame() %>%
+  mutate(sample = rownames(.),
+         land_type = meta_plants$land_type)
+
+species_scores <- scores(plant_lt_cap, display = "species") %>%
+  as.data.frame() %>%
+  rownames_to_column("species")
+
+# Optional: keep only species with strongest loadings on CAP1
+species_scores_filtered <- species_scores %>%
+  filter(abs(CAP1) > 0.1 | abs(MDS1) > 0.1)
+
+ggplot(site_scores,
+       aes(x = CAP1, y = MDS1, color = land_type, fill = land_type)) +
+  stat_ellipse(geom = "polygon", type = "t",
+               level = 0.95, alpha = 0.3) +
+  geom_point(size = 2.5, shape = 21, stroke = 0.5,
+             aes(fill = land_type), color = 'black') +
+  geom_segment(data = species_scores_filtered,
+               aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
+               arrow = arrow(length = unit(0.2, "cm")),
+               color = "black",
+               inherit.aes = F) +
+  geom_text_repel(data = species_scores_filtered,
+            aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
+            size = 3, hjust = 0.5, max.overlaps = 20,
+            inherit.aes = F) +
+  scale_color_manual(values = c("natural" = "#1b9e77",
+                                "semi" = "#d95f02"),
+                     labels = c("Natural", "Semi-natural")) +
+  scale_fill_manual(values = c("natural" = "#1b9e77",
+                                "semi" = "#d95f02"),
+                     labels = c("Natural", "Semi-natural")) +
+  theme_minimal(base_size = 14) +
+  labs(
+    x = "CAP1",
+    y = "MDS1",
+    fill = "Land type", color = "Land type")
 
 ```
+
+* No differences in plant community across bloom period or land type.
+
+This may be expected, as the plants don't get up and walk away...certainly not within a season anyway.
+
+**However, we should expect floral resources to vary across bloom periods.**
+
+### Plant floral diversity across bloom period
+```{r floral_diversity_bloomperiod, echo = F}
+floral_div_fun <- function(data, bloom_period){
+  data %>% 
+    uncount(FloralUnits) %>% 
+    filter(period == bloom_period) %>% 
+    group_by(site, spp) %>% 
+    tally(name = "plant_count") %>% 
+    pivot_wider(names_from = spp,
+              values_from = plant_count,
+              values_fill = list(plant_count = 0)) %>% 
+    column_to_rownames("site") %>% 
+    diversity()
+}
+
+period_floral_div <- levels(plants$period) %>% 
+  map(~ floral_div_fun(plants, bloom_period = .x))
+
+names(period_floral_div) <- levels(plants$period)
+
+floral_div <- do.call(rbind, period_floral_div) %>% 
+  data.frame() %>% 
+  rownames_to_column("period") %>% 
+  pivot_longer(cols = c("Asotin" : "Spangle"),
+               names_to = "site",
+               values_to = "div") %>% 
+  mutate(across(c(period, site), factor),
+         period = factor(period, levels = c(
+           "Pre-Bloom", "Peak-Bloom", "Post-Bloom"
+         ))) %>% 
+  left_join(., land_type, by = "site") %>% 
+  left_join(., canola, by = "site")
+
+floral_div %>% 
+  ggplot(aes(x = period, y = div)) +
+  geom_boxplot() +
+  theme_cowplot(font_size = 16) +
+  labs(y = "Floral Shannon diversity") +
+  theme(axis.title.x = element_blank()) +
+  facet_wrap(~land_type)
+
+floral_model1 <- lm(div ~ period * land_type,
+                 data = floral_div)
+
+anova(floral_model1)
+summary(floral_model1)
+
+```
+
+```{r floral_units_over_time, echo = F}
+
+total_floral <- plants %>% 
+  mutate(doy = yday(date)) %>% 
+  group_by(siteID, doy, land_type) %>% 
+  summarise(total_FU = sum(FloralUnits)) 
+
+total_floral %>% 
+  ggplot(aes(x = doy, y = total_FU, color = land_type)) +
+  geom_jitter(width = 0.1, height = 0) +
+  geom_smooth(method = 'lm') +
+  theme_classic() +
+  labs(x = "Day of year", y = "Total floral units",
+       color = "Land type")
+
+floral_mod_total <- lm(total_FU ~ doy * land_type,
+                       data = total_floral)
+
+anova(floral_mod_total)
+summary(floral_mod_total)
+```
+
+# Multivariate analysis of floral resources across bloom periods
+
+```{r multi_floral, echo = F}
+
+floral_matrix <- plants %>% 
+  uncount(FloralUnits) %>% 
+  group_by(siteID, spp) %>% 
+  tally() %>% 
+  pivot_wider(names_from = spp,
+              values_from = n,
+              values_fill = list(n = 0)) %>% 
+  column_to_rownames("siteID")
+
+floral_perm <- adonis2(floral_matrix ~ period * land_type,
+                      data = meta_plants)
+
+floral_perm
+
+```
+
 
 
 ### Plant community diversity across bloom period and canola
