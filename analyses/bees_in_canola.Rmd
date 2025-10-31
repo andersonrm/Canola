@@ -60,12 +60,11 @@ This analysis explores Salena and Olivia's canola experiment.
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # Load Packages
-library(tidyverse) # Needed for data wrangling: dplyr, tidyr, ggplot2
-library(cowplot) # Needed for publication-quality ggplots
+library(tidyverse)
+library(cowplot) 
 library(glmmTMB)
 library(lme4)
 library(sjPlot)
-library(car)
 library(knitr)
 library(emmeans)
 library(vegan)
@@ -103,87 +102,61 @@ bee_hw <- bee_hw %>%
     c(period : land_type), factor),
     across(c(transect : genus), factor),
     date = ymd(date),
-    week = week(date),
+    year = as.numeric(year(date)) + 2000,
+    month = as.numeric(month(date)),
+    day = as.numeric(day(date)),
+    date = paste(year, month, day, sep = "_"),
+    date = ymd(date),
     site = factor(case_when(
       site == "Smoot " ~ "Smoot",
       TRUE ~ site)),
     period = factor(case_when(
       period == "1" ~ "Pre-Bloom",
       period == "2" ~ "Peak-Bloom",
-      TRUE ~ "Post-Bloom")))
+      TRUE ~ "Post-Bloom")),
+    in_canola = factor("no"))
 
+
+hw_1 <- bee_hw %>% 
+  select(date, period, site, land_type, latitude, longitude,
+         transect, morphogroup, family, genus, head_width,
+         intertegular_space, in_canola)
 
 canola_bees <- canola_bees %>% 
   filter(!is.na(ID),
          Genus != "Wasp",
            Genus != "") %>% 
   mutate(across(c(
-    Site : sex), factor),
-    across(c(County : Catch), factor)) %>% 
+    Site : sex, County : Catch), factor)) %>% 
   unite(new_date, c(Year, Month, Day), sep = "-") %>% 
   mutate(date = ymd(new_date),
          Period = factor(case_when(
       Period == "2" ~ "Peak-Bloom",
       Period == "3" ~ "Post-Bloom",
       TRUE ~ NA)),
-      land_type = "canola") %>% 
+      land_type = factor("canola"),
+      in_canola = factor("yes"),
+      HW = as.numeric(HW)) %>% 
+  select(-Date) %>% 
   rename(site = Site,
          period = Period,
          transect = Transect,
          genus = Genus,
          species = Species,
-         head_width = HW)
+         head_width = HW,
+         latitude = Lat,
+         longitude = Long,
+         subgenus = Subgenus)
+
+hw_2 <- canola_bees %>% 
+  select(date, period, site, land_type, latitude, longitude,
+         transect, genus, subgenus, species, head_width,
+         land_type, in_canola)
+
+bee_head_width <- bind_rows(hw_1, hw_2)
+
 
 #{{{{{{{{{{{{}}}}}}}}}}}}
-
-
-# Clean up Olivia's data:
-bees <- bees %>% 
-  select(-X) %>% 
-  mutate(across(c(Period : Genus), factor),
-         Date = ymd(Date),
-         week = week(Date),
-         Family = factor(case_when(
-           Family == "Halictus " ~ "Halictidae",
-           Family == "Halictidae" & Genus == "Nomada" ~ "Apidae",
-           TRUE ~ Family)),
-         Genus = factor(case_when(
-           Genus == "Ceratina " ~ "Ceratina",
-           Genus == "Melissodes " ~ "Melissodes",
-           TRUE ~ Genus)),
-         land_type = "canola") %>% 
-  rename(date = Date,
-         period = Period,
-         site = Site,
-         transect = Transect,
-         morphogroup = Morphogroup,
-         family = Family,
-         genus = Genus)
-
-
-## Combine the bees and canola bees
-  
-bee_div_data <- bees %>% 
-  select(site, genus, period, date) %>% 
-  bind_rows(., select(canola_bees,
-                      site, genus, period, date)) %>% 
-  mutate(DoY = yday(date))
-
-
-
-
-# Extract Salena's land type variable:
-land_type <- bee_hw %>% 
-  select(site, land_type) %>% 
-  distinct() %>% 
-  bind_rows(., select(canola_bees, site, land_type)) %>% 
-  distinct()
-
-# Add land type to Olivia's data:
-bees <- bees %>% 
-  left_join(land_type, by = "site")
-
-
 # plant data:
 plants <- plants %>% 
   filter(Genus != "UK") %>% 
@@ -214,12 +187,45 @@ plants <- plants %>%
          transect = Transect,
          family = Family,
          genus = Genus,
-         species = Species) %>% 
-  left_join(., land_type, by = "site") 
+         species = Species)
+
+canola_plants <- data.frame(
+  site = factor(levels(canola_bees$site)),
+  CommonName = factor("canola"),
+  Amount = 100,
+  FloralUnits = 100)
+
+
+plants <- bind_rows(plants, canola_plants)
+
+#########################
+
+# Site data
+canola <- canola %>% 
+  mutate(site = factor(site),
+         PrairieFragment = factor(PrairieFragment),
+         PrairieFragment = factor(case_when(
+           site == "Asotin" | site == "Hutchins" ~ "No",
+           site == "Plaza" | site == "Spangle" ~ "Yes",
+           TRUE ~ PrairieFragment
+         )))
+
+canola_sites <- bee_head_width %>%
+  filter(in_canola == "yes") %>%
+  select(site, latitude, longitude) %>%
+  distinct() %>%
+  mutate(lat_long = paste(latitude,longitude, sep = ",")) %>% 
+  filter(!is.na(latitude))
+
+write.csv(canola_sites,
+          file = "data/canola_site_coords.csv",
+          quote = F, row.names = F)
 
 
 
 
+
+########## Probably discard this below:
 plant_counts <- plants %>% 
   uncount(Amount) %>% 
   group_by(site, period, CommonName) %>% 
@@ -290,6 +296,36 @@ year_day <- plants %>%
 
 ```
 
+
+```{r plant_community_wrangling, echo = F}
+
+plant_matrix <- plants %>% 
+  uncount(Amount) %>% 
+  select(site, CommonName) %>% 
+  group_by(site, CommonName) %>% 
+  tally() %>% 
+  pivot_wider(names_from = CommonName,
+              values_from = n,
+              values_fill = list(n = 0)) %>% 
+  column_to_rownames("site")
+
+plant_div <- cbind(
+  shannon = diversity(plant_matrix),
+  richness = specnumber(plant_matrix),
+  pielou = diversity(plant_matrix) / log(specnumber(plant_matrix))
+) %>% as.data.frame() %>% 
+  rownames_to_column("site") %>% 
+  mutate(site = factor(site))
+
+total_floral <- plants %>%
+  group_by(site) %>% 
+  summarise(cu_floral = sum(FloralUnits))
+
+plant_div <- left_join(plant_div, total_floral,
+                       by = "site")
+  
+
+```
 
 ## Plant community composition
 
