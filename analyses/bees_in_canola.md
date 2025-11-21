@@ -28,27 +28,7 @@ This analysis explores Salena and Olivia’s canola experiment.
 
 ![](bees_in_canola_files/figure-gfm/eda_bee_genera_in_canola-1.png)<!-- -->
 
-    ## [[1]]
-
 ![](bees_in_canola_files/figure-gfm/head_width_models-1.png)<!-- -->
-
-    ## 
-    ## [[2]]
-    ## [[2]]$genus
-
-![](bees_in_canola_files/figure-gfm/head_width_models-2.png)<!-- -->
-
-    ## 
-    ## 
-    ## [[3]]
-
-![](bees_in_canola_files/figure-gfm/head_width_models-3.png)<!-- -->
-
-    ## 
-    ## [[4]]
-
-![](bees_in_canola_files/figure-gfm/head_width_models-4.png)<!-- -->
-![](bees_in_canola_files/figure-gfm/head_width_models-5.png)<!-- -->![](bees_in_canola_files/figure-gfm/head_width_models-6.png)<!-- -->
 
     ## Linear mixed model fit by REML ['lmerMod']
     ## Formula: head_width ~ in_canola * propCan2km + (propCan2km | genus)
@@ -80,9 +60,7 @@ This analysis explores Salena and Olivia’s canola experiment.
     ## propCan2km  -0.652  0.101       
     ## in_cnlys:C2  0.015 -0.764 -0.159
 
-![](bees_in_canola_files/figure-gfm/head_width_models-7.png)<!-- -->
-
-![](bees_in_canola_files/figure-gfm/head_width_figure-1.png)<!-- -->![](bees_in_canola_files/figure-gfm/head_width_figure-2.png)<!-- -->![](bees_in_canola_files/figure-gfm/head_width_figure-3.png)<!-- -->
+![](bees_in_canola_files/figure-gfm/head_width_figure-1.png)<!-- -->
 
     ## Permutation test for adonis under reduced model
     ## Terms added sequentially (first to last)

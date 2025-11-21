@@ -339,13 +339,13 @@ hw_mod1 <- lmer(head_width ~ in_canola * propCan2km +
                 data = semi_join(bee_head_width, ten_bees,
                                  by = "genus"))
 
-plot_model(hw_mod1, type = "diag")
-plot_model(hw_mod1, type = "est")
-plot_model(hw_mod1, type = "re")
+# plot_model(hw_mod1, type = "diag")
+# plot_model(hw_mod1, type = "est")
+plot_model(hw_mod1, type = "re") +
+  theme_minimal(base_size = 18) +
+  labs(title = "")
 
 summary(hw_mod1)
-plot_model(hw_mod1, type = "pred",
-           terms = c("propCan2km", "in_canola"))
 
 # plant richness, shannon diversity, and cumulative floral units had no effect on head_width and were removed from the models.
 
@@ -356,17 +356,38 @@ plot_model(hw_mod1, type = "pred",
 hw_pred <- ggpredict(hw_mod1,
                      terms = c("propCan2km", "in_canola"))
 
-plot(hw_pred)
+
 
 hw_pred_genus <- ggpredict(hw_mod1,
                            terms = c("propCan2km", "in_canola",
                                      "genus"))
-plot(hw_pred_genus)
 
-hw_pred_genus %>% 
-  ggplot(aes(x = x, y = predicted, color = group)) +
-  geom_point() +
-  facet_wrap(~facet)
+
+hw_pred_genus %>%
+  as.data.frame() %>% 
+  mutate(in_canola = group) %>% 
+  ggplot(aes(x = x, y = predicted, color = in_canola)) +
+  geom_line(size = 2, show.legend = F) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high,
+                  color = in_canola), alpha = 0,
+              linetype = 2, show.legend = F) +
+  geom_jitter(data = semi_join(bee_head_width, ten_bees, by = "genus"),
+             aes(x = propCan2km, y = head_width,
+                 fill = in_canola),
+             width = 0.002,
+             shape = 21,
+             color = "black") +
+  theme_minimal(base_size = 18) +
+  labs(x = "Canola saturation\n(2km radius)",
+       y = "Head width (mm)",
+       fill = "Canola") +
+  scale_color_manual(values = c("no" = "#A1CAF1",
+                                "yes" = "#d95f02")) +
+  scale_fill_manual(values = c("no" = "#A1CAF1",
+                               "yes" = "#d95f02")) 
+  
+  
+
 ```
 
 
