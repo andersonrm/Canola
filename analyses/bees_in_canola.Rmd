@@ -72,6 +72,8 @@ library(randomForest)
 library(caret)
 library(adespatial)
 library(ggrepel)
+library(ggeffects)
+library(gamm4)
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # @@@@@ Data Preparation
@@ -87,6 +89,8 @@ bee_hw <- read.csv("data/CleanPalouseBees.csv")
 canola <- read.csv("data/canola_coverage.csv")
 
 canola_bees <- read.csv("data/bees_in_canola.csv")
+
+canola_buffs <- read.csv("data/Canola_Buffs.csv")
 
 ###### Functions
 
@@ -217,9 +221,16 @@ canola_sites <- bee_head_width %>%
   mutate(lat_long = paste(latitude,longitude, sep = ",")) %>% 
   filter(!is.na(latitude))
 
-write.csv(canola_sites,
-          file = "data/canola_site_coords.csv",
-          quote = F, row.names = F)
+site_data <- canola_buffs %>% 
+  mutate(propCan500m = Canola_area500m / total_area500m,
+         propCan1km = Canola_area1000m / total_area1000m,
+         propCan2km = Canola_area2000m / total_area2000m,
+         site = factor(site),
+         DistanceToCanola = 1,
+         PrairieFragment = factor("No")) %>% 
+  select(site, propCan500m, propCan1km, propCan2km,
+         DistanceToCanola, PrairieFragment) %>% 
+  bind_rows(., canola)
 
 
 
@@ -312,142 +323,194 @@ plant_matrix <- plants %>%
 plant_div <- cbind(
   shannon = diversity(plant_matrix),
   richness = specnumber(plant_matrix),
-  pielou = diversity(plant_matrix) / log(specnumber(plant_matrix))
-) %>% as.data.frame() %>% 
+  pielou = diversity(plant_matrix) / 
+    log(specnumber(plant_matrix))) %>%
+  as.data.frame() %>% 
   rownames_to_column("site") %>% 
   mutate(site = factor(site))
 
 total_floral <- plants %>%
   group_by(site) %>% 
-  summarise(cu_floral = sum(FloralUnits))
+  summarise(q_floral = sum(FloralUnits))
 
 plant_div <- left_join(plant_div, total_floral,
                        by = "site")
+
+site_data <- left_join(site_data, plant_div, by = "site")  
+
+
+bee_head_width <- left_join(bee_head_width,
+                            site_data, by = "site")
+
+
+# bees abundant enough for head_width analyses:
+five_bees <- bee_head_width %>%
+  group_by(genus) %>%
+  tally() %>% 
+  filter(n >= 5)
+
+
+ten_bees <- bee_head_width %>%
+  group_by(genus) %>%
+  tally() %>% 
+  filter(n >= 10)
+
+```
+
+
+
+```{r eda_figs, echo = F}
+
+# plant div and canola distance:
+site_data %>% 
+  ggplot(aes(x = DistanceToCanola, y = shannon)) +
+  geom_jitter() +
+  scale_x_continuous(transform = "log")
+
+# plant div and canola buffer props:
+site_data %>% 
+  ggplot(aes(x = propCan2km, y = shannon)) +
+  geom_point()
+
+# head width and canola props:
+bee_head_width %>% 
+  ggplot(aes(x = propCan500m, y = head_width,
+             color = genus)) +
+  geom_point()
+
+```
+
+```{r eda_floral_units, echo = F}
+
+bee_head_width %>% 
+  filter(in_canola == "no") %>% 
+  ggplot(aes(x = propCan2km, y = q_floral)) +
+  geom_point()
+
+```
+
+```{r eda_bee_genera_in_canola, echo = F}
+
+semi_join(bee_head_width, ten_bees, by = "genus") %>% 
+  group_by(site, genus, in_canola) %>% 
+  tally() %>% 
+  ggplot(aes(x = genus, y = n, color = site)) +
+  geom_point() +
+  facet_wrap(~in_canola) +
+  coord_flip()
+
+```
+
+
+```{r head_width_models, echo = F}
+
+
+
+
+hw_mod1 <- lmer(head_width ~ in_canola * propCan2km +
+                  (propCan2km | genus),
+                data = semi_join(bee_head_width, ten_bees,
+                                 by = "genus"))
+
+plot_model(hw_mod1, type = "diag")
+plot_model(hw_mod1, type = "est")
+plot_model(hw_mod1, type = "re")
+
+summary(hw_mod1)
+plot_model(hw_mod1, type = "pred",
+           terms = c("propCan2km", "in_canola"))
+
+# plant richness, shannon diversity, and cumulative floral units had no effect on head_width and were removed from the models.
+
+```
+
+```{r head_width_figure, echo = F}
+
+hw_pred <- ggpredict(hw_mod1,
+                     terms = c("propCan2km", "in_canola"))
+
+plot(hw_pred)
+
+hw_pred_genus <- ggpredict(hw_mod1,
+                           terms = c("propCan2km", "in_canola",
+                                     "genus"))
+plot(hw_pred_genus)
+
+hw_pred_genus %>% 
+  ggplot(aes(x = x, y = predicted, color = group)) +
+  geom_point() +
+  facet_wrap(~facet)
+```
+
+
+```{r bee_diversity, echo = F}
+
+bee_matrix <- bee_head_width %>% 
+  group_by(genus, date, site) %>% 
+  tally(n = "count") %>% 
+  pivot_wider(names_from = genus,
+              values_from = count,
+              values_fill = list(count = 0)) %>% 
+  unite(col = date_site, c(date, site), sep = "_") %>% 
+  column_to_rownames("date_site")
   
 
+bee_meta <- bee_head_width %>% 
+  select(date, site, in_canola, propCan500m, propCan1km,
+         propCan2km, shannon, richness, pielou) %>% 
+  distinct() %>% 
+  mutate(pielou = case_when(
+    pielou == "NaN" ~ 1,
+    TRUE ~ pielou),
+    date_site = paste(date, site, sep = "_"),
+    week = week(date),
+    JD = yday(date))
+
+
+## PERMANOVA
+adonis_mod1 <- adonis2(bee_matrix ~ in_canola +
+                         JD +
+                         splines::ns(propCan2km,
+                                     df = 5) +
+                         richness +
+                         shannon,
+        data = bee_meta, method = "bray")
+
+adonis_mod1
+
+permutest(betadisper(vegdist(bee_matrix, method = "bray"),
+                     bee_meta$in_canola))
+
+
+simper_result <- simper(bee_matrix,
+                        group = bee_meta$in_canola)
+summary(simper_result)
+
 ```
 
-## Plant community composition
-
-### Plant diversity across bloom period
-```{r plant_diversity_bloomperiod, echo = F}
-plant_div_fun <- function(data, bloom_period){
-  data %>% 
-    uncount(Amount) %>% 
-    filter(period == bloom_period) %>% 
-    group_by(site, spp) %>% 
-    tally(name = "plant_count") %>% 
-    pivot_wider(names_from = spp,
-              values_from = plant_count,
-              values_fill = list(plant_count = 0)) %>% 
-    column_to_rownames("site") %>% 
-    diversity()
-}
-
-period_plant_div <- levels(plants$period) %>% 
-  map(~ plant_div_fun(plants, bloom_period = .x))
-
-names(period_plant_div) <- levels(plants$period)
-
-plant_div <- do.call(rbind, period_plant_div) %>% 
-  data.frame() %>% 
-  rownames_to_column("period") %>% 
-  pivot_longer(cols = c("Asotin" : "Spangle"),
-               names_to = "site",
-               values_to = "div") %>% 
-  mutate(across(c(period, site), factor),
-         period = factor(period, levels = c(
-           "Pre-Bloom", "Peak-Bloom", "Post-Bloom"
-         ))) %>% 
-  left_join(., land_type, by = "site") %>% 
-  left_join(., canola, by = "site") %>% 
-  mutate(siteID = factor(paste(site, period, sep = "_"))) %>% 
-  left_join(., year_day, by = "siteID")
-
-plant_div %>% 
-  ggplot(aes(x = period, y = div)) +
-  geom_boxplot() +
-  theme_cowplot(font_size = 16) +
-  labs(y = "Shannon diversity") +
-  theme(axis.title.x = element_blank()) +
-  facet_wrap(~land_type)
-
-div_model1 <- lm(div ~ period * land_type,
-                 data = plant_div)
-
-anova(div_model1)
-summary(div_model1)
-```
+# CAP (bee composition by canola)
 
 
-```{r plant_div_over_time, echo = F}
-
-plant_div %>% 
-  ggplot(aes(x = DoY, y = div, color = land_type,
-             fill = land_type)) +
-  geom_jitter(width = 1, height = 0.2, shape = 21,
-              aes(fill = land_type), color = 'black', size = 3) +
-  geom_smooth(method = 'lm', alpha = 0.2) +
-  theme_classic()
-
-div_model2 <- lm(div ~ DoY * land_type,
-                 data = plant_div)
-
-anova(div_model2)
-summary(div_model2)
-```
-
-# Multivariate analysis of plant species turnover across bloom period and habitat types
-
-```{r multi_plants, echo = F, fig.width=10, fig.height=8}
-
-plant_totals <- plants %>% 
-  uncount(Amount) %>% 
-  group_by(siteID, spp) %>% 
-  tally() %>% 
-  group_by(spp) %>% 
-  summarise(total_counts = sum(n)) %>% 
-  arrange(desc(total_counts)) %>% 
-  filter(total_counts > quantile(total_counts, 0.1))
+## In canola or not
+```{r bee_comp_canola, echo = F}
 
 
-meta_plants <- plants %>% 
-  select(siteID, period, site, land_type, DoY) %>% 
-  distinct()
+canola_diss <- vegdist(bee_matrix, method = "bray")
 
+cap_model1 <- capscale(bee_matrix ~ in_canola,
+                      data = bee_meta,
+                      distance = "bray")
 
-plant_matrix <- plants %>% 
-  semi_join(., plant_totals, by = "spp") %>% 
-  uncount(Amount) %>% 
-  group_by(siteID, spp) %>% 
-  tally() %>% 
-  pivot_wider(names_from = spp,
-              values_from = n,
-              values_fill = list(n = 0)) %>% 
-  column_to_rownames("siteID")
+summary(cap_model1)
 
-plant_perm <- adonis2(plant_matrix ~ period * land_type,
-                      data = meta_plants)
-
-plant_perm
-
-simper_plants <- simper(plant_matrix,
-                        group = meta_plants$land_type)
-
-summary(simper_plants)
-
-plant_lt_cap <- capscale(plant_matrix ~ land_type,
-                         data = meta_plants,
-                         distance = "bray")
-summary(plant_lt_cap)
-
-
-site_scores <- scores(plant_lt_cap, display = "sites") %>%
+site_scores <- scores(cap_model1, display = "sites") %>%
   as.data.frame() %>%
   mutate(sample = rownames(.),
-         land_type = meta_plants$land_type)
+         in_canola = bee_meta$in_canola,
+         propCan2km = bee_meta$propCan2km,
+         richness = bee_meta$richness)
 
-species_scores <- scores(plant_lt_cap, display = "species") %>%
+species_scores <- scores(cap_model1, display = "species") %>%
   as.data.frame() %>%
   rownames_to_column("species")
 
@@ -455,816 +518,130 @@ species_scores <- scores(plant_lt_cap, display = "species") %>%
 species_scores_filtered <- species_scores %>%
   filter(abs(CAP1) > 0.1 | abs(MDS1) > 0.1)
 
+
 ggplot(site_scores,
-       aes(x = CAP1, y = MDS1, color = land_type, fill = land_type)) +
+       aes(x = CAP1, y = MDS1,
+           color = in_canola, fill = in_canola)) +
   stat_ellipse(geom = "polygon", type = "t",
                level = 0.95, alpha = 0.3) +
   geom_point(size = 2.5, shape = 21, stroke = 0.5,
-             aes(fill = land_type), color = 'black') +
+             aes(fill = in_canola), color = 'black') +
+  scale_color_manual(values = c("no" = "#A1CAF1",
+                                "yes" = "#d95f02")) +
+  scale_fill_manual(values = c("no" = "#A1CAF1",
+                               "yes" = "#d95f02")) +
   geom_segment(data = species_scores_filtered,
                aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
                arrow = arrow(length = unit(0.2, "cm")),
                color = "black",
                inherit.aes = F) +
-  geom_text_repel(data = species_scores_filtered,
+  geom_text(data = species_scores_filtered,
             aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
-            size = 3, hjust = 0.5, max.overlaps = 20,
+            size = 3, hjust = 0.5,
             inherit.aes = F) +
-  scale_color_manual(values = c("natural" = "#1b9e77",
-                                "semi" = "#d95f02"),
-                     labels = c("Natural", "Semi-natural")) +
-  scale_fill_manual(values = c("natural" = "#1b9e77",
-                                "semi" = "#d95f02"),
-                     labels = c("Natural", "Semi-natural")) +
   theme_minimal(base_size = 14) +
   labs(
-    x = "CAP1",
-    y = "MDS1",
-    fill = "Land type", color = "Land type")
-
-```
-
-* No differences in plant community across bloom period or land type.
-
-This may be expected, as the plants don't get up and walk away...certainly not within a season anyway.
-
-**However, we should expect floral resources to vary across bloom periods.**
-
-### Plant floral diversity across bloom period
-```{r floral_diversity_bloomperiod, echo = F}
-floral_div_fun <- function(data, bloom_period){
-  data %>% 
-    uncount(FloralUnits) %>% 
-    filter(period == bloom_period) %>% 
-    group_by(site, spp) %>% 
-    tally(name = "plant_count") %>% 
-    pivot_wider(names_from = spp,
-              values_from = plant_count,
-              values_fill = list(plant_count = 0)) %>% 
-    column_to_rownames("site") %>% 
-    diversity()
-}
-
-period_floral_div <- levels(plants$period) %>% 
-  map(~ floral_div_fun(plants, bloom_period = .x))
-
-names(period_floral_div) <- levels(plants$period)
-
-floral_div <- do.call(rbind, period_floral_div) %>% 
-  data.frame() %>% 
-  rownames_to_column("period") %>% 
-  pivot_longer(cols = c("Asotin" : "Spangle"),
-               names_to = "site",
-               values_to = "div") %>% 
-  mutate(across(c(period, site), factor),
-         period = factor(period, levels = c(
-           "Pre-Bloom", "Peak-Bloom", "Post-Bloom"
-         ))) %>% 
-  left_join(., land_type, by = "site") %>% 
-  left_join(., canola, by = "site")
-
-floral_div %>% 
-  ggplot(aes(x = period, y = div)) +
-  geom_boxplot() +
-  theme_cowplot(font_size = 16) +
-  labs(y = "Floral Shannon diversity") +
-  theme(axis.title.x = element_blank()) +
-  facet_wrap(~land_type)
-
-floral_model1 <- lm(div ~ period * land_type,
-                 data = floral_div)
-
-anova(floral_model1)
-summary(floral_model1)
-
-```
-
-```{r floral_units_over_time, echo = F}
-
-total_floral <- plants %>% 
-  group_by(siteID, DoY, land_type) %>% 
-  summarise(total_FU = sum(FloralUnits)) 
-
-total_floral %>% 
-  ggplot(aes(x = DoY, y = total_FU, color = land_type)) +
-  geom_jitter(width = 0.1, height = 0) +
-  geom_smooth(method = 'lm') +
-  theme_classic() +
-  labs(x = "Day of year", y = "Total floral units",
-       color = "Land type")
-
-floral_mod_total <- lm(total_FU ~ DoY * land_type,
-                       data = total_floral)
-
-anova(floral_mod_total)
-summary(floral_mod_total)
-```
-
-# Multivariate analysis of floral resources across bloom periods
-
-```{r multi_floral, echo = F}
-
-floral_matrix <- plants %>% 
-  uncount(FloralUnits) %>% 
-  group_by(siteID, spp) %>% 
-  tally() %>% 
-  pivot_wider(names_from = spp,
-              values_from = n,
-              values_fill = list(n = 0)) %>% 
-  column_to_rownames("siteID")
-
-floral_perm <- adonis2(floral_matrix ~ period * land_type,
-                      data = meta_plants)
-
-floral_perm
-
-```
-
-
-
-### Plant community diversity across bloom period and canola
-```{r plant_diversity_bloom_canola, echo = F}
-
-plot_canola_radius <- plant_div %>% 
-  ggplot(aes(x = propCan1km, y = div)) +
-  geom_jitter(width = 0.01, shape = 21, size = 3, stroke = 0.7,
-             aes(fill = land_type)) +
-  labs(y = "Shannon diversity", x = "Pr(Canola) 1km radius",
-       fill = "Habitat type") +
-  theme_bw() +
-  theme(strip.background = element_blank()) +
-  facet_wrap(~period)
-
-
-plot_canola_distance <- plant_div %>% 
-  ggplot(aes(x = DistanceToCanola, y = div)) +
-  geom_jitter(width = 0.01, shape = 21, size = 3, stroke = 0.7,
-             aes(fill = land_type)) +
-  labs(y = "Shannon diversity", x = "Distance to canola (m)",
-       fill = "Habitat type") +
-  theme_bw() +
-  theme(strip.background = element_blank()) +
-  facet_wrap(~period) +
-  scale_x_continuous(transform = "log10")
-
-cowplot::plot_grid(plot_canola_radius,
-          plot_canola_distance,
-          nrow = 2)
-
-```
-
-
-
-### Turnover of floral resources
-
-$\beta$ diversity
-
-```{r plant_beta_div_across_bloom_period, echo = F}
-plant_count_matrix <- plant_counts %>% 
-  mutate(site_period = factor(paste0(site, period, sep = "_"))) %>% 
-  ungroup() %>% 
-  pivot_wider(names_from = CommonName,
-              values_from = plant_count,
-              values_fill = list(plant_count = 0))
-
-
-fun_beta_div <- function(data, site_name){
-beta_div_list <- data %>% 
-  filter(site == site_name) %>% 
-  select(-site, -site_period) %>% 
-  column_to_rownames("period") %>% 
-  beta.div.comp(., coef = "S", quant = TRUE)
-
-beta_div_parts <- beta_div_list["part"] %>% data.frame %>% t() %>%
-  data.frame() 
-
-rownames(beta_div_parts) <- site_name
-
-beta_div_parts <- beta_div_parts %>% rownames_to_column("site")
-}
-
-plant_beta_div <- levels(plant_count_matrix$site) %>% 
-  map(~ fun_beta_div(plant_count_matrix, site_name = .x))
-
-plant_beta_div <- do.call(rbind, plant_beta_div) %>% 
-  left_join(., land_type, by = "site") %>% 
-  left_join(., canola, by = "site")
-
-```
-
-```{r plant_betadiv_by_site_fig, echo = F}
-
-plant_beta_div %>% 
-  pivot_longer(cols = c(BDtotal:RichDif.BDtotal),
-               names_to = "beta_types",
-               values_to = "beta_parts") %>% 
-  mutate(site = factor(site, levels = c(
-    "Chipman1", "Chipman2", "Clark1", "Hutchins",
-    "Asotin", "Clark2", "Kamiak", "Plaza", "Smoot", "Spangle"))) %>% 
-  ggplot(aes(x = site, y = beta_parts, color = land_type)) +
-  geom_point() +
-  facet_wrap(~ beta_types) +
-  coord_flip() +
-  theme_bw() +
-  theme(axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        strip.background = element_blank()) +
-  labs(color = "Habitat")
-```
-
-```{r plant_betadiv_prop_canola_fig, echo = F}
-
-
-plant_beta_div %>% 
-  pivot_longer(cols = c(BDtotal:RichDif.BDtotal),
-               names_to = "beta_types",
-               values_to = "beta_parts") %>% 
-  mutate(site = factor(site, levels = c(
-    "Chipman1", "Chipman2", "Clark1", "Hutchins",
-    "Asotin", "Clark2", "Kamiak", "Plaza", "Smoot", "Spangle"))) %>% 
-  ggplot(aes(x = propCan1km, y = beta_parts, color = land_type)) +
-  geom_point() +
-  facet_wrap(~ beta_types) +
-  theme_bw() +
-  theme(strip.background = element_blank()) +
-  labs(color = "Habitat",
-       y = "Plant species turnover")
-```
-
-## Bee diversity across bloom periods
-```{r bee_div_bloom_period, echo = F}
-
-
-bee_div_fun <- function(data, bloom_period){
-  data %>% 
-    filter(period == bloom_period) %>% 
-    group_by(site, genus) %>% 
-    tally(name = "bee_count") %>% 
-    pivot_wider(names_from = genus,
-              values_from = bee_count,
-              values_fill = list(bee_count = 0)) %>% 
-    column_to_rownames("site") %>% 
-    diversity()
-}
-
-period_bee_div <- levels(bee_div_data$period) %>% 
-  map(~ bee_div_fun(bee_div_data, bloom_period = .x))
-
-names(period_bee_div) <- levels(bees$period)
-
-bee_div <- do.call(rbind, period_bee_div) %>% 
-  data.frame() %>% 
-  rownames_to_column("period") %>% 
-  pivot_longer(cols = c("Asotin" : "Smoot_c"),
-               names_to = "site",
-               values_to = "div") %>% 
-  mutate(across(c(period, site), factor),
-         period = factor(period, levels = c(
-           "Pre-Bloom", "Peak-Bloom", "Post-Bloom"
-         ))) %>% 
-  left_join(., land_type, by = "site") %>% 
-  left_join(., canola, by = "site")
-
-```
-
-## Bee turnover across bloom periods
-```{r bee_beta_div_period, echo = F}
-
-fun_beta_div <- function(data, site_name){
-beta_div_list <- data %>% 
-  filter(site == site_name) %>% 
-  select(-site, -site_period) %>% 
-  column_to_rownames("period") %>% 
-  beta.div.comp(., coef = "S", quant = TRUE)
-
-beta_div_parts <- beta_div_list["part"] %>% data.frame %>% t() %>%
-  data.frame() 
-
-rownames(beta_div_parts) <- site_name
-
-beta_div_parts <- beta_div_parts %>% rownames_to_column("site")
-}
-
-bee_beta_div <- levels(bee_count_matrix$site) %>% 
-  map(~ fun_beta_div(bee_count_matrix, site_name = .x))
-
-bee_beta_div <- do.call(rbind, bee_beta_div) %>% 
-  left_join(., land_type, by = "site") %>% 
-  left_join(., canola, by = "site")
+    x = "CAP1 (Canola--10%)",
+    y = "MDS1 (Residual--77%)",
+    fill = "Canola", color = "Canola"
+  )
 
 
 ```
 
-# Testing Olivia's predictions
+## Proportion canola
+```{r bee_comp_canola_prop_Can, echo = F}
 
-1) The stability of bee communities (measured as turnover from the pre- to peak- to post-bloom) will be greater in landscapes with less access to pulse-blooming resources. **Evidence in support of this prediction will be a positive relationship between $\beta$ diversity and the proportion of canola surrounding each site or a negative relationship between $\beta$ diversity and the distance to the nearest canola.**
+gam_cap <- gamm4(propCan2km ~ s(CAP1, MDS1, k = 5),
+                 data = site_scores)
 
+grid_cap <- expand.grid(CAP1 = seq(min(site_scores$CAP1),
+                                   max(site_scores$CAP1),
+                                   length = 100),
+                        MDS1 = seq(min(site_scores$MDS1),
+                                   max(site_scores$MDS1),
+                                   length = 100))
 
-```{r prediction_1, echo = F}
-
-bee_beta_div %>% 
-  pivot_longer(cols = c(BDtotal : RichDif.BDtotal),
-               names_to = "beta_types",
-               values_to = "beta_div") %>% 
-  ggplot(aes(x = propCan1km, y = beta_div)) +
-  geom_point() +
-  geom_smooth(alpha = 0.2,
-              method = lm, formula = y ~ x + poly(x, 2)) +
-  theme_bw() + facet_wrap(~ beta_types)
-
-bee_beta_div %>% 
-  pivot_longer(cols = c(BDtotal : RichDif.BDtotal),
-               names_to = "beta_types",
-               values_to = "beta_div") %>% 
-  ggplot(aes(x = propCan500m, y = beta_div)) +
-  geom_point() +
-  geom_smooth(alpha = 0.2,
-              method = lm, formula = y ~ x + poly(x, 2)) +
-  theme_bw() + facet_wrap(~ beta_types)
-
-bee_beta_div %>% 
-  pivot_longer(cols = c(BDtotal : RichDif.BDtotal),
-               names_to = "beta_types",
-               values_to = "beta_div") %>% 
-  ggplot(aes(x = propCan2km, y = beta_div)) +
-  geom_point() +
-  geom_smooth(alpha = 0.2,
-              method = lm, formula = y ~ x + poly(x, 2)) +
-  theme_bw() + facet_wrap(~ beta_types)
-
-bee_beta_div %>% 
-  pivot_longer(cols = c(BDtotal : RichDif.BDtotal),
-               names_to = "beta_types",
-               values_to = "beta_div") %>% 
-  ggplot(aes(x = DistanceToCanola/1000, y = beta_div)) +
-  geom_point() +
-  geom_smooth(alpha = 0.2,
-              method = lm, formula = y ~ x + poly(x, 2)) +
-  theme_bw() + facet_wrap(~ beta_types) +
-  labs(x = "Distance to Canola (km)")
-```
-
-(2) Bee communities at sites with more canola in the landscape will have less stability due to a reliance on pulsed floral resources 
-
-**How is this different from the first prediction?**
+grid_cap$propCan2km <- predict(gam_cap$gam, newdata = grid_cap)
 
 
-(3) Bee communities will be more diverse during peak bloom than pre- and post-bloom
-```{r bee_divesity_over_bloom_period, echo = F}
-
-bee_div <- bee_div %>% 
-  mutate(land_type = factor(case_when(
-    land_type == "natural" ~ "natural",
-    land_type == "semi" ~ "semi",
-    TRUE ~ "canola"
-  )))
-
-bee_div %>% 
-  ggplot(aes(x = period, y = div)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.1) +
-  theme_bw() + labs(y = "Bee diversity") +
-  facet_wrap(~ land_type)
-
-bee_div_mod1 <- lm(div ~ period * land_type, data = bee_div)
-
-summary(bee_div_mod1)
-
-plot_model(bee_div_mod1,
-           type = "pred",
-           terms = c("land_type", "period"))
-```
-
-4) Bee health metrics will be greater in landscapes with more canola
-```{r bee_health_by_canola, echo = F}
-
-
-head_width <- bee_hw %>% 
-  select(date, site, period, genus, head_width, land_type)
-
-can_head_width <- canola_bees %>% 
-  select(date, site, period, genus, head_width, land_type) %>% 
-  filter(!is.na(head_width)) %>% 
-  mutate(head_width = as.numeric(head_width))
-
-head_width <- head_width %>% 
-  bind_rows(., can_head_width)
-
-
-head_width <- head_width %>% 
-  left_join(., canola, by = "site")
-
-head_width_mod1 <- lmer(head_width ~ propCan500m +
-                          scale(DistanceToCanola) +
-                          (propCan500m | genus), data = bee_hw)
-summary(head_width_mod1)
-plot_model(head_width_mod1,
-           type = "re") +
-  geom_vline(xintercept = 0, linewidth = 1, color = "black")
-
-
-plot_model(head_width_mod1, type = "diag")
-```
-
-(5) Bee health metrics will be positively related to stability of floral resources in the landscape
-
-* can't make this comparison without plant diversity data in canola fields. Or we make an assumption about low diversity (1 plant, low richness, low evenness)
-```{r bee_health_by_plant_betadiv, echo = F}
-
-
-
+ggplot(site_scores,
+       aes(x = CAP1, y = MDS1,
+           color = in_canola, fill = in_canola)) +
+  geom_point(shape = 21, size = 2, stroke = 0.5,
+             aes(fill = in_canola), color = 'black') +
+  stat_ellipse(geom = "polygon", type = "t",
+               level = 0.95, alpha = 0.3) +
+  geom_contour(data = grid_cap,
+               aes(x = CAP1, y = MDS1, z = propCan2km),
+               color = "grey40", inherit.aes = FALSE) +
+  metR::geom_text_contour(data = grid_cap,
+                          aes(x = CAP1, y = MDS1, z = propCan2km),
+                          color = "grey20", stroke = 0.2, skip = 1,
+                          inherit.aes = FALSE) +
+  scale_color_manual(values = c("no" = "#A1CAF1",
+                                "yes" = "#d95f02")) +
+  scale_fill_manual(values = c("no" = "#A1CAF1",
+                               "yes" = "#d95f02")) +
+  theme_minimal(base_size = 14) +
+  labs(x = "CAP1 (Canola--10%)",
+       y = "MDS1 (Residual--17%)",
+       fill = "Canola", color = "Canola") +
+  geom_segment(data = species_scores_filtered,
+               aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
+               arrow = arrow(length = unit(0.2, "cm")),
+               color = "black",
+               inherit.aes = F) +
+  geom_text(data = species_scores_filtered,
+            aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
+            size = 3, hjust = 0.5,
+            inherit.aes = F)
 
 ```
 
 
-## Bee community composition
+## Plant richness
+```{r bee_comp_canola_richness, echo = F}
 
-```{r bee_composition_by_canola, echo = F}
+gam_cap2 <- gamm4(richness ~ s(CAP1, MDS1, k = 5),
+                 data = site_scores)
 
-meta_plants <- meta_plants %>% 
-  left_join(., canola, by = "site")
-
-# PERMANOVA be composition by predictors
-
-## need to combine canola sites with plant meta data for ordinations
-
-# bee_comp_perm <- adonis2(bee_count_matrix ~ )
-
-bee_ord_model1 # Only prop canola matters
-
-## checking for trends with GAM:
-library(mgcv)
-bee_mat_gam <- bind_cols(bee_mat, scores(bee_ord)$sites)
-
-bee_gam1 <- gam(log(DistanceToCanola) ~ s(NMDS1, NMDS2, NMDS3, k = 9) +
-                  period,
-                  data = bee_mat_gam)
-
-summary(bee_gam1) # Distance to canola has strong relationship
-
-bee_gam2 <- gam(propCan1km ~ s(NMDS1, NMDS2, NMDS3, k = 2) +
-                  period,
-                  data = bee_mat_gam)
-
-summary(bee_gam2) # prop Canola has slight relationship
+grid_cap$richness <- predict(gam_cap2$gam, newdata = grid_cap)
 
 
-#### checking for trends with PERMANOVA:
-
-bee_mat_species <- bee_mat %>% ungroup() %>% 
-  select(Andrena : Anthophora)
-
-bee_mat_predictors <- bee_mat %>% ungroup() %>% 
-  select(-Andrena : -Anthophora)
-
-# linear fit:
-bee_ord_adonis1 <- adonis2(bee_mat_species ~
-                            log(DistanceToCanola) +
-                            propCan1km + period,
-                          data = bee_mat)
-
-
-# checking for non-linearity in DistanceToCanola
-bee_ord_adonis2 <- adonis2(bee_mat_species ~
-                            splines::ns(log(DistanceToCanola), df = 3) +
-                            propCan1km + period,
-                          data = bee_mat)
-
-# checking for non-linearity in propCan1km
-bee_ord_adonis3 <- adonis2(bee_mat_species ~
-                            splines::ns(propCan1km, df = 3) +
-                            DistanceToCanola + period,
-                          data = bee_mat)
-
-# checking for non-linearity in propCan1km & DistanceToCanola
-bee_ord_adonis4 <- adonis2(bee_mat_species ~
-                            splines::ns(propCan1km, df = 3) +
-                            splines::ns(DistanceToCanola, df = 3) +
-                             period,
-                          data = bee_mat)
-bee_ord_adonis1
-bee_ord_adonis2
-bee_ord_adonis3
-bee_ord_adonis4
-
-# Both propCan1km and DistanceToCanola have non-linear fits
-```
-
-```{r bee_comp_by_canola_plot, echo = F, fig.width=9, fig.height=10}
-
-bee_sites <- data.frame(scores(bee_ord)$sites) %>% 
-  rownames_to_column("sample_num") %>% 
-  bind_cols(., bee_mat_predictors) %>% 
-  mutate(period = factor(period, levels = c(
-    "Pre-Bloom", "Peak-Bloom", "Post-Bloom"
-  )))
-
-bee_sites_centroids <- bee_sites %>% 
-  group_by(period) %>% 
-  summarise(NMDS1 = mean(NMDS1),
-            NMDS2 = mean(NMDS2)) 
-
-bee_ord_propCan <- gam(propCan1km ~ s(NMDS1, NMDS2, bs = "ts"),
-                       data = bee_sites)
-summary(bee_ord_propCan)
-bee_ord_distance <- gam(log(DistanceToCanola) ~ s(NMDS1, NMDS2,
-                                                  bs = "ts"),
-                        data = bee_sites)
-
-preddat <- expand.grid(NMDS1 = seq(-2.5, 2.5, 0.5),
-                       NMDS2 = seq(-1.5, 1.5, 0.5))
-preddat$distance_pred <- exp(predict(bee_ord_distance, newdata = preddat))
-preddat$propCan_pred <- predict(bee_ord_propCan, newdata = preddat)
-
-preddat <- preddat %>% 
-  mutate(propCan_pred = case_when(
-    propCan_pred < 0 ~ 0,
-    TRUE ~ propCan_pred
-  ))
-
-bee_species <- data.frame(scores(bee_ord)$species) %>% 
-  rownames_to_column("genus")
-
-bee_species$distance_centroid <- exp(predict(
-  bee_ord_distance, newdata = bee_species))
-bee_species$propCan_centroid <- predict(
-  bee_ord_propCan, newdata = bee_species)
-
-bee_species <- bee_species %>% 
-  left_join(., reduced_bees, by = "genus")
-
-
-plot_bee_distance <- ggplot(mapping = aes(x = NMDS1, y = NMDS2)) +
-  geom_contour(data = preddat,
-               aes(z = distance_pred), color = "grey") +
-  metR::geom_text_contour(data = preddat,
-                          aes(z = distance_pred),
-                          color = "grey", stroke = 0.15, skip = 0) +
-  geom_text_repel(data = bee_species, max.overlaps = 10,
-                  aes(label = genus, size = total_counts)) +
-  scale_size_binned(transform = "log10", range = c(1.5, 5),
-             breaks = c(3, 30, 300)) +
-  theme_cowplot() +
-  stat_ellipse(data = bee_sites,
-               aes(x = NMDS1, y = NMDS2, color = period)) +
-  geom_point(data = bee_sites_centroids,
-             aes(x = NMDS1, y = NMDS2, fill = period),
-             shape = 21, size = 5, show.legend = F) +
-  # geom_point(data = bee_sites,
-  #            aes(x = NMDS1, y = NMDS2, color = period),
-  #            show.legend = F) +
-  labs(size = "Abundance",
-       color = "Season") +
-  scale_color_manual(values = c("orange2",
-                                "maroon3",
-                                "seagreen3")) +
-  scale_fill_manual(values = c("orange2",
-                                "maroon3",
-                                "seagreen3"))
-
-plot_bee_propCan <- ggplot(mapping = aes(x = NMDS1, y = NMDS2)) +
-  geom_contour(data = preddat,
-               aes(z = propCan_pred), color = "grey") +
-  metR::geom_text_contour(data = preddat,
-                          aes(z = propCan_pred),
-                          color = "grey", stroke = 0.15, skip = 1) +
-  geom_text_repel(data = bee_species, max.overlaps = 20,
-                  aes(label = genus, size = total_counts)) +
-  scale_size_binned(transform = "log10", range = c(1.5, 5),
-             breaks = c(3, 30, 300)) +
-  theme_cowplot() +
-  stat_ellipse(data = bee_sites,
-               aes(x = NMDS1, y = NMDS2, color = period)) +
-  geom_point(data = bee_sites_centroids,
-             aes(x = NMDS1, y = NMDS2, fill = period),
-             shape = 21, size = 5, show.legend = F) +
-  # geom_point(data = bee_sites,
-  #            aes(x = NMDS1, y = NMDS2, color = period),
-  #            show.legend = F) +
-  labs(size = "Abundance",
-       color = "Season") +
-  scale_color_manual(values = c("orange2",
-                                "maroon3",
-                                "seagreen3")) +
-  scale_fill_manual(values = c("orange2",
-                                "maroon3",
-                                "seagreen3"))
-
-cowplot::plot_grid(plot_bee_distance,
-          plot_bee_propCan,
-          nrow = 2)
+ggplot(site_scores,
+       aes(x = CAP1, y = MDS1,
+           color = in_canola, fill = in_canola)) +
+  geom_point(shape = 21, size = 2, stroke = 0.5,
+             aes(fill = in_canola), color = 'black') +
+  stat_ellipse(geom = "polygon", type = "t",
+               level = 0.95, alpha = 0.3) +
+  geom_contour(data = grid_cap,
+               aes(x = CAP1, y = MDS1, z = richness),
+               color = "grey40", inherit.aes = FALSE) +
+  metR::geom_text_contour(data = grid_cap,
+                          aes(x = CAP1, y = MDS1, z = richness),
+                          color = "grey20", stroke = 0.2, skip = 1,
+                          inherit.aes = FALSE) +
+  scale_color_manual(values = c("no" = "#A1CAF1",
+                                "yes" = "#d95f02")) +
+  scale_fill_manual(values = c("no" = "#A1CAF1",
+                               "yes" = "#d95f02")) +
+  theme_minimal(base_size = 14) +
+  labs(x = "CAP1 (Canola--10%)",
+       y = "MDS1 (Residual--17%)",
+       fill = "Canola", color = "Canola") +
+  geom_segment(data = species_scores_filtered,
+               aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
+               arrow = arrow(length = unit(0.2, "cm")),
+               color = "black",
+               inherit.aes = F) +
+  geom_text(data = species_scores_filtered,
+            aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
+            size = 3, hjust = 0.5,
+            inherit.aes = F)
 
 ```
-
-
-###
-
-```{r bee_diversity_by_land_type, echo = F}
-
-#####################################################
-# matrix assembly
-habitat_matrix <- bees %>% 
-  mutate(period_site_land = paste(
-    period, site, land_type, sep = "_")) %>% 
-  group_by(genus, period_site_land) %>% 
-  tally(n = "count") %>% 
-  pivot_wider(names_from = genus,
-              values_from = count,
-              values_fill = list(count = 0)) %>% 
-  column_to_rownames("period_site_land")
-
-habitat_meta <- bees %>% 
-  select(land_type, period, site) %>% 
-  distinct() %>% 
-  mutate(period_site_land = factor(
-    paste(period, site, land_type, sep = "_")))
-
-```
-
-```{r permanova_stats, echo = F, warning=FALSE}
-# land_type
-land_type_mod <- adonis2(habitat_matrix ~ land_type * period,
-        data = habitat_meta, method = "bray")
-
-land_type_mod
-
-permutest(betadisper(vegdist(habitat_matrix, method = "bray"),
-                     habitat_meta$land_type))
-
-# bloom period
-period_mod <- adonis2(habitat_matrix ~ period,
-        data = habitat_meta, method = "bray")
-
-period_mod
-
-permutest(betadisper(vegdist(habitat_matrix, method = "bray"),
-                     habitat_meta$period))
-
-# site
-site_mod <- adonis2(habitat_matrix ~ site,
-        data = habitat_meta, method = "bray")
-
-site_mod
-
-permutest(betadisper(vegdist(habitat_matrix, method = "bray"),
-                     habitat_meta$site))
-
-```
-
-
-### Site classification by species composition (Random Forest)
-```{r random_forest_class, echo = F}
-
-rf_matrix <- habitat_matrix %>% 
-  rownames_to_column("period_site_land") %>% 
-  separate_wider_delim(period_site_land, delim = "_",
-                       cols_remove = F,
-                       names = c("period", "site", "land_type")) %>% 
-  mutate(across(c(period : period_site_land), as.factor))
-
-rfmod <- randomForest(y = rf_matrix$land_type,
-                           x = select(rf_matrix,
-                                      -period, -site,
-                                      -period_site_land),
-                           importance = T, nPerm = 999,
-                           proximity = T)
-
-
-train(y = rf_matrix$land_type,
-      x = select(rf_matrix, -period, -site,
-                 -period_site_land),
-      method = "rf", na.action = na.omit)
-
-update(rfmod, mtry = 2)
-
-importance(rfmod)
-imp_vals_top <- data.frame(importance(rfmod)) %>% 
-  arrange(desc(MeanDecreaseGini)) %>% 
-  filter(MeanDecreaseGini > quantile(MeanDecreaseGini, 0.8))
-
-kable(imp_vals_top, format = "markdown", digits = 3)
-
-rfmod
-
-MDSplot(rfmod, rf_matrix$land_type)
-```
-
-**Random Forest classification of habitat type by species composition.** The model was tuned without pre-processing. Overall model accuracy was 81%. The model can delineate the habitat types with an overall *out of bag error* of 3.33% using bee community composition as the predictor matrix. 
-
-
-
-
-```{r nmds_sites_calcs, eval = T, include = F}
-# NMDS scores
-nmds_ltp <- metaMDS(habitat_matrix, distance = "bray",
-                    k = 2, try = 250, autotransform = F)
-nmds_ltp$stress
-# 
-stressplot(nmds_ltp)
-
-ltp_scores <- data.frame(scores(nmds_ltp)$sites) %>%
-  rownames_to_column("period_site_land") %>% 
-  mutate(period_site_land = factor(period_site_land)) %>% 
-  left_join(habitat_meta, by = "period_site_land") 
-
-spp_scores <- data.frame(scores(nmds_ltp)$species) %>% 
-  rownames_to_column("Species")
-
-centroids_ltp <- ltp_scores %>% 
-  group_by(period_site_land) %>% 
-  summarise(NMDS1 = mean(NMDS1),
-            NMDS2 = mean(NMDS2))
-
-centroids_habitat <- ltp_scores %>% 
-  group_by(land_type) %>% 
-  summarise(NMDS1 = mean(NMDS1),
-            NMDS2 = mean(NMDS2))
-
-centroids_period <- ltp_scores %>% 
-  group_by(period) %>% 
-  summarise(NMDS1 = mean(NMDS1),
-            NMDS2 = mean(NMDS2))
-```
-
-### Bee composition by habitat type
-```{r nmds_habitat_fig, echo = F}
-
-imp_spp <- imp_vals_top %>% 
-  rownames_to_column("Species") %>% 
-  select(Species, MeanDecreaseGini)
-
-spp_scores <- right_join(spp_scores, imp_spp, by = "Species")
-
-spp_scores <- spp_scores %>% 
-  filter(!Species == "land_type")
-
-ltp_scores %>% 
-  ggplot(aes(x = NMDS1, y = NMDS2)) +
-  geom_point(aes(NMDS1, NMDS2, color = land_type),
-             size = 1) +
-  stat_ellipse(aes(color = land_type),
-               show.legend = F) +
-  geom_point(data = centroids_habitat,
-             aes(x = NMDS1, y = NMDS2, fill = land_type),
-             size = 4,
-             shape = 21, show.legend = F) +
-  theme_cowplot() +
-  ggrepel::geom_text_repel(data = spp_scores,
-                           aes(x = NMDS1, y = NMDS2,
-                               label = Species,
-                               size = MeanDecreaseGini),
-                           max.overlaps = 20)+
-  scale_size_continuous(
-    name = "      Mean\ndecrease Gini",
-    limits = c(.4, 3),
-    breaks = c(0.75, 2, 3),
-    range = c(1, 6)) +
-  guides(color = guide_legend(override.aes = list(size = 4, shape = 16))) +
-  scale_color_manual(values = c("#E69F00", "#56B4E9"),
-                     name = "Habitat type")+
-  scale_fill_manual(values = c("#E69F00", "#56B4E9"))
-
-
-
-```
-**Variation in community composition across habitat types.** Bee species are plotted on a two-dimensional non-metric multidimensional scaling ordination of the 30 combinations of site, period, and habitat type. Small points are the individual site/period/habitat combinations. Large points are the centroids of the two habitat types with natural habitat in orange, semi-natural habitat in blue. Ellipses are 95% confidence intervals around the habitat centroids. Bees species shown are the most representative (top 20th percentile of a random forest analysis) of the compositional differences among sites. Text size of the labels is proportional to variable importance score (mean decrease in Gini score).
-
-
-
-### Bee composition by habitat type and bloom period
-```{r nmds_period_habitat_fig, echo = F}
-
-ltp_scores %>% 
-  ggplot(aes(x = NMDS1, y = NMDS2)) +
-  geom_point(aes(NMDS1, NMDS2, color = period),
-             size = 1) +
-  stat_ellipse(aes(color = period),
-               show.legend = F) +
-  geom_point(data = centroids_period,
-             aes(x = NMDS1, y = NMDS2, fill = period),
-             size = 4,
-             shape = 21, show.legend = F) +
-  theme_cowplot() +
-  ggrepel::geom_text_repel(data = spp_scores,
-                           aes(x = NMDS1, y = NMDS2,
-                               label = Species,
-                               size = MeanDecreaseGini),
-                           max.overlaps = 20)+
-  scale_size_continuous(
-    name = "      Mean\ndecrease Gini",
-    limits = c(.4, 3),
-    breaks = c(0.75, 2, 3),
-    range = c(1, 6)) +
-  guides(color = guide_legend(override.aes = list(size = 4, shape = 16))) +
-  scale_color_manual(values = c("#E69F00", "#56B4E9", "#009E73"),
-                     name = "Bloom")+
-  scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73")) +
-  facet_wrap(~land_type) 
-
-```
-
-Note that there is considerable overlap in community composition at all comparisons (PERMANOVA **habitat;** *P* = 0.44, *F* = 0.99, **site;** *P* = 0.27, *F* = 1.12, **period**; *P* = 0.54, *F* = 0.94). From this analysis, we can conclude that community bee community composition does not vary across natural/semi-natural habitat types, sites, or bloom period.
-
 
 
 
