@@ -1,7 +1,7 @@
 Canola Bee Analysis
 ================
 Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich
-November 20, 2025
+November 21, 2025
 
   
 
@@ -201,6 +201,8 @@ This analysis explores Salena and Olivia’s canola experiment.
 ## Plant richness
 
 ![](bees_in_canola_files/figure-gfm/bee_comp_canola_richness-1.png)<!-- -->
+
+![](bees_in_canola_files/figure-gfm/bee_rich_canola-1.png)<!-- -->
 
 ## Session Information
 

@@ -232,79 +232,6 @@ site_data <- canola_buffs %>%
          DistanceToCanola, PrairieFragment) %>% 
   bind_rows(., canola)
 
-
-
-
-
-########## Probably discard this below:
-plant_counts <- plants %>% 
-  uncount(Amount) %>% 
-  group_by(site, period, CommonName) %>% 
-  tally(name = "plant_count")
-
-
-canola <- canola %>% 
-  mutate(site = factor(site))
-
-canola_vars <- colnames(canola)
-
-canola_bee_vars <- data.frame(levels(canola_bees$site), 1:1, 0:0, 0:0, 0:0,
-                              c(NA,NA,NA,NA,NA,NA,NA,NA,NA))
-
-colnames(canola_bee_vars) <- canola_vars
-
-canola_bee_vars <- canola_bee_vars %>% 
-  mutate(site = factor(site))
-
-canola <- canola %>% 
-  bind_rows(., canola_bee_vars)
-
-
-year_day <- plants %>% 
-  select(siteID, DoY) %>% 
-  distinct()
-
-#######################################################
-
-# Which genera are found in both natural and semi-natural sites?
-
-# nat <- bees1 %>% 
-#   filter(land_type == "natural") %>% 
-#   select(genus) %>% 
-#   distinct()
-# 
-# seminat <- bees1 %>% 
-#   filter(land_type == "semi") %>% 
-#   select(genus) %>% 
-#   distinct()
-# 
-# # species only found in NATURAL sites:
-# bees_unique_natural <- anti_join(nat, seminat)
-# 
-# # species only found in SEMINATURAL sites:
-# bees_unique_semi <- anti_join(seminat, nat)
-# 
-# # overlapping species (species we can use in site comparison models)
-# overlap <- semi_join(nat, seminat, by = "genus")
-# 
-# # removing species that were only found in either natural or seminatural sites:
-# bees.reduced <- semi_join(bees1, overlap, by = "genus")
-# 
-# 
-# # removing genera with sample size < 3 in either land type:
-# good_samples <- bees.reduced %>% 
-#   group_by(land_type, genus) %>% 
-#   tally() %>% 
-#   filter(n > 2) %>% 
-#   ungroup() %>% 
-#   select(genus) %>% 
-#   distinct()
-# 
-# 
-# bees.reduced <- semi_join(bees.reduced, good_samples, by = "genus")
-
-
-
 ```
 
 
@@ -643,6 +570,32 @@ ggplot(site_scores,
 
 ```
 
+
+```{r bee_rich_canola, echo = F}
+
+bee_div <- cbind(
+  bee_shannon = diversity(bee_matrix),
+  bee_richness = specnumber(bee_matrix),
+  bee_pielou = diversity(bee_matrix) / 
+    log(specnumber(bee_matrix))) %>% 
+  as.data.frame() %>% 
+  rownames_to_column("date_site") %>% 
+  mutate(in_canola = bee_meta$in_canola,
+         propCan2km = bee_meta$propCan2km,
+         propCan1km = bee_meta$propCan1km,
+         propCan500m = bee_meta$propCan500m,
+         shannon = bee_meta$shannon,
+         richness = bee_meta$richness,
+         pielou = bee_meta$pielou,
+         JD = bee_meta$JD)
+
+
+bee_div %>% 
+  ggplot(aes(x = propCan2km, y = bee_shannon,
+             color = in_canola)) +
+  geom_point()
+
+```
 
 
 ## Session Information
