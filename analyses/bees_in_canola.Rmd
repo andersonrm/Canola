@@ -284,6 +284,27 @@ ten_bees <- bee_head_width %>%
 
 ```
 
+```{r variability_head_size, echo = F}
+
+bee_head_width %>% 
+  filter(!is.na(head_width)) %>% 
+  summarise(min = min(head_width),
+            max = max(head_width))
+
+```
+
+```{r number_bees_propCan2km, echo = F}
+
+bee_head_width %>% 
+  group_by(site) %>% tally() %>% 
+  left_join(., site_data, by = "site") %>% 
+  ggplot(aes(x = propCan2km, y = n)) +
+  geom_point() +
+  geom_smooth() +
+  labs(y = "Count of bees") +
+  theme_minimal()
+
+```
 
 
 ```{r eda_figs, echo = F}
@@ -331,7 +352,11 @@ semi_join(bee_head_width, ten_bees, by = "genus") %>%
 
 ```{r head_width_models, echo = F}
 
-
+semi_join(bee_head_width, ten_bees, by = "genus") %>% 
+  filter(!is.na(head_width)) %>% 
+  ggplot(aes(x = propCan2km, y = head_width)) +
+  geom_point() +
+  geom_smooth()
 
 
 hw_mod1 <- lmer(head_width ~ in_canola * propCan2km +
@@ -383,9 +408,11 @@ hw_pred_genus %>%
        y = "Predicted head width\n(mm)",
        fill = "Canola") +
   scale_color_manual(values = c("no" = "#A1CAF1",
-                                "yes" = "#d95f02")) +
+                                "yes" = "#d95f02"),
+                     labels = c("outside", "inside")) +
   scale_fill_manual(values = c("no" = "#A1CAF1",
-                               "yes" = "#d95f02")) 
+                               "yes" = "#d95f02"),
+                    labels = c("outside", "inside")) 
   
   
 
@@ -489,7 +516,7 @@ slopes %>%
   scale_color_manual(values = c("darkgrey", "black")) +
   theme_minimal(base_size = 18) +
   labs(y = NULL,
-       x = "Canola saturation\n(2km radius)") +
+       x = "Slope: canola saturation\n(2km radius)") +
   scale_x_continuous(limits = c(-2.5, 2.5)) +
   geom_vline(aes(xintercept = 0))
 
@@ -640,12 +667,14 @@ ggplot(site_scores,
                           color = "grey20", stroke = 0.2, skip = 1,
                           inherit.aes = FALSE) +
   scale_color_manual(values = c("no" = "#A1CAF1",
-                                "yes" = "#d95f02")) +
+                                "yes" = "#d95f02"),
+                     label = c("outside", "inside")) +
   scale_fill_manual(values = c("no" = "#A1CAF1",
-                               "yes" = "#d95f02")) +
+                               "yes" = "#d95f02"),
+                    label = c("outside", "inside")) +
   theme_minimal(base_size = 14) +
-  labs(x = "CAP1 (Canola--10%)",
-       y = "MDS1 (Residual--17%)",
+  labs(x = "CAP1 (Canola--9.2%)",
+       y = "MDS1 (Residual--17.2%)",
        fill = "Canola", color = "Canola") +
   geom_segment(data = species_scores_filtered,
                aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
@@ -684,12 +713,14 @@ ggplot(site_scores,
                           color = "grey20", stroke = 0.2, skip = 1,
                           inherit.aes = FALSE) +
   scale_color_manual(values = c("no" = "#A1CAF1",
-                                "yes" = "#d95f02")) +
+                                "yes" = "#d95f02"),
+                     label = c("outside", "inside")) +
   scale_fill_manual(values = c("no" = "#A1CAF1",
-                               "yes" = "#d95f02")) +
+                               "yes" = "#d95f02"),
+                    label = c("outside", "inside")) +
   theme_minimal(base_size = 14) +
-  labs(x = "CAP1 (Canola--10%)",
-       y = "MDS1 (Residual--17%)",
+  labs(x = "CAP1 (Canola--9.2%)",
+       y = "MDS1 (Residual--17.2%)",
        fill = "Canola", color = "Canola") +
   geom_segment(data = species_scores_filtered,
                aes(x = 0, y = 0, xend = CAP1, yend = MDS1),

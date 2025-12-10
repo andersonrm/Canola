@@ -27,13 +27,20 @@ This analysis explores Salena and Olivia’s canola experiment.
 - No difference in bee community composition across habitat types
   (natural or semi-natural), or habitat types and bloom period.
 
+<!-- -->
+
+    ##    min  max
+    ## 1 0.96 5.38
+
+![](bees_in_canola_files/figure-gfm/number_bees_propCan2km-1.png)<!-- -->
+
 ![](bees_in_canola_files/figure-gfm/eda_figs-1.png)<!-- -->![](bees_in_canola_files/figure-gfm/eda_figs-2.png)<!-- -->![](bees_in_canola_files/figure-gfm/eda_figs-3.png)<!-- -->
 
 ![](bees_in_canola_files/figure-gfm/eda_floral_units-1.png)<!-- -->
 
 ![](bees_in_canola_files/figure-gfm/eda_bee_genera_in_canola-1.png)<!-- -->
 
-![](bees_in_canola_files/figure-gfm/head_width_models-1.png)<!-- -->
+![](bees_in_canola_files/figure-gfm/head_width_models-1.png)<!-- -->![](bees_in_canola_files/figure-gfm/head_width_models-2.png)<!-- -->
 
     ## Linear mixed model fit by REML ['lmerMod']
     ## Formula: head_width ~ in_canola * propCan2km + (propCan2km | genus)
