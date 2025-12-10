@@ -1,12 +1,17 @@
 Canola Bee Analysis
 ================
 Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich
-November 21, 2025
+December 10, 2025
 
   
 
 - [Overview](#overview)
   - [Summary of Results](#summary-of-results)
+- [Summary stats for head width
+  model](#summary-stats-for-head-width-model)
+- [Mixed-model figure](#mixed-model-figure)
+- [Random slopes figure](#random-slopes-figure)
+- [Bee diversity (PERMANOVA)](#bee-diversity-permanova)
 - [CAP (bee composition by canola)](#cap-bee-composition-by-canola)
   - [In canola or not](#in-canola-or-not)
   - [Proportion canola](#proportion-canola)
@@ -62,22 +67,229 @@ This analysis explores Salena and Olivia’s canola experiment.
 
 ![](bees_in_canola_files/figure-gfm/head_width_figure-1.png)<!-- -->
 
-    ## Permutation test for adonis under reduced model
-    ## Terms added sequentially (first to last)
-    ## Permutation: free
-    ## Number of permutations: 999
-    ## 
-    ## adonis2(formula = bee_matrix ~ in_canola + JD + splines::ns(propCan2km, df = 5) + richness + shannon, data = bee_meta, method = "bray")
-    ##                                 Df SumOfSqs      R2      F Pr(>F)    
-    ## in_canola                        1   1.3419 0.09941 5.2985  0.001 ***
-    ## JD                               1   0.1393 0.01032 0.5499  0.889    
-    ## splines::ns(propCan2km, df = 5)  5   1.7501 0.12964 1.3820  0.050 *  
-    ## richness                         1   0.4557 0.03376 1.7993  0.058 .  
-    ## shannon                          1   0.1880 0.01393 0.7423  0.723    
-    ## Residual                        38   9.6241 0.71295                  
-    ## Total                           47  13.4991 1.00000                  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Summary stats for head width model
+
+|   X | Parameter                  | Coefficient |   SE |   CI | CI_low | CI_high |     t | df_error |    p | Effects | Group    |
+|----:|:---------------------------|------------:|-----:|-----:|-------:|--------:|------:|---------:|-----:|:--------|:---------|
+|   1 | (Intercept)                |        2.29 | 0.29 | 0.95 |   1.72 |    2.87 |  7.86 |     1961 | 0.00 | fixed   |          |
+|   2 | in_canolayes               |        0.30 | 0.03 | 0.95 |   0.24 |    0.37 |  9.02 |     1961 | 0.00 | fixed   |          |
+|   3 | propCan2km                 |       -0.35 | 0.32 | 0.95 |  -0.98 |    0.27 | -1.12 |     1961 | 0.26 | fixed   |          |
+|   4 | in_canolayes:propCan2km    |       -0.85 | 0.23 | 0.95 |  -1.29 |   -0.40 | -3.75 |     1961 | 0.00 | fixed   |          |
+|   5 | SD (Intercept)             |        0.96 |   NA | 0.95 |     NA |      NA |    NA |       NA |   NA | random  | genus    |
+|   6 | SD (propCan2km)            |        0.89 |   NA | 0.95 |     NA |      NA |    NA |       NA |   NA | random  | genus    |
+|   7 | Cor (Intercept~propCan2km) |       -0.74 |   NA | 0.95 |     NA |      NA |    NA |       NA |   NA | random  | genus    |
+|   8 | SD (Observations)          |        0.40 |   NA | 0.95 |     NA |      NA |    NA |       NA |   NA | random  | Residual |
+
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="6" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+head_width
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+std. Beta
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+standardized CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">
+std. p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.294
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.080
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.789
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+in canola \[yes\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.300
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.209
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+propCan2km
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.354
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.053
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.263
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.263
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+in canola \[yes\] ×<br>propCan2km
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.848
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.127
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-Inf – Inf
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td colspan="7" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+0.16
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>genus</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+0.93
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>genus.propCan2km</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+0.80
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>genus</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+-0.74
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+0.83
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>genus</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+11
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="6">
+1969
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="6">
+0.016 / 0.832
+</td>
+</tr>
+</table>
+
+## Mixed-model figure
+
+![](bees_in_canola_files/figure-gfm/mixed_effects_fig-1.png)<!-- -->
+
+## Random slopes figure
+
+![](bees_in_canola_files/figure-gfm/RE_slopes-1.png)<!-- -->
+
+## Bee diversity (PERMANOVA)
+
+|                                 |  Df | SumOfSqs |   R2 |    F | Pr(\>F) |
+|:--------------------------------|----:|---------:|-----:|-----:|--------:|
+| in_canola                       |   1 |     1.34 | 0.10 | 5.30 |    0.00 |
+| JD                              |   1 |     0.14 | 0.01 | 0.55 |    0.89 |
+| splines::ns(propCan2km, df = 5) |   5 |     1.75 | 0.13 | 1.38 |    0.05 |
+| richness                        |   1 |     0.46 | 0.03 | 1.80 |    0.06 |
+| shannon                         |   1 |     0.19 | 0.01 | 0.74 |    0.72 |
+| Residual                        |  38 |     9.62 | 0.71 |   NA |      NA |
+| Total                           |  47 |    13.50 | 1.00 |   NA |      NA |
+
     ## 
     ## Permutation test for homogeneity of multivariate dispersions
     ## Permutation: free

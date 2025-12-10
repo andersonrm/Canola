@@ -376,10 +376,11 @@ hw_pred_genus %>%
                  fill = in_canola),
              width = 0.002,
              shape = 21,
-             color = "black") +
+             color = "black",
+             show.legend = F) +
   theme_minimal(base_size = 18) +
   labs(x = "Canola saturation\n(2km radius)",
-       y = "Head width (mm)",
+       y = "Predicted head width\n(mm)",
        fill = "Canola") +
   scale_color_manual(values = c("no" = "#A1CAF1",
                                 "yes" = "#d95f02")) +
@@ -390,7 +391,111 @@ hw_pred_genus %>%
 
 ```
 
+## Summary stats for head width model
+```{r hw_mod_summary, echo = F}
 
+# library(parameters)
+# model_parameters(hw_mod1)
+
+# write.csv(model_parameters(hw_mod1),
+#           file = "data/hw_mod_summary.csv")
+hw_mod1_summary <- read.csv("data/hw_mod_summary.csv")
+
+kable(hw_mod1_summary,
+      format = "markdown", digits = 2)
+
+
+
+sjPlot::tab_model(hw_mod1,
+                  show.ci = TRUE,
+                  show.std = TRUE,
+                  show.re.var = TRUE,
+                  digits = 3)
+
+```
+
+## Mixed-model figure
+
+```{r mixed_effects_fig, echo = F}
+
+
+re <- ranef(hw_mod1, condVar = TRUE)
+slopes <- re$genus %>% 
+  as.data.frame() %>%
+  rownames_to_column("genus") %>%
+  dplyr::select(genus, propCan2km)
+
+vc <- attr(re$genus, "postVar")
+
+slopes$se <- sqrt(sapply(1 : dim(vc)[3], function(i) vc[2, 2, i]))
+
+slopes <- slopes %>%
+  mutate(lower = propCan2km - 1.96 * se,
+    upper = propCan2km + 1.96 * se)
+
+
+xpred <- seq(min(bee_head_width$propCan2km),
+             max(bee_head_width$propCan2km),
+             length.out = 50)
+
+newdat <- expand.grid(
+  propCan2km = xpred,
+  genus = unique(semi_join(bee_head_width, ten_bees,
+                                 by = "genus")$genus),
+  in_canola = c("no", "yes"))
+
+newdat$pred <- predict(hw_mod1, newdat, re.form = NULL)
+
+
+newdat %>% 
+  ggplot() +
+  geom_line(aes(x = propCan2km, y = pred,
+                group = interaction(genus, in_canola)),
+            color = "grey70", linewidth = 0.5, alpha = 0.6) +
+  geom_line(data = hw_pred,
+            aes(x = x, y = predicted, color = group),
+            linewidth = 1.4,
+            show.legend = F) +
+  geom_ribbon(data = hw_pred,
+              aes(x = x, ymin = conf.low,
+                  ymax = conf.high,
+                  color = group),
+              alpha = 0, linetype = 2,
+              show.legend = F) +
+  scale_color_manual(values = c("#A1CAF1", "#d95f02")) +
+  labs(x = "Canola saturation\n(2km radius)",
+    y = "Predicted head width\n(mm)") +
+  theme_minimal(base_size = 18)
+
+
+```
+
+## Random slopes figure
+```{r RE_slopes, echo = F}
+
+slopes <- slopes %>% 
+  mutate(Color = factor(case_when(
+    lower < 0 & upper > 0 ~ "notsig",
+    TRUE ~ "sig"
+  )))
+
+slopes %>% 
+  ggplot(aes(x = propCan2km, y = genus, color = Color)) +
+  geom_point(show.legend = F) +
+  geom_errorbar(aes(xmin = lower,
+                    xmax = upper),
+                width = 0,
+                show.legend = F) +
+  scale_color_manual(values = c("darkgrey", "black")) +
+  theme_minimal(base_size = 18) +
+  labs(y = NULL,
+       x = "Canola saturation\n(2km radius)") +
+  scale_x_continuous(limits = c(-2.5, 2.5)) +
+  geom_vline(aes(xintercept = 0))
+
+```
+
+## Bee diversity (PERMANOVA)
 ```{r bee_diversity, echo = F}
 
 bee_matrix <- bee_head_width %>% 
@@ -424,7 +529,14 @@ adonis_mod1 <- adonis2(bee_matrix ~ in_canola +
                          shannon,
         data = bee_meta, method = "bray")
 
-adonis_mod1
+# adonis_mod1
+
+# write.csv(adonis_mod1,
+#           file = "data/permanova_summary.csv")
+
+kable(adonis_mod1,
+      format = "markdown",
+      digits = 2)
 
 permutest(betadisper(vegdist(bee_matrix, method = "bray"),
                      bee_meta$in_canola))
