@@ -1,7 +1,7 @@
 Canola Bee Analysis
 ================
 Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich
-December 10, 2025
+December 16, 2025
 
   
 
@@ -16,6 +16,7 @@ December 10, 2025
   - [In canola or not](#in-canola-or-not)
   - [Proportion canola](#proportion-canola)
   - [Plant richness](#plant-richness)
+  - [CAP composite figure](#cap-composite-figure)
   - [Session Information](#session-information)
 
 ## Overview
@@ -34,11 +35,60 @@ This analysis explores Salena and Olivia’s canola experiment.
 
 ![](bees_in_canola_files/figure-gfm/number_bees_propCan2km-1.png)<!-- -->
 
+    ## # A tibble: 29 × 2
+    ##    genus            n
+    ##    <fct>        <int>
+    ##  1 Andrena        604
+    ##  2 Lasioglossum   577
+    ##  3 Ceratina       367
+    ##  4 Halictus       159
+    ##  5 Nomada         102
+    ##  6 Sphecodes       46
+    ##  7 Apis            43
+    ##  8 Hylaeus         31
+    ##  9 Bombus          21
+    ## 10 Osmia           20
+    ## 11 Protandrena     13
+    ## 12 Megachile        9
+    ## 13 Eucera           8
+    ## 14 Dufourea         7
+    ## 15 Colletes         6
+    ## 16 Panurginus       6
+    ## 17 Perdita          5
+    ## 18 Agapostemon      4
+    ## 19 Melissodes       4
+    ## 20 Diadasia         3
+    ## 21 Heriades         3
+    ## 22 Anthidium        2
+    ## 23 Epoleus          2
+    ## 24 Nomia            2
+    ## 25 Anthophora       2
+    ## 26 Hoplitis         1
+    ## 27 Melecta          1
+    ## 28 Herides          1
+    ## 29 Sambuci          1
+    ## # A tibble: 64 × 2
+    ##    genus              n
+    ##    <fct>          <int>
+    ##  1 Allium           624
+    ##  2 Symphoricarpos   565
+    ##  3 Myosotis         165
+    ##  4 Vicia            153
+    ##  5 Eriogonum        151
+    ##  6 Amsinckia        139
+    ##  7 Galium           123
+    ##  8 Sisymbrium       123
+    ##  9 Lupinus          118
+    ## 10 Claytonia         99
+    ## # ℹ 54 more rows
+
 ![](bees_in_canola_files/figure-gfm/eda_figs-1.png)<!-- -->![](bees_in_canola_files/figure-gfm/eda_figs-2.png)<!-- -->![](bees_in_canola_files/figure-gfm/eda_figs-3.png)<!-- -->
 
 ![](bees_in_canola_files/figure-gfm/eda_floral_units-1.png)<!-- -->
 
 ![](bees_in_canola_files/figure-gfm/eda_bee_genera_in_canola-1.png)<!-- -->
+
+![](bees_in_canola_files/figure-gfm/ceratina_figs-1.png)<!-- -->
 
 ![](bees_in_canola_files/figure-gfm/head_width_models-1.png)<!-- -->![](bees_in_canola_files/figure-gfm/head_width_models-2.png)<!-- -->
 
@@ -398,6 +448,10 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 ## Plant richness
 
 ![](bees_in_canola_files/figure-gfm/bee_comp_canola_richness-1.png)<!-- -->
+
+## CAP composite figure
+
+![](bees_in_canola_files/figure-gfm/cap_composite_fig-1.png)<!-- -->
 
 ![](bees_in_canola_files/figure-gfm/bee_rich_canola-1.png)<!-- -->
 

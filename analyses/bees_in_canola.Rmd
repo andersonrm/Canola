@@ -61,19 +61,16 @@ This analysis explores Salena and Olivia's canola experiment.
 
 # Load Packages
 library(tidyverse)
-library(cowplot) 
-library(glmmTMB)
 library(lme4)
 library(sjPlot)
 library(knitr)
 library(emmeans)
 library(vegan)
-library(randomForest)
-library(caret)
 library(adespatial)
 library(ggrepel)
 library(ggeffects)
 library(gamm4)
+library(patchwork)
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # @@@@@ Data Preparation
@@ -265,6 +262,10 @@ plant_div <- left_join(plant_div, total_floral,
 
 site_data <- left_join(site_data, plant_div, by = "site")  
 
+canola_names <- bee_head_width %>% 
+  select(in_canola, site) %>% 
+  distinct()
+
 
 bee_head_width <- left_join(bee_head_width,
                             site_data, by = "site")
@@ -306,6 +307,25 @@ bee_head_width %>%
 
 ```
 
+```{r bee_numbers, echo = F}
+
+bee_head_width %>% 
+  group_by(genus) %>% 
+  tally() %>% 
+  arrange(desc(n)) %>% 
+  print(n = nrow(.))
+
+
+plants_counts <- plants %>% 
+  uncount(Amount) %>% 
+  filter(!is.na(genus))
+
+plants_counts %>% 
+  group_by(genus) %>% 
+  tally() %>% 
+  arrange(desc(n))
+
+```
 
 ```{r eda_figs, echo = F}
 
@@ -316,15 +336,24 @@ site_data %>%
   scale_x_continuous(transform = "log")
 
 # plant div and canola buffer props:
-site_data %>% 
-  ggplot(aes(x = propCan2km, y = shannon)) +
-  geom_point()
+bee_head_width %>%
+  select(propCan2km, richness, in_canola) %>% 
+  distinct() %>% 
+  ggplot(aes(x = propCan2km, y = richness, color = in_canola)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              formula = y ~ poly(x, 2))
 
 # head width and canola props:
 bee_head_width %>% 
+  semi_join(., ten_bees, by = "genus") %>% 
+  filter(genus != "Protandrena",
+         genus != "Osmia") %>% 
   ggplot(aes(x = propCan500m, y = head_width,
              color = genus)) +
-  geom_point()
+  geom_jitter(width = 0.01) +
+  geom_smooth(method = lm,
+              formula = y ~ splines::bs(x, 3))
 
 ```
 
@@ -340,6 +369,8 @@ bee_head_width %>%
 ```{r eda_bee_genera_in_canola, echo = F}
 
 semi_join(bee_head_width, ten_bees, by = "genus") %>% 
+  subset(genus != "Protandrena",
+         genus != "Osmia") %>% 
   group_by(site, genus, in_canola) %>% 
   tally() %>% 
   ggplot(aes(x = genus, y = n, color = site)) +
@@ -349,6 +380,23 @@ semi_join(bee_head_width, ten_bees, by = "genus") %>%
 
 ```
 
+```{r ceratina_figs, echo = F}
+
+bee_head_width %>% 
+  subset(genus == "Ceratina") %>% 
+  group_by(site) %>% 
+  tally() %>% 
+  left_join(., bee_head_width %>% 
+              select(propCan2km, richness, in_canola, site) %>% 
+              distinct(),
+            by = "site") %>% 
+  ggplot(aes(x = richness, y = n, color = in_canola)) +
+  geom_point() +
+  geom_smooth(method = gam,
+              formula = y ~ splines::ns(x, df = 2))
+
+
+```
 
 ```{r head_width_models, echo = F}
 
@@ -402,11 +450,12 @@ hw_pred_genus %>%
              width = 0.002,
              shape = 21,
              color = "black",
-             show.legend = F) +
+             show.legend = T) +
   theme_minimal(base_size = 18) +
   labs(x = "Canola saturation\n(2km radius)",
        y = "Predicted head width\n(mm)",
-       fill = "Canola") +
+       fill = "Canola",
+       color = "Canola") +
   scale_color_manual(values = c("no" = "#A1CAF1",
                                 "yes" = "#d95f02"),
                      labels = c("outside", "inside")) +
@@ -516,7 +565,7 @@ slopes %>%
   scale_color_manual(values = c("darkgrey", "black")) +
   theme_minimal(base_size = 18) +
   labs(y = NULL,
-       x = "Slope: canola saturation\n(2km radius)") +
+       x = "Partial pooled estimates") +
   scale_x_continuous(limits = c(-2.5, 2.5)) +
   geom_vline(aes(xintercept = 0))
 
@@ -684,7 +733,11 @@ ggplot(site_scores,
   geom_text(data = species_scores_filtered,
             aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
             size = 3, hjust = 0.5,
-            inherit.aes = F)
+            inherit.aes = F) +
+  theme(legend.position = "bottom",
+        legend.title.position = "top",
+        legend.title = element_text(hjust = .5),
+        legend.direction = "horizontal")
 
 ```
 
@@ -733,6 +786,100 @@ ggplot(site_scores,
             inherit.aes = F)
 
 ```
+
+## CAP composite figure
+```{r cap_composite_fig, echo = F, fig.width=11, fig.height=5}
+
+capA <- ggplot(site_scores,
+       aes(x = CAP1, y = MDS1,
+           color = in_canola, fill = in_canola)) +
+  geom_point(shape = 21, size = 2, stroke = 0.5,
+             aes(fill = in_canola), color = 'black') +
+  stat_ellipse(geom = "polygon", type = "t",
+               level = 0.95, alpha = 0.3) +
+  geom_contour(data = grid_cap,
+               aes(x = CAP1, y = MDS1, z = propCan2km),
+               color = "grey40", inherit.aes = FALSE) +
+  metR::geom_text_contour(data = grid_cap,
+                          aes(x = CAP1, y = MDS1, z = propCan2km),
+                          color = "grey20", stroke = 0.2, skip = 1,
+                          inherit.aes = FALSE) +
+  scale_color_manual(values = c("no" = "#A1CAF1",
+                                "yes" = "#d95f02"),
+                     label = c("outside", "inside")) +
+  scale_fill_manual(values = c("no" = "#A1CAF1",
+                               "yes" = "#d95f02"),
+                    label = c("outside", "inside")) +
+  theme_minimal(base_size = 14) +
+  labs(x = "CAP1 (Canola--9.2%)",
+       y = "MDS1 (Residual--17.2%)",
+       fill = "Canola", color = "Canola") +
+  geom_segment(data = species_scores_filtered,
+               aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
+               arrow = arrow(length = unit(0.2, "cm")),
+               color = "black",
+               inherit.aes = F) +
+  geom_text(data = species_scores_filtered,
+            aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
+            size = 3, hjust = 0.5,
+            inherit.aes = F) +
+  theme(legend.position = "bottom",
+        legend.title.position = "top",
+        legend.title = element_text(hjust = .5),
+        legend.direction = "horizontal")
+
+
+capB <- ggplot(site_scores,
+       aes(x = CAP1, y = MDS1,
+           color = in_canola, fill = in_canola)) +
+  geom_point(shape = 21, size = 2, stroke = 0.5,
+             aes(fill = in_canola), color = 'black') +
+  stat_ellipse(geom = "polygon", type = "t",
+               level = 0.95, alpha = 0.3) +
+  geom_contour(data = grid_cap,
+               aes(x = CAP1, y = MDS1, z = richness),
+               color = "grey40", inherit.aes = FALSE) +
+  metR::geom_text_contour(data = grid_cap,
+                          aes(x = CAP1, y = MDS1, z = richness),
+                          color = "grey20", stroke = 0.2, skip = 1,
+                          inherit.aes = FALSE) +
+  scale_color_manual(values = c("no" = "#A1CAF1",
+                                "yes" = "#d95f02"),
+                     label = c("outside", "inside")) +
+  scale_fill_manual(values = c("no" = "#A1CAF1",
+                               "yes" = "#d95f02"),
+                    label = c("outside", "inside")) +
+  theme_minimal(base_size = 14) +
+  labs(x = "CAP1 (Canola--9.2%)",
+       y = NULL,
+       fill = "Canola", color = "Canola") +
+  geom_segment(data = species_scores_filtered,
+               aes(x = 0, y = 0, xend = CAP1, yend = MDS1),
+               arrow = arrow(length = unit(0.2, "cm")),
+               color = "black",
+               inherit.aes = F) +
+  geom_text(data = species_scores_filtered,
+            aes(x = CAP1 * 1.1, y = MDS1 * 1.1, label = species),
+            size = 3, hjust = 0.5,
+            inherit.aes = F) +
+  theme(legend.position = "bottom",
+        legend.title.position = "top",
+        legend.title = element_text(hjust = .5),
+        legend.direction = "horizontal")
+
+
+# Using patchwork to combine plots:
+
+(capA + capB) +
+  plot_annotation(tag_levels = "A") +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal",
+        legend.justification = "center")
+
+```
+
+
 
 
 ```{r bee_rich_canola, echo = F}
