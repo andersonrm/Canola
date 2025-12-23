@@ -1,7 +1,7 @@
 Canola Bee Analysis
 ================
 Dr. Riley M. Anderson, Olivia Shaffer, & Salena Helmreich
-December 16, 2025
+December 23, 2025
 
   
 

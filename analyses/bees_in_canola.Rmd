@@ -458,10 +458,12 @@ hw_pred_genus %>%
        color = "Canola") +
   scale_color_manual(values = c("no" = "#A1CAF1",
                                 "yes" = "#d95f02"),
-                     labels = c("outside", "inside")) +
+                     labels = c("Outside canola", "Inside canola")) +
   scale_fill_manual(values = c("no" = "#A1CAF1",
                                "yes" = "#d95f02"),
-                    labels = c("outside", "inside")) 
+                    labels = c("Outside canola", "Inside canola")) +
+  theme(legend.position = "top",
+        legend.title = element_blank())
   
   
 
@@ -806,10 +808,10 @@ capA <- ggplot(site_scores,
                           inherit.aes = FALSE) +
   scale_color_manual(values = c("no" = "#A1CAF1",
                                 "yes" = "#d95f02"),
-                     label = c("outside", "inside")) +
+                     label = c("Outside canola", "Inside canola")) +
   scale_fill_manual(values = c("no" = "#A1CAF1",
                                "yes" = "#d95f02"),
-                    label = c("outside", "inside")) +
+                    label = c("Outside canola", "Inside canola")) +
   theme_minimal(base_size = 14) +
   labs(x = "CAP1 (Canola--9.2%)",
        y = "MDS1 (Residual--17.2%)",
@@ -845,10 +847,10 @@ capB <- ggplot(site_scores,
                           inherit.aes = FALSE) +
   scale_color_manual(values = c("no" = "#A1CAF1",
                                 "yes" = "#d95f02"),
-                     label = c("outside", "inside")) +
+                     label = c("Outside canola", "Inside canola")) +
   scale_fill_manual(values = c("no" = "#A1CAF1",
                                "yes" = "#d95f02"),
-                    label = c("outside", "inside")) +
+                    label = c("Outside canola", "Inside canola")) +
   theme_minimal(base_size = 14) +
   labs(x = "CAP1 (Canola--9.2%)",
        y = NULL,
@@ -875,7 +877,8 @@ capB <- ggplot(site_scores,
   plot_layout(guides = "collect") &
   theme(legend.position = "bottom",
         legend.direction = "horizontal",
-        legend.justification = "center")
+        legend.justification = "center",
+        legend.title = element_blank())
 
 ```
 
