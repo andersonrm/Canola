@@ -229,6 +229,8 @@ site_data <- canola_buffs %>%
          DistanceToCanola, PrairieFragment) %>% 
   bind_rows(., canola)
 
+cor(hw_1$head_width, hw_1$intertegular_space, method = "pearson")
+
 ```
 
 
